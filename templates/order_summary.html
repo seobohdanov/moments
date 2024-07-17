@@ -51,8 +51,12 @@
                                 if (document.querySelectorAll('.order-list .photo-list').length === 0) {
                                     window.location.href = "{{ url_for('index') }}";
                                 }
+                            } else {
+                                // Update data-photo-index for remaining photos
+                                orderList.querySelectorAll('.photo-item').forEach((item, newIndex) => {
+                                    item.setAttribute('data-photo-index', newIndex);
+                                });
                             }
-
                         } else {
                             console.error(data.error);
                         }

@@ -190,7 +190,7 @@ def remove_photo():
     except Exception as e:
         logging.error(f"Error in remove_photo route: {e}")
         return jsonify({'success': False, 'error': 'An error occurred. Check logs for details.'})
-
+        
 @app.route('/clear_all', methods=['POST'])
 def clear_all():
     try:
