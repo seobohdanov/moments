@@ -5,74 +5,94 @@
     <title>Order Summary</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
     <script>
-        function removePhoto(orderIndex, photoIndex) {
-            fetch("{{ url_for('remove_photo') }}", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/x-www-form-urlencoded"
-                },
-                body: `order_index=${orderIndex}&photo_index=${photoIndex}`
-            }).then(response => response.json()).then(data => {
-                if (data.success) {
-                    const photoList = document.querySelector(`#order-${orderIndex} .photo-list`);
-                    const photoItem = document.querySelector(`#order-${orderIndex} .photo-item[data-photo-index="${photoIndex}"]`);
-                    photoList.removeChild(photoItem);
+        document.addEventListener('DOMContentLoaded', function () {
+            const clearAllButton = document.getElementById('clear-all-button');
+            const removeButtons = document.querySelectorAll('.remove-photo');
 
-                    // Update data-photo-index for remaining photos
-                    photoList.querySelectorAll('.photo-item').forEach((item, index) => {
-                        item.setAttribute('data-photo-index', index);
+            clearAllButton.addEventListener('click', function () {
+                fetch("{{ url_for('clear_all') }}", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/x-www-form-urlencoded"
+                    }
+                }).then(response => response.json()).then(data => {
+                    if (data.success) {
+                        window.location.href = "{{ url_for('index') }}";
+                    } else {
+                        console.error('Clear all failed.');
+                    }
+                }).catch(error => {
+                    console.error('Error:', error);
+                });
+            });
+
+            removeButtons.forEach(button => {
+                button.addEventListener('click', function () {
+                    const orderIndex = button.dataset.orderIndex;
+                    const photoIndex = button.dataset.photoIndex;
+
+                    fetch("{{ url_for('remove_photo') }}", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/x-www-form-urlencoded"
+                        },
+                        body: `order_index=${orderIndex}&photo_index=${photoIndex}`
+                    }).then(response => response.json()).then(data => {
+                        if (data.success) {
+                            const photoItem = document.querySelector(`#order-${orderIndex} .photo-item[data-photo-index="${photoIndex}"]`);
+                            photoItem.parentNode.removeChild(photoItem);
+
+                            // Check if the order list is empty and redirect if necessary
+                            const orderList = document.querySelector(`#order-${orderIndex} .photo-list`);
+                            if (orderList.children.length === 0) {
+                                const orderElement = document.getElementById(`order-${orderIndex}`);
+                                orderElement.parentNode.removeChild(orderElement);
+
+                                if (document.querySelectorAll('.order-list .photo-list').length === 0) {
+                                    window.location.href = "{{ url_for('index') }}";
+                                }
+                            }
+
+                        } else {
+                            console.error(data.error);
+                        }
+                    }).catch(error => {
+                        console.error('Error:', error);
                     });
-                } else {
-                    console.error(data.error);
-                }
-            }).catch(error => {
-                console.error('Error:', error);
+                });
             });
-        }
-
-        function clearAll() {
-            fetch("{{ url_for('clear_all') }}", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/x-www-form-urlencoded"
-                }
-            }).then(response => response.json()).then(data => {
-                if (data.success) {
-                    window.location.reload();
-                } else {
-                    console.error('Clear all failed.');
-                }
-            }).catch(error => {
-                console.error('Error:', error);
-            });
-        }
+        });
     </script>
 </head>
 <body>
     <div class="container">
         <h1>Order Summary</h1>
-        <ul class="order-list">
-            {% for order_index, order in enumerate(orders) %}
-            <li id="order-{{ order_index }}">
-                <p><strong>Size:</strong> {{ order.size }}</p>
-                <p><strong>Paper Type:</strong> {{ order.paper_type }}</p>
-                <p><strong>Photos:</strong></p>
-                <ul class="photo-list">
-                    {% for photo_index, photo in enumerate(order.photos) %}
-                    <li class="photo-item" data-photo-index="{{ photo_index }}">
-                        <div class="photo-container">
-                            <img src="{{ url_for('uploaded_file', filename=photo) }}" alt="{{ photo }}" class="photo-preview">
-                            <button class="remove-photo" onclick="removePhoto({{ order_index }}, {{ photo_index }})">X</button>
-                        </div>
+        <div id="orders-container">
+            {% if orders %}
+                <ul class="order-list">
+                    {% for order_index, order in enumerate(orders) %}
+                    <li id="order-{{ order_index }}">
+                        <p><strong>Size:</strong> {{ order.size }}</p>
+                        <p><strong>Paper Type:</strong> {{ order.paper_type }}</p>
+                        <p><strong>Photos:</strong></p>
+                        <ul class="photo-list">
+                            {% for photo_index, photo in enumerate(order.photos) %}
+                            <li class="photo-item" data-photo-index="{{ photo_index }}">
+                                <div class="photo-container">
+                                    <img src="{{ url_for('uploaded_file', filename=photo) }}" alt="{{ photo }}" class="photo-preview">
+                                    <button class="remove-photo" data-order-index="{{ order_index }}" data-photo-index="{{ photo_index }}">X</button>
+                                </div>
+                            </li>
+                            {% endfor %}
+                        </ul>
                     </li>
                     {% endfor %}
                 </ul>
-            </li>
-            {% endfor %}
-        </ul>
-        <button onclick="window.location.href='{{ url_for('index') }}'" class="btn btn-primary">Add More Photos</button>
-        <button onclick="window.location.href='{{ url_for('complete_order_form') }}'" class="btn btn-success">Complete Order</button>
-        <button onclick="clearAll()" class="btn btn-danger">Clear All</button>
+            {% else %}
+                <p>No orders yet.</p>
+            {% endif %}
+        </div>
+        <button type="button" id="clear-all-button" class="btn btn-danger">Clear All</button>
     </div>
 </body>
 </html>

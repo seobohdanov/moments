@@ -82,6 +82,9 @@
             function removeFile(index) {
                 filesArray.splice(index, 1);
                 previewFiles();
+                if (filesArray.length === 0) {
+                    window.location.href = "{{ url_for('index') }}";
+                }
             }
 
             function updateButtons(hasFiles) {
@@ -150,7 +153,7 @@
                     if (data.success) {
                         filesArray = [];
                         previewFiles();
-                        window.location.href = data.redirect;
+                        window.location.href = "{{ url_for('index') }}";
                     } else {
                         console.error('Clear all failed.');
                     }
@@ -177,8 +180,12 @@
                             item.setAttribute('data-photo-index', index);
                         });
 
+                        // Check if there are no photos left and update buttons accordingly
                         if (orderList.children.length === 0) {
-                            window.location.href = "{{ url_for('index') }}";
+                            document.getElementById(`order-${orderIndex}`).remove();
+                            if (document.querySelectorAll('.order-list .photo-list').length === 0) {
+                                window.location.href = "{{ url_for('index') }}";
+                            }
                         }
 
                     } else {
@@ -221,7 +228,7 @@
                     <p>Drag & Drop files here or click to select files</p>
                     <input type="file" id="photos" name="photos" multiple class="form-control-file" accept=".jpg,.jpeg,.png,.gif,.heic,.webp">
                 </div>
-                <div class="preview"></div>
+                               <div class="preview"></div>
             </div>
             <div class="form-group">
                 <div id="progress-bar" class="progress-bar"></div>
@@ -229,7 +236,7 @@
             <button type="submit" id="submit-button" class="btn btn-primary">Add to Order</button>
             <button type="button" id="clear-all-button" class="btn btn-danger" style="display:none;">Clear All</button>
             <button type="button" id="skip-button" class="btn btn-secondary" style="display:none;" onclick="window.location.href='{{ url_for('order_summary') }}'">Skip to Order Summary</button>
-                       <p id="error-message" style="color: red;"></p>
+            <p id="error-message" style="color: red;"></p>
         </form>
         <div id="loader" class="loader" style="display:none;"></div>
         {% if orders %}

@@ -81,6 +81,14 @@
                     photoList.querySelectorAll('.photo-item').forEach((item, index) => {
                         item.setAttribute('data-photo-index', index);
                     });
+
+                    // Check if the order list is empty and redirect if necessary
+                    if (photoList.children.length === 0) {
+                        document.getElementById(`order-${orderIndex}`).remove();
+                        if (document.querySelectorAll('.order-list .photo-list').length === 0) {
+                            window.location.href = "{{ url_for('index') }}";
+                        }
+                    }
                 } else {
                     console.error(data.error);
                 }

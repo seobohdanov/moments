@@ -246,14 +246,14 @@ input[type="file"] {
 
 @media (max-width: 768px) {
     .container {
-padding: 15px;
-}
-h1 {
-font-size: 24px;
-}
-.btn {
-width: 100%;
-padding: 12px;
-font-size: 18px;
-}
+        padding: 15px;
+    }
+    h1 {
+        font-size: 24px;
+    }
+    .btn {
+        width: 100%;
+        padding: 12px;
+        font-size: 18px;
+    }
 }
