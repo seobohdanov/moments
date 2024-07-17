@@ -7,7 +7,6 @@
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const clearAllButton = document.getElementById('clear-all-button');
-            const removeButtons = document.querySelectorAll('.remove-photo');
 
             clearAllButton.addEventListener('click', function () {
                 fetch("{{ url_for('clear_all') }}", {
@@ -26,45 +25,51 @@
                 });
             });
 
-            removeButtons.forEach(button => {
-                button.addEventListener('click', function () {
-                    const orderIndex = button.dataset.orderIndex;
-                    const photoIndex = button.dataset.photoIndex;
+            function removePhoto(orderIndex, photoIndex) {
+                fetch("{{ url_for('remove_photo') }}", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/x-www-form-urlencoded"
+                    },
+                    body: `order_index=${orderIndex}&photo_index=${photoIndex}`
+                }).then(response => response.json()).then(data => {
+                    if (data.success) {
+                        updateOrderList();
+                    } else {
+                        console.error(data.error);
+                    }
+                }).catch(error => {
+                    console.error('Error:', error);
+                });
+            }
 
-                    fetch("{{ url_for('remove_photo') }}", {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/x-www-form-urlencoded"
-                        },
-                        body: `order_index=${orderIndex}&photo_index=${photoIndex}`
-                    }).then(response => response.json()).then(data => {
-                        if (data.success) {
-                            const orderList = document.querySelector(`#order-${orderIndex} .photo-list`);
-                            const photoItem = orderList.querySelector(`[data-photo-index="${photoIndex}"]`);
-                            photoItem.parentNode.removeChild(photoItem);
-
-                            // Update data-photo-index for remaining photos
-                            orderList.querySelectorAll('.photo-item').forEach((item, newIndex) => {
-                                item.setAttribute('data-photo-index', newIndex);
-                            });
-
-                            // Check if the order list is empty and redirect if necessary
-                            if (orderList.children.length === 0) {
-                                const orderElement = document.getElementById(`order-${orderIndex}`);
-                                orderElement.parentNode.removeChild(orderElement);
-
-                                if (document.querySelectorAll('.order-list .photo-list').length === 0) {
-                                    window.location.href = "{{ url_for('index') }}";
-                                }
-                            }
-                        } else {
-                            console.error(data.error);
-                        }
-                    }).catch(error => {
+            function updateOrderList() {
+                fetch("{{ url_for('order_summary') }}")
+                    .then(response => response.text())
+                    .then(html => {
+                        const parser = new DOMParser();
+                        const doc = parser.parseFromString(html, 'text/html');
+                        const newOrdersContainer = doc.querySelector('#orders-container');
+                        document.querySelector('#orders-container').innerHTML = newOrdersContainer.innerHTML;
+                        attachRemovePhotoListeners();
+                    })
+                    .catch(error => {
                         console.error('Error:', error);
                     });
+            }
+
+            function attachRemovePhotoListeners() {
+                const removeButtons = document.querySelectorAll('.remove-photo');
+                removeButtons.forEach(button => {
+                    button.addEventListener('click', function () {
+                        const orderIndex = button.dataset.orderIndex;
+                        const photoIndex = button.dataset.photoIndex;
+                        removePhoto(orderIndex, photoIndex);
+                    });
                 });
-            });
+            }
+
+            attachRemovePhotoListeners();
         });
     </script>
 </head>
