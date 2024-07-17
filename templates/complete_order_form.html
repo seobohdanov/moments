@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Complete Order</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-control {
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Complete Order</h1>
+        <form action="{{ url_for('complete_order') }}" method="post">
+            <div class="form-group">
+                <label for="first_name">First Name:</label>
+                <input type="text" id="first_name" name="first_name" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="last_name">Last Name:</label>
+                <input type="text" id="last_name" name="last_name" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="phone">Phone:</label>
+                <input type="tel" id="phone" name="phone" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="city">City:</label>
+                <input type="text" id="city" name="city" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="post_office">Post Office:</label>
+                <input type="text" id="post_office" name="post_office" class="form-control" required>
+            </div>
+            <button type="submit" class="btn btn-success">Submit Order</button>
+        </form>
+        <h2>Current Orders</h2>
+        <ul class="order-list">
+            {% for order_index, order in enumerate(orders) %}
+            <li id="order-{{ order_index }}">
+                <p><strong>Size:</strong> {{ order.size }}</p>
+                <p><strong>Paper Type:</strong> {{ order.paper_type }}</p>
+                <p><strong>Photos:</strong></p>
+                <ul class="photo-list">
+                    {% for photo_index, photo in enumerate(order.photos) %}
+                    <li class="photo-item" data-photo-index="{{ photo_index }}">
+                        <div class="photo-container">
+                            <img src="{{ url_for('uploaded_file', filename=photo) }}" alt="{{ photo }}" class="photo-preview">
+                            <button class="remove-photo" onclick="removePhoto({{ order_index }}, {{ photo_index }})">X</button>
+                        </div>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+    <script>
+        function removePhoto(orderIndex, photoIndex) {
+            fetch("{{ url_for('remove_photo') }}", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded"
+                },
+                body: `order_index=${orderIndex}&photo_index=${photoIndex}`
+            }).then(response => response.json()).then(data => {
+                if (data.success) {
+                    const photoList = document.querySelector(`#order-${orderIndex} .photo-list`);
+                    const photoItem = document.querySelector(`#order-${orderIndex} .photo-item[data-photo-index="${photoIndex}"]`);
+                    photoList.removeChild(photoItem);
+
+                    // Update data-photo-index for remaining photos
+                    photoList.querySelectorAll('.photo-item').forEach((item, index) => {
+                        item.setAttribute('data-photo-index', index);
+                    });
+                } else {
+                    console.error(data.error);
+                }
+            }).catch(error => {
+                console.error('Error:', error);
+            });
+        }
+    </script>
+</body>
+</html>

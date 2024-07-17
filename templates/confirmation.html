@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Order Confirmed</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-control {
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+            margin-top: 5px;
+        }
+        .photo-preview {
+            width: 100px;
+            height: auto;
+            margin: 5px;
+        }
+        .photo-container {
+            display: inline-block;
+            position: relative;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .order-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        .order-list li {
+            border-bottom: 1px solid #ddd;
+            padding: 10px 0;
+        }
+        .order-list li:last-child {
+            border-bottom: none;
+        }
+        .photo-list {
+            list-style-type: none;
+            padding: 0;
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .photo-item {
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+        .total-photos {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Order Confirmed</h1>
+        <p>Thank you, {{ user_info.first_name }} {{ user_info.last_name }}! Your order will be delivered to {{ user_info.city }}, Post Office No. {{ user_info.post_office }}.</p>
+        <h2>Current Orders</h2>
+        <p class="total-photos"><strong>Total Photos:</strong> {% for order in orders %}{{ order.size }} {{ order.paper_type }}, {{ order.photos|length }}{% if not loop.last %}; {% endif %}{% endfor %}</p>
+        <ul class="order-list">
+            {% for order_index, order in enumerate(orders) %}
+            <li id="order-{{ order_index }}">
+                <p><strong>Size:</strong> {{ order.size }}, <strong>Paper Type:</strong> {{ order.paper_type }}, <strong>Quantity:</strong> {{ order.photos|length }}</p>
+                <ul class="photo-list">
+                    {% for photo in order.photos %}
+                    <li class="photo-item">
+                        <div class="photo-container">
+                            <img src="{{ url_for('uploaded_file', filename=photo) }}" alt="{{ photo }}" class="photo-preview">
+                        </div>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>

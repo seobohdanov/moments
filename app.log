@@ -1,0 +1,442 @@
+2024-07-16 20:15:17,445 INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://172.31.34.215:5000
+2024-07-16 20:15:17,445 INFO: [33mPress CTRL+C to quit[0m
+2024-07-16 20:15:17,446 INFO:  * Restarting with stat
+2024-07-16 20:15:17,778 WARNING:  * Debugger is active!
+2024-07-16 20:15:17,779 INFO:  * Debugger PIN: 137-796-129
+2024-07-16 20:15:20,823 DEBUG: Archive created: archives/160720244.zip
+2024-07-16 20:15:20,825 DEBUG: Using selector: EpollSelector
+2024-07-16 20:15:20,826 DEBUG: load_ssl_context verify=True cert=None trust_env=True http2=False
+2024-07-16 20:15:20,828 DEBUG: load_verify_locations cafile='/home/ec2-user/.local/lib/python3.7/site-packages/certifi/cacert.pem'
+2024-07-16 20:15:20,841 DEBUG: load_ssl_context verify=True cert=None trust_env=True http2=False
+2024-07-16 20:15:20,841 DEBUG: load_verify_locations cafile='/home/ec2-user/.local/lib/python3.7/site-packages/certifi/cacert.pem'
+2024-07-16 20:15:20,855 DEBUG: Entering: send_message
+2024-07-16 20:15:20,868 DEBUG: connect_tcp.started host='api.telegram.org' port=443 local_address=None timeout=5.0 socket_options=None
+2024-07-16 20:15:20,898 DEBUG: connect_tcp.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x7f317436be10>
+2024-07-16 20:15:20,898 DEBUG: start_tls.started ssl_context=<ssl.SSLContext object at 0x7f3174344e50> server_hostname='api.telegram.org' timeout=5.0
+2024-07-16 20:15:20,951 DEBUG: start_tls.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x7f317435c2d0>
+2024-07-16 20:15:20,952 DEBUG: send_request_headers.started request=<Request [b'POST']>
+2024-07-16 20:15:20,952 DEBUG: send_request_headers.complete
+2024-07-16 20:15:20,952 DEBUG: send_request_body.started request=<Request [b'POST']>
+2024-07-16 20:15:20,953 DEBUG: send_request_body.complete
+2024-07-16 20:15:20,953 DEBUG: receive_response_headers.started request=<Request [b'POST']>
+2024-07-16 20:15:21,015 DEBUG: receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Server', b'nginx/1.18.0'), (b'Date', b'Tue, 16 Jul 2024 20:15:21 GMT'), (b'Content-Type', b'application/json'), (b'Content-Length', b'627'), (b'Connection', b'keep-alive'), (b'Strict-Transport-Security', b'max-age=31536000; includeSubDomains; preload'), (b'Access-Control-Allow-Origin', b'*'), (b'Access-Control-Allow-Methods', b'GET, POST, OPTIONS'), (b'Access-Control-Expose-Headers', b'Content-Length,Content-Type,Date,Server,Connection')])
+2024-07-16 20:15:21,016 INFO: HTTP Request: POST https://api.telegram.org/bot7410874657:AAHibMVweWuCPsDlghx64W6gKMHWoz7yTiM/sendMessage "HTTP/1.1 200 OK"
+2024-07-16 20:15:21,016 DEBUG: receive_response_body.started request=<Request [b'POST']>
+2024-07-16 20:15:21,017 DEBUG: receive_response_body.complete
+2024-07-16 20:15:21,017 DEBUG: response_closed.started
+2024-07-16 20:15:21,018 DEBUG: response_closed.complete
+2024-07-16 20:15:21,020 DEBUG: Message(api_kwargs={'link_preview_options': {'is_disabled': True}}, channel_chat_created=False, chat=Chat(id=-1002243134010, title='Moments Замовлення', type=<ChatType.SUPERGROUP>), date=datetime.datetime(2024, 7, 16, 20, 15, 20, tzinfo=datetime.timezone.utc), delete_chat_photo=False, entities=(MessageEntity(length=10, offset=48, type=<MessageEntityType.PHONE_NUMBER>), MessageEntity(length=84, offset=110, type=<MessageEntityType.URL>)), from_user=User(first_name='Moments', id=7410874657, is_bot=True, username='Momentslab_bot'), group_chat_created=False, message_id=3, supergroup_chat_created=False, text='New Order:\n    Name: Maksym Bohdanov\n    Phone: 0953842052\n    City: Bakar\n    Post Office: 3245\n    Archive: http://ec2-13-60-99-164.eu-north-1.compute.amazonaws.com:5000/archives/160720244.zip')
+2024-07-16 20:15:21,022 DEBUG: Exiting: send_message
+2024-07-16 20:15:21,022 DEBUG: Message sent to Telegram chat -1002243134010
+2024-07-16 20:15:21,041 INFO: 188.252.198.78 - - [16/Jul/2024 20:15:21] "POST /complete_order HTTP/1.1" 200 -
+2024-07-16 20:15:21,463 INFO: 188.252.198.78 - - [16/Jul/2024 20:15:21] "[36mGET /static/styles.css HTTP/1.1[0m" 304 -
+2024-07-16 20:15:24,037 INFO: 188.252.198.78 - - [16/Jul/2024 20:15:24] "GET /complete_order_form HTTP/1.1" 200 -
+2024-07-16 20:15:24,556 INFO: 188.252.198.78 - - [16/Jul/2024 20:15:24] "GET /order_summary HTTP/1.1" 200 -
+2024-07-16 20:15:25,270 INFO: 188.252.198.78 - - [16/Jul/2024 20:15:25] "GET / HTTP/1.1" 200 -
+2024-07-16 20:15:27,204 INFO: 188.252.198.78 - - [16/Jul/2024 20:15:27] "GET / HTTP/1.1" 200 -
+2024-07-16 20:15:27,703 INFO: 188.252.198.78 - - [16/Jul/2024 20:15:27] "[36mGET /static/styles.css HTTP/1.1[0m" 304 -
+2024-07-16 20:15:34,975 INFO: 188.252.198.78 - - [16/Jul/2024 20:15:34] "[32mPOST /add_order HTTP/1.1[0m" 302 -
+2024-07-16 20:15:35,117 INFO: 188.252.198.78 - - [16/Jul/2024 20:15:35] "GET /order_summary HTTP/1.1" 200 -
+2024-07-16 20:15:35,283 INFO: 188.252.198.78 - - [16/Jul/2024 20:15:35] "GET /order_summary HTTP/1.1" 200 -
+2024-07-16 20:15:35,688 INFO: 188.252.198.78 - - [16/Jul/2024 20:15:35] "GET /uploads/photo_2024-07-09%2010.34.06.jpeg HTTP/1.1" 200 -
+2024-07-16 20:15:36,432 INFO: 188.252.198.78 - - [16/Jul/2024 20:15:36] "[36mGET /static/styles.css HTTP/1.1[0m" 304 -
+2024-07-16 20:15:36,432 INFO: 188.252.198.78 - - [16/Jul/2024 20:15:36] "GET /uploads/photo_2024-07-13%2016.06.24.jpeg HTTP/1.1" 200 -
+2024-07-16 20:15:36,581 INFO: 188.252.198.78 - - [16/Jul/2024 20:15:36] "GET /uploads/photo_2024-07-09%2010.34.04.jpeg HTTP/1.1" 200 -
+2024-07-16 20:15:36,582 INFO: 188.252.198.78 - - [16/Jul/2024 20:15:36] "GET /uploads/photo_2024-07-09%2010.34.03.jpeg HTTP/1.1" 200 -
+2024-07-16 20:15:36,611 INFO: 188.252.198.78 - - [16/Jul/2024 20:15:36] "GET /uploads/photo_2024-07-09%2010.34.05.jpeg HTTP/1.1" 200 -
+2024-07-16 20:15:37,840 INFO: 188.252.198.78 - - [16/Jul/2024 20:15:37] "GET / HTTP/1.1" 200 -
+2024-07-16 20:15:38,265 INFO: 188.252.198.78 - - [16/Jul/2024 20:15:38] "[36mGET /static/styles.css HTTP/1.1[0m" 304 -
+2024-07-16 20:15:38,266 INFO: 188.252.198.78 - - [16/Jul/2024 20:15:38] "[36mGET /uploads/photo_2024-07-13%2016.06.24.jpeg HTTP/1.1[0m" 304 -
+2024-07-16 20:15:38,330 INFO: 188.252.198.78 - - [16/Jul/2024 20:15:38] "[36mGET /uploads/photo_2024-07-09%2010.34.06.jpeg HTTP/1.1[0m" 304 -
+2024-07-16 20:15:38,402 INFO: 188.252.198.78 - - [16/Jul/2024 20:15:38] "[36mGET /uploads/photo_2024-07-09%2010.34.03.jpeg HTTP/1.1[0m" 304 -
+2024-07-16 20:15:38,409 INFO: 188.252.198.78 - - [16/Jul/2024 20:15:38] "[36mGET /uploads/photo_2024-07-09%2010.34.04.jpeg HTTP/1.1[0m" 304 -
+2024-07-16 20:15:38,410 INFO: 188.252.198.78 - - [16/Jul/2024 20:15:38] "[36mGET /uploads/photo_2024-07-09%2010.34.05.jpeg HTTP/1.1[0m" 304 -
+2024-07-16 20:15:51,117 INFO: 188.252.198.78 - - [16/Jul/2024 20:15:51] "[32mPOST /add_order HTTP/1.1[0m" 302 -
+2024-07-16 20:15:51,257 INFO: 188.252.198.78 - - [16/Jul/2024 20:15:51] "GET /order_summary HTTP/1.1" 200 -
+2024-07-16 20:15:51,412 INFO: 188.252.198.78 - - [16/Jul/2024 20:15:51] "GET /order_summary HTTP/1.1" 200 -
+2024-07-16 20:15:51,826 INFO: 188.252.198.78 - - [16/Jul/2024 20:15:51] "[36mGET /static/styles.css HTTP/1.1[0m" 304 -
+2024-07-16 20:15:51,895 INFO: 188.252.198.78 - - [16/Jul/2024 20:15:51] "GET /uploads/photo_2024-07-13%2016.06.24.jpeg HTTP/1.1" 200 -
+2024-07-16 20:15:51,902 INFO: 188.252.198.78 - - [16/Jul/2024 20:15:51] "GET /uploads/photo_2024-07-09%2010.34.06.jpeg HTTP/1.1" 200 -
+2024-07-16 20:15:51,964 INFO: 188.252.198.78 - - [16/Jul/2024 20:15:51] "GET /uploads/photo_2024-07-09%2010.34.03.jpeg HTTP/1.1" 200 -
+2024-07-16 20:15:51,969 INFO: 188.252.198.78 - - [16/Jul/2024 20:15:51] "GET /uploads/photo_2024-07-09%2010.34.04.jpeg HTTP/1.1" 200 -
+2024-07-16 20:15:51,970 INFO: 188.252.198.78 - - [16/Jul/2024 20:15:51] "GET /uploads/IMG_7739.jpg HTTP/1.1" 200 -
+2024-07-16 20:15:51,972 INFO: 188.252.198.78 - - [16/Jul/2024 20:15:51] "GET /uploads/photo_2024-07-09%2010.34.05.jpeg HTTP/1.1" 200 -
+2024-07-16 20:15:56,452 INFO: 188.252.198.78 - - [16/Jul/2024 20:15:56] "GET /complete_order_form HTTP/1.1" 200 -
+2024-07-16 20:15:56,889 INFO: 188.252.198.78 - - [16/Jul/2024 20:15:56] "[36mGET /uploads/photo_2024-07-13%2016.06.24.jpeg HTTP/1.1[0m" 304 -
+2024-07-16 20:15:57,108 INFO: 188.252.198.78 - - [16/Jul/2024 20:15:57] "[36mGET /static/styles.css HTTP/1.1[0m" 304 -
+2024-07-16 20:15:57,109 INFO: 188.252.198.78 - - [16/Jul/2024 20:15:57] "[36mGET /uploads/photo_2024-07-09%2010.34.03.jpeg HTTP/1.1[0m" 304 -
+2024-07-16 20:15:57,119 INFO: 188.252.198.78 - - [16/Jul/2024 20:15:57] "[36mGET /uploads/photo_2024-07-09%2010.34.06.jpeg HTTP/1.1[0m" 304 -
+2024-07-16 20:15:57,120 INFO: 188.252.198.78 - - [16/Jul/2024 20:15:57] "[36mGET /uploads/photo_2024-07-09%2010.34.04.jpeg HTTP/1.1[0m" 304 -
+2024-07-16 20:15:57,122 INFO: 188.252.198.78 - - [16/Jul/2024 20:15:57] "[36mGET /uploads/photo_2024-07-09%2010.34.05.jpeg HTTP/1.1[0m" 304 -
+2024-07-16 20:15:57,247 INFO: 188.252.198.78 - - [16/Jul/2024 20:15:57] "[36mGET /uploads/IMG_7739.jpg HTTP/1.1[0m" 304 -
+2024-07-16 20:16:01,635 DEBUG: Archive created: archives/160720245.zip
+2024-07-16 20:16:01,635 DEBUG: Using selector: EpollSelector
+2024-07-16 20:16:01,636 DEBUG: load_ssl_context verify=True cert=None trust_env=True http2=False
+2024-07-16 20:16:01,636 DEBUG: load_verify_locations cafile='/home/ec2-user/.local/lib/python3.7/site-packages/certifi/cacert.pem'
+2024-07-16 20:16:01,643 DEBUG: load_ssl_context verify=True cert=None trust_env=True http2=False
+2024-07-16 20:16:01,643 DEBUG: load_verify_locations cafile='/home/ec2-user/.local/lib/python3.7/site-packages/certifi/cacert.pem'
+2024-07-16 20:16:01,650 DEBUG: Entering: send_message
+2024-07-16 20:16:01,652 DEBUG: connect_tcp.started host='api.telegram.org' port=443 local_address=None timeout=5.0 socket_options=None
+2024-07-16 20:16:01,679 DEBUG: connect_tcp.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x7f31757e8f50>
+2024-07-16 20:16:01,680 DEBUG: start_tls.started ssl_context=<ssl.SSLContext object at 0x7f3178dac050> server_hostname='api.telegram.org' timeout=5.0
+2024-07-16 20:16:01,732 DEBUG: start_tls.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x7f3174351750>
+2024-07-16 20:16:01,732 DEBUG: send_request_headers.started request=<Request [b'POST']>
+2024-07-16 20:16:01,733 DEBUG: send_request_headers.complete
+2024-07-16 20:16:01,733 DEBUG: send_request_body.started request=<Request [b'POST']>
+2024-07-16 20:16:01,733 DEBUG: send_request_body.complete
+2024-07-16 20:16:01,733 DEBUG: receive_response_headers.started request=<Request [b'POST']>
+2024-07-16 20:16:01,798 DEBUG: receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Server', b'nginx/1.18.0'), (b'Date', b'Tue, 16 Jul 2024 20:16:01 GMT'), (b'Content-Type', b'application/json'), (b'Content-Length', b'627'), (b'Connection', b'keep-alive'), (b'Strict-Transport-Security', b'max-age=31536000; includeSubDomains; preload'), (b'Access-Control-Allow-Origin', b'*'), (b'Access-Control-Allow-Methods', b'GET, POST, OPTIONS'), (b'Access-Control-Expose-Headers', b'Content-Length,Content-Type,Date,Server,Connection')])
+2024-07-16 20:16:01,798 INFO: HTTP Request: POST https://api.telegram.org/bot7410874657:AAHibMVweWuCPsDlghx64W6gKMHWoz7yTiM/sendMessage "HTTP/1.1 200 OK"
+2024-07-16 20:16:01,799 DEBUG: receive_response_body.started request=<Request [b'POST']>
+2024-07-16 20:16:01,799 DEBUG: receive_response_body.complete
+2024-07-16 20:16:01,799 DEBUG: response_closed.started
+2024-07-16 20:16:01,799 DEBUG: response_closed.complete
+2024-07-16 20:16:01,800 DEBUG: Message(api_kwargs={'link_preview_options': {'is_disabled': True}}, channel_chat_created=False, chat=Chat(id=-1002243134010, title='Moments Замовлення', type=<ChatType.SUPERGROUP>), date=datetime.datetime(2024, 7, 16, 20, 16, 1, tzinfo=datetime.timezone.utc), delete_chat_photo=False, entities=(MessageEntity(length=10, offset=48, type=<MessageEntityType.PHONE_NUMBER>), MessageEntity(length=84, offset=110, type=<MessageEntityType.URL>)), from_user=User(first_name='Moments', id=7410874657, is_bot=True, username='Momentslab_bot'), group_chat_created=False, message_id=4, supergroup_chat_created=False, text='New Order:\n    Name: Maksym Bohdanov\n    Phone: 0953842052\n    City: Bakar\n    Post Office: 3245\n    Archive: http://ec2-13-60-99-164.eu-north-1.compute.amazonaws.com:5000/archives/160720245.zip')
+2024-07-16 20:16:01,801 DEBUG: Exiting: send_message
+2024-07-16 20:16:01,801 DEBUG: Message sent to Telegram chat -1002243134010
+2024-07-16 20:16:01,804 INFO: 188.252.198.78 - - [16/Jul/2024 20:16:01] "POST /complete_order HTTP/1.1" 200 -
+2024-07-16 20:16:02,291 INFO: 188.252.198.78 - - [16/Jul/2024 20:16:02] "[36mGET /uploads/photo_2024-07-09%2010.34.06.jpeg HTTP/1.1[0m" 304 -
+2024-07-16 20:16:02,291 INFO: 188.252.198.78 - - [16/Jul/2024 20:16:02] "[36mGET /static/styles.css HTTP/1.1[0m" 304 -
+2024-07-16 20:16:02,295 INFO: 188.252.198.78 - - [16/Jul/2024 20:16:02] "[36mGET /uploads/photo_2024-07-13%2016.06.24.jpeg HTTP/1.1[0m" 304 -
+2024-07-16 20:16:02,437 INFO: 188.252.198.78 - - [16/Jul/2024 20:16:02] "[36mGET /uploads/photo_2024-07-09%2010.34.03.jpeg HTTP/1.1[0m" 304 -
+2024-07-16 20:16:02,445 INFO: 188.252.198.78 - - [16/Jul/2024 20:16:02] "[36mGET /uploads/photo_2024-07-09%2010.34.05.jpeg HTTP/1.1[0m" 304 -
+2024-07-16 20:16:02,446 INFO: 188.252.198.78 - - [16/Jul/2024 20:16:02] "[36mGET /uploads/photo_2024-07-09%2010.34.04.jpeg HTTP/1.1[0m" 304 -
+2024-07-16 20:16:02,447 INFO: 188.252.198.78 - - [16/Jul/2024 20:16:02] "[36mGET /uploads/IMG_7739.jpg HTTP/1.1[0m" 304 -
+2024-07-16 20:16:43,734 INFO: 188.252.198.78 - - [16/Jul/2024 20:16:43] "GET /archives/160720244.zip HTTP/1.1" 200 -
+2024-07-16 20:16:50,660 INFO: 188.252.198.78 - - [16/Jul/2024 20:16:50] "GET /archives/160720245.zip HTTP/1.1" 200 -
+2024-07-16 20:21:09,505 INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://172.31.34.215:5000
+2024-07-16 20:21:09,505 INFO: [33mPress CTRL+C to quit[0m
+2024-07-16 20:21:09,506 INFO:  * Restarting with stat
+2024-07-16 20:21:09,909 WARNING:  * Debugger is active!
+2024-07-16 20:21:09,909 INFO:  * Debugger PIN: 137-796-129
+2024-07-16 20:21:16,057 DEBUG: Processing complete_order route
+2024-07-16 20:21:16,061 DEBUG: Order ID: 160720246
+2024-07-16 20:21:16,061 DEBUG: Archive created: archives/160720246.zip
+2024-07-16 20:21:16,062 DEBUG: Using selector: EpollSelector
+2024-07-16 20:21:16,063 DEBUG: load_ssl_context verify=True cert=None trust_env=True http2=False
+2024-07-16 20:21:16,064 DEBUG: load_verify_locations cafile='/home/ec2-user/.local/lib/python3.7/site-packages/certifi/cacert.pem'
+2024-07-16 20:21:16,086 DEBUG: load_ssl_context verify=True cert=None trust_env=True http2=False
+2024-07-16 20:21:16,091 DEBUG: load_verify_locations cafile='/home/ec2-user/.local/lib/python3.7/site-packages/certifi/cacert.pem'
+2024-07-16 20:21:16,119 DEBUG: Entering: send_message
+2024-07-16 20:21:16,129 DEBUG: connect_tcp.started host='api.telegram.org' port=443 local_address=None timeout=5.0 socket_options=None
+2024-07-16 20:21:16,160 DEBUG: connect_tcp.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x7efde0934e50>
+2024-07-16 20:21:16,161 DEBUG: start_tls.started ssl_context=<ssl.SSLContext object at 0x7efde1dc0ed0> server_hostname='api.telegram.org' timeout=5.0
+2024-07-16 20:21:16,215 DEBUG: start_tls.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x7efde0926310>
+2024-07-16 20:21:16,215 DEBUG: send_request_headers.started request=<Request [b'POST']>
+2024-07-16 20:21:16,216 DEBUG: send_request_headers.complete
+2024-07-16 20:21:16,216 DEBUG: send_request_body.started request=<Request [b'POST']>
+2024-07-16 20:21:16,217 DEBUG: send_request_body.complete
+2024-07-16 20:21:16,218 DEBUG: receive_response_headers.started request=<Request [b'POST']>
+2024-07-16 20:21:16,328 DEBUG: receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Server', b'nginx/1.18.0'), (b'Date', b'Tue, 16 Jul 2024 20:21:16 GMT'), (b'Content-Type', b'application/json'), (b'Content-Length', b'627'), (b'Connection', b'keep-alive'), (b'Strict-Transport-Security', b'max-age=31536000; includeSubDomains; preload'), (b'Access-Control-Allow-Origin', b'*'), (b'Access-Control-Allow-Methods', b'GET, POST, OPTIONS'), (b'Access-Control-Expose-Headers', b'Content-Length,Content-Type,Date,Server,Connection')])
+2024-07-16 20:21:16,329 INFO: HTTP Request: POST https://api.telegram.org/bot7410874657:AAHibMVweWuCPsDlghx64W6gKMHWoz7yTiM/sendMessage "HTTP/1.1 200 OK"
+2024-07-16 20:21:16,329 DEBUG: receive_response_body.started request=<Request [b'POST']>
+2024-07-16 20:21:16,330 DEBUG: receive_response_body.complete
+2024-07-16 20:21:16,330 DEBUG: response_closed.started
+2024-07-16 20:21:16,331 DEBUG: response_closed.complete
+2024-07-16 20:21:16,333 DEBUG: Message(api_kwargs={'link_preview_options': {'is_disabled': True}}, channel_chat_created=False, chat=Chat(id=-1002243134010, title='Moments Замовлення', type=<ChatType.SUPERGROUP>), date=datetime.datetime(2024, 7, 16, 20, 21, 16, tzinfo=datetime.timezone.utc), delete_chat_photo=False, entities=(MessageEntity(length=10, offset=48, type=<MessageEntityType.PHONE_NUMBER>), MessageEntity(length=84, offset=110, type=<MessageEntityType.URL>)), from_user=User(first_name='Moments', id=7410874657, is_bot=True, username='Momentslab_bot'), group_chat_created=False, message_id=5, supergroup_chat_created=False, text='New Order:\n    Name: Maksym Bohdanov\n    Phone: 0953842052\n    City: Bakar\n    Post Office: 3245\n    Archive: http://ec2-13-60-99-164.eu-north-1.compute.amazonaws.com:5000/archives/160720246.zip')
+2024-07-16 20:21:16,338 DEBUG: Exiting: send_message
+2024-07-16 20:21:16,339 DEBUG: Message sent to Telegram chat -1002243134010
+2024-07-16 20:21:16,367 INFO: 188.252.198.78 - - [16/Jul/2024 20:21:16] "POST /complete_order HTTP/1.1" 200 -
+2024-07-16 20:21:16,758 INFO: 188.252.198.78 - - [16/Jul/2024 20:21:16] "[36mGET /static/styles.css HTTP/1.1[0m" 304 -
+2024-07-16 20:21:19,551 DEBUG: Processing complete_order route
+2024-07-16 20:21:19,552 DEBUG: Order ID: 160720247
+2024-07-16 20:21:19,552 DEBUG: Archive created: archives/160720247.zip
+2024-07-16 20:21:19,553 DEBUG: Using selector: EpollSelector
+2024-07-16 20:21:19,553 DEBUG: load_ssl_context verify=True cert=None trust_env=True http2=False
+2024-07-16 20:21:19,554 DEBUG: load_verify_locations cafile='/home/ec2-user/.local/lib/python3.7/site-packages/certifi/cacert.pem'
+2024-07-16 20:21:19,563 DEBUG: load_ssl_context verify=True cert=None trust_env=True http2=False
+2024-07-16 20:21:19,563 DEBUG: load_verify_locations cafile='/home/ec2-user/.local/lib/python3.7/site-packages/certifi/cacert.pem'
+2024-07-16 20:21:19,571 DEBUG: Entering: send_message
+2024-07-16 20:21:19,572 DEBUG: connect_tcp.started host='api.telegram.org' port=443 local_address=None timeout=5.0 socket_options=None
+2024-07-16 20:21:19,599 DEBUG: connect_tcp.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x7efde027f510>
+2024-07-16 20:21:19,599 DEBUG: start_tls.started ssl_context=<ssl.SSLContext object at 0x7efde06b9850> server_hostname='api.telegram.org' timeout=5.0
+2024-07-16 20:21:19,662 DEBUG: start_tls.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x7efde027fed0>
+2024-07-16 20:21:19,663 DEBUG: send_request_headers.started request=<Request [b'POST']>
+2024-07-16 20:21:19,663 DEBUG: send_request_headers.complete
+2024-07-16 20:21:19,663 DEBUG: send_request_body.started request=<Request [b'POST']>
+2024-07-16 20:21:19,664 DEBUG: send_request_body.complete
+2024-07-16 20:21:19,664 DEBUG: receive_response_headers.started request=<Request [b'POST']>
+2024-07-16 20:21:19,798 DEBUG: receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Server', b'nginx/1.18.0'), (b'Date', b'Tue, 16 Jul 2024 20:21:19 GMT'), (b'Content-Type', b'application/json'), (b'Content-Length', b'627'), (b'Connection', b'keep-alive'), (b'Strict-Transport-Security', b'max-age=31536000; includeSubDomains; preload'), (b'Access-Control-Allow-Origin', b'*'), (b'Access-Control-Allow-Methods', b'GET, POST, OPTIONS'), (b'Access-Control-Expose-Headers', b'Content-Length,Content-Type,Date,Server,Connection')])
+2024-07-16 20:21:19,799 INFO: HTTP Request: POST https://api.telegram.org/bot7410874657:AAHibMVweWuCPsDlghx64W6gKMHWoz7yTiM/sendMessage "HTTP/1.1 200 OK"
+2024-07-16 20:21:19,799 DEBUG: receive_response_body.started request=<Request [b'POST']>
+2024-07-16 20:21:19,799 DEBUG: receive_response_body.complete
+2024-07-16 20:21:19,799 DEBUG: response_closed.started
+2024-07-16 20:21:19,800 DEBUG: response_closed.complete
+2024-07-16 20:21:19,801 DEBUG: Message(api_kwargs={'link_preview_options': {'is_disabled': True}}, channel_chat_created=False, chat=Chat(id=-1002243134010, title='Moments Замовлення', type=<ChatType.SUPERGROUP>), date=datetime.datetime(2024, 7, 16, 20, 21, 19, tzinfo=datetime.timezone.utc), delete_chat_photo=False, entities=(MessageEntity(length=10, offset=48, type=<MessageEntityType.PHONE_NUMBER>), MessageEntity(length=84, offset=110, type=<MessageEntityType.URL>)), from_user=User(first_name='Moments', id=7410874657, is_bot=True, username='Momentslab_bot'), group_chat_created=False, message_id=6, supergroup_chat_created=False, text='New Order:\n    Name: Maksym Bohdanov\n    Phone: 0953842052\n    City: Bakar\n    Post Office: 3245\n    Archive: http://ec2-13-60-99-164.eu-north-1.compute.amazonaws.com:5000/archives/160720247.zip')
+2024-07-16 20:21:19,803 DEBUG: Exiting: send_message
+2024-07-16 20:21:19,803 DEBUG: Message sent to Telegram chat -1002243134010
+2024-07-16 20:21:19,805 INFO: 188.252.198.78 - - [16/Jul/2024 20:21:19] "POST /complete_order HTTP/1.1" 200 -
+2024-07-16 20:21:20,220 INFO: 188.252.198.78 - - [16/Jul/2024 20:21:20] "[36mGET /static/styles.css HTTP/1.1[0m" 304 -
+2024-07-16 20:21:25,287 INFO: 188.252.198.78 - - [16/Jul/2024 20:21:25] "GET / HTTP/1.1" 200 -
+2024-07-16 20:21:25,708 INFO: 188.252.198.78 - - [16/Jul/2024 20:21:25] "[36mGET /static/styles.css HTTP/1.1[0m" 304 -
+2024-07-16 20:21:35,115 INFO: 188.252.198.78 - - [16/Jul/2024 20:21:35] "[32mPOST /add_order HTTP/1.1[0m" 302 -
+2024-07-16 20:21:35,263 INFO: 188.252.198.78 - - [16/Jul/2024 20:21:35] "GET /order_summary HTTP/1.1" 200 -
+2024-07-16 20:21:35,427 INFO: 188.252.198.78 - - [16/Jul/2024 20:21:35] "GET /order_summary HTTP/1.1" 200 -
+2024-07-16 20:21:35,826 INFO: 188.252.198.78 - - [16/Jul/2024 20:21:35] "GET /uploads/output_price_tag-5-removebg-preview.png HTTP/1.1" 200 -
+2024-07-16 20:21:35,890 INFO: 188.252.198.78 - - [16/Jul/2024 20:21:35] "[36mGET /static/styles.css HTTP/1.1[0m" 304 -
+2024-07-16 20:21:35,892 INFO: 188.252.198.78 - - [16/Jul/2024 20:21:35] "GET /uploads/output_rainbow_palette-5-removebg-preview.png HTTP/1.1" 200 -
+2024-07-16 20:21:36,026 INFO: 188.252.198.78 - - [16/Jul/2024 20:21:36] "GET /uploads/output_various_photo_sizes-5-removebg-preview.png HTTP/1.1" 200 -
+2024-07-16 20:21:36,030 INFO: 188.252.198.78 - - [16/Jul/2024 20:21:36] "GET /uploads/output_ukraine_map-5-removebg-preview.png HTTP/1.1" 200 -
+2024-07-16 20:21:37,564 INFO: 188.252.198.78 - - [16/Jul/2024 20:21:37] "GET / HTTP/1.1" 200 -
+2024-07-16 20:21:37,984 INFO: 188.252.198.78 - - [16/Jul/2024 20:21:37] "[36mGET /static/styles.css HTTP/1.1[0m" 304 -
+2024-07-16 20:21:38,052 INFO: 188.252.198.78 - - [16/Jul/2024 20:21:38] "[36mGET /uploads/output_price_tag-5-removebg-preview.png HTTP/1.1[0m" 304 -
+2024-07-16 20:21:38,055 INFO: 188.252.198.78 - - [16/Jul/2024 20:21:38] "[36mGET /uploads/output_rainbow_palette-5-removebg-preview.png HTTP/1.1[0m" 304 -
+2024-07-16 20:21:38,118 INFO: 188.252.198.78 - - [16/Jul/2024 20:21:38] "[36mGET /uploads/output_ukraine_map-5-removebg-preview.png HTTP/1.1[0m" 304 -
+2024-07-16 20:21:38,126 INFO: 188.252.198.78 - - [16/Jul/2024 20:21:38] "[36mGET /uploads/output_various_photo_sizes-5-removebg-preview.png HTTP/1.1[0m" 304 -
+2024-07-16 20:21:51,672 INFO: 188.252.198.78 - - [16/Jul/2024 20:21:51] "[32mPOST /add_order HTTP/1.1[0m" 302 -
+2024-07-16 20:21:51,818 INFO: 188.252.198.78 - - [16/Jul/2024 20:21:51] "GET /order_summary HTTP/1.1" 200 -
+2024-07-16 20:21:51,983 INFO: 188.252.198.78 - - [16/Jul/2024 20:21:51] "GET /order_summary HTTP/1.1" 200 -
+2024-07-16 20:21:52,384 INFO: 188.252.198.78 - - [16/Jul/2024 20:21:52] "[36mGET /static/styles.css HTTP/1.1[0m" 304 -
+2024-07-16 20:21:52,458 INFO: 188.252.198.78 - - [16/Jul/2024 20:21:52] "[36mGET /uploads/output_rainbow_palette-5-removebg-preview.png HTTP/1.1[0m" 304 -
+2024-07-16 20:21:52,460 INFO: 188.252.198.78 - - [16/Jul/2024 20:21:52] "[36mGET /uploads/output_price_tag-5-removebg-preview.png HTTP/1.1[0m" 304 -
+2024-07-16 20:21:52,524 INFO: 188.252.198.78 - - [16/Jul/2024 20:21:52] "GET /uploads/photo_2024-07-09%2010.34.03.jpeg HTTP/1.1" 200 -
+2024-07-16 20:21:52,534 INFO: 188.252.198.78 - - [16/Jul/2024 20:21:52] "GET /uploads/photo_2024-07-09%2010.34.05.jpeg HTTP/1.1" 200 -
+2024-07-16 20:21:52,534 INFO: 188.252.198.78 - - [16/Jul/2024 20:21:52] "GET /uploads/photo_2024-07-09%2010.34.06.jpeg HTTP/1.1" 200 -
+2024-07-16 20:21:52,535 INFO: 188.252.198.78 - - [16/Jul/2024 20:21:52] "GET /uploads/photo_2024-07-09%2010.34.04.jpeg HTTP/1.1" 200 -
+2024-07-16 20:21:52,588 INFO: 188.252.198.78 - - [16/Jul/2024 20:21:52] "[36mGET /uploads/output_ukraine_map-5-removebg-preview.png HTTP/1.1[0m" 304 -
+2024-07-16 20:21:52,602 INFO: 188.252.198.78 - - [16/Jul/2024 20:21:52] "[36mGET /uploads/output_various_photo_sizes-5-removebg-preview.png HTTP/1.1[0m" 304 -
+2024-07-16 20:21:52,722 INFO: 188.252.198.78 - - [16/Jul/2024 20:21:52] "GET /uploads/IMG_7739.jpg HTTP/1.1" 200 -
+2024-07-16 20:21:52,741 INFO: 188.252.198.78 - - [16/Jul/2024 20:21:52] "GET /uploads/photo_2024-07-13%2016.06.24.jpeg HTTP/1.1" 200 -
+2024-07-16 20:21:58,884 INFO: 188.252.198.78 - - [16/Jul/2024 20:21:58] "GET /complete_order_form HTTP/1.1" 200 -
+2024-07-16 20:21:59,300 INFO: 188.252.198.78 - - [16/Jul/2024 20:21:59] "[36mGET /static/styles.css HTTP/1.1[0m" 304 -
+2024-07-16 20:21:59,368 INFO: 188.252.198.78 - - [16/Jul/2024 20:21:59] "[36mGET /uploads/output_price_tag-5-removebg-preview.png HTTP/1.1[0m" 304 -
+2024-07-16 20:21:59,370 INFO: 188.252.198.78 - - [16/Jul/2024 20:21:59] "[36mGET /uploads/output_rainbow_palette-5-removebg-preview.png HTTP/1.1[0m" 304 -
+2024-07-16 20:21:59,373 INFO: 188.252.198.78 - - [16/Jul/2024 20:21:59] "[36mGET /uploads/photo_2024-07-09%2010.34.03.jpeg HTTP/1.1[0m" 304 -
+2024-07-16 20:21:59,376 INFO: 188.252.198.78 - - [16/Jul/2024 20:21:59] "[36mGET /uploads/photo_2024-07-09%2010.34.06.jpeg HTTP/1.1[0m" 304 -
+2024-07-16 20:21:59,376 INFO: 188.252.198.78 - - [16/Jul/2024 20:21:59] "[36mGET /uploads/output_various_photo_sizes-5-removebg-preview.png HTTP/1.1[0m" 304 -
+2024-07-16 20:21:59,427 INFO: 188.252.198.78 - - [16/Jul/2024 20:21:59] "[36mGET /uploads/output_ukraine_map-5-removebg-preview.png HTTP/1.1[0m" 304 -
+2024-07-16 20:21:59,505 INFO: 188.252.198.78 - - [16/Jul/2024 20:21:59] "[36mGET /uploads/IMG_7739.jpg HTTP/1.1[0m" 304 -
+2024-07-16 20:21:59,508 INFO: 188.252.198.78 - - [16/Jul/2024 20:21:59] "[36mGET /uploads/photo_2024-07-09%2010.34.04.jpeg HTTP/1.1[0m" 304 -
+2024-07-16 20:21:59,509 INFO: 188.252.198.78 - - [16/Jul/2024 20:21:59] "[36mGET /uploads/photo_2024-07-13%2016.06.24.jpeg HTTP/1.1[0m" 304 -
+2024-07-16 20:21:59,513 INFO: 188.252.198.78 - - [16/Jul/2024 20:21:59] "[36mGET /uploads/photo_2024-07-09%2010.34.05.jpeg HTTP/1.1[0m" 304 -
+2024-07-16 20:22:06,421 DEBUG: Processing complete_order route
+2024-07-16 20:22:06,422 DEBUG: Order ID: 160720248
+2024-07-16 20:22:06,427 DEBUG: Archive created: archives/160720248.zip
+2024-07-16 20:22:06,427 DEBUG: Using selector: EpollSelector
+2024-07-16 20:22:06,428 DEBUG: load_ssl_context verify=True cert=None trust_env=True http2=False
+2024-07-16 20:22:06,428 DEBUG: load_verify_locations cafile='/home/ec2-user/.local/lib/python3.7/site-packages/certifi/cacert.pem'
+2024-07-16 20:22:06,434 DEBUG: load_ssl_context verify=True cert=None trust_env=True http2=False
+2024-07-16 20:22:06,435 DEBUG: load_verify_locations cafile='/home/ec2-user/.local/lib/python3.7/site-packages/certifi/cacert.pem'
+2024-07-16 20:22:06,442 DEBUG: Entering: send_message
+2024-07-16 20:22:06,443 DEBUG: connect_tcp.started host='api.telegram.org' port=443 local_address=None timeout=5.0 socket_options=None
+2024-07-16 20:22:06,471 DEBUG: connect_tcp.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x7efde027fb90>
+2024-07-16 20:22:06,472 DEBUG: start_tls.started ssl_context=<ssl.SSLContext object at 0x7efde53761d0> server_hostname='api.telegram.org' timeout=5.0
+2024-07-16 20:22:06,523 DEBUG: start_tls.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x7efde027f350>
+2024-07-16 20:22:06,523 DEBUG: send_request_headers.started request=<Request [b'POST']>
+2024-07-16 20:22:06,524 DEBUG: send_request_headers.complete
+2024-07-16 20:22:06,524 DEBUG: send_request_body.started request=<Request [b'POST']>
+2024-07-16 20:22:06,524 DEBUG: send_request_body.complete
+2024-07-16 20:22:06,524 DEBUG: receive_response_headers.started request=<Request [b'POST']>
+2024-07-16 20:22:06,596 DEBUG: receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Server', b'nginx/1.18.0'), (b'Date', b'Tue, 16 Jul 2024 20:22:06 GMT'), (b'Content-Type', b'application/json'), (b'Content-Length', b'734'), (b'Connection', b'keep-alive'), (b'Strict-Transport-Security', b'max-age=31536000; includeSubDomains; preload'), (b'Access-Control-Allow-Origin', b'*'), (b'Access-Control-Allow-Methods', b'GET, POST, OPTIONS'), (b'Access-Control-Expose-Headers', b'Content-Length,Content-Type,Date,Server,Connection')])
+2024-07-16 20:22:06,596 INFO: HTTP Request: POST https://api.telegram.org/bot7410874657:AAHibMVweWuCPsDlghx64W6gKMHWoz7yTiM/sendMessage "HTTP/1.1 200 OK"
+2024-07-16 20:22:06,597 DEBUG: receive_response_body.started request=<Request [b'POST']>
+2024-07-16 20:22:06,597 DEBUG: receive_response_body.complete
+2024-07-16 20:22:06,597 DEBUG: response_closed.started
+2024-07-16 20:22:06,597 DEBUG: response_closed.complete
+2024-07-16 20:22:06,598 DEBUG: Message(api_kwargs={'link_preview_options': {'is_disabled': True}}, channel_chat_created=False, chat=Chat(id=-1002243134010, title='Moments Замовлення', type=<ChatType.SUPERGROUP>), date=datetime.datetime(2024, 7, 16, 20, 22, 6, tzinfo=datetime.timezone.utc), delete_chat_photo=False, entities=(MessageEntity(length=10, offset=48, type=<MessageEntityType.PHONE_NUMBER>), MessageEntity(length=84, offset=112, type=<MessageEntityType.URL>)), from_user=User(first_name='Moments', id=7410874657, is_bot=True, username='Momentslab_bot'), group_chat_created=False, message_id=7, supergroup_chat_created=False, text='New Order:\n    Name: Максим Богданов\n    Phone: 0994531636\n    City: Харьков\n    Post Office: 3245\n    Archive: http://ec2-13-60-99-164.eu-north-1.compute.amazonaws.com:5000/archives/160720248.zip')
+2024-07-16 20:22:06,599 DEBUG: Exiting: send_message
+2024-07-16 20:22:06,599 DEBUG: Message sent to Telegram chat -1002243134010
+2024-07-16 20:22:06,602 INFO: 188.252.198.78 - - [16/Jul/2024 20:22:06] "POST /complete_order HTTP/1.1" 200 -
+2024-07-16 20:22:07,024 INFO: 188.252.198.78 - - [16/Jul/2024 20:22:07] "[36mGET /static/styles.css HTTP/1.1[0m" 304 -
+2024-07-16 20:22:07,090 INFO: 188.252.198.78 - - [16/Jul/2024 20:22:07] "[36mGET /uploads/output_rainbow_palette-5-removebg-preview.png HTTP/1.1[0m" 304 -
+2024-07-16 20:22:07,094 INFO: 188.252.198.78 - - [16/Jul/2024 20:22:07] "[36mGET /uploads/output_price_tag-5-removebg-preview.png HTTP/1.1[0m" 304 -
+2024-07-16 20:22:07,159 INFO: 188.252.198.78 - - [16/Jul/2024 20:22:07] "[36mGET /uploads/photo_2024-07-09%2010.34.03.jpeg HTTP/1.1[0m" 304 -
+2024-07-16 20:22:07,162 INFO: 188.252.198.78 - - [16/Jul/2024 20:22:07] "[36mGET /uploads/photo_2024-07-09%2010.34.05.jpeg HTTP/1.1[0m" 304 -
+2024-07-16 20:22:07,167 INFO: 188.252.198.78 - - [16/Jul/2024 20:22:07] "[36mGET /uploads/photo_2024-07-09%2010.34.04.jpeg HTTP/1.1[0m" 304 -
+2024-07-16 20:22:07,167 INFO: 188.252.198.78 - - [16/Jul/2024 20:22:07] "[36mGET /uploads/photo_2024-07-09%2010.34.06.jpeg HTTP/1.1[0m" 304 -
+2024-07-16 20:22:07,222 INFO: 188.252.198.78 - - [16/Jul/2024 20:22:07] "[36mGET /uploads/output_various_photo_sizes-5-removebg-preview.png HTTP/1.1[0m" 304 -
+2024-07-16 20:22:07,229 INFO: 188.252.198.78 - - [16/Jul/2024 20:22:07] "[36mGET /uploads/IMG_7739.jpg HTTP/1.1[0m" 304 -
+2024-07-16 20:22:07,290 INFO: 188.252.198.78 - - [16/Jul/2024 20:22:07] "[36mGET /uploads/output_ukraine_map-5-removebg-preview.png HTTP/1.1[0m" 304 -
+2024-07-16 20:22:07,296 INFO: 188.252.198.78 - - [16/Jul/2024 20:22:07] "[36mGET /uploads/photo_2024-07-13%2016.06.24.jpeg HTTP/1.1[0m" 304 -
+2024-07-16 20:24:38,182 INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://172.31.34.215:5000
+2024-07-16 20:24:38,182 INFO: [33mPress CTRL+C to quit[0m
+2024-07-16 20:24:38,183 INFO:  * Restarting with stat
+2024-07-16 20:24:38,533 WARNING:  * Debugger is active!
+2024-07-16 20:24:38,534 INFO:  * Debugger PIN: 137-796-129
+2024-07-16 20:24:42,092 INFO: 188.252.198.78 - - [16/Jul/2024 20:24:42] "GET / HTTP/1.1" 200 -
+2024-07-16 20:24:42,585 INFO: 188.252.198.78 - - [16/Jul/2024 20:24:42] "[36mGET /static/styles.css HTTP/1.1[0m" 304 -
+2024-07-16 20:24:56,514 INFO: 188.252.198.78 - - [16/Jul/2024 20:24:56] "[32mPOST /add_order HTTP/1.1[0m" 302 -
+2024-07-16 20:24:56,667 INFO: 188.252.198.78 - - [16/Jul/2024 20:24:56] "GET /order_summary HTTP/1.1" 200 -
+2024-07-16 20:24:56,824 INFO: 188.252.198.78 - - [16/Jul/2024 20:24:56] "GET /order_summary HTTP/1.1" 200 -
+2024-07-16 20:24:57,297 INFO: 188.252.198.78 - - [16/Jul/2024 20:24:57] "[36mGET /static/styles.css HTTP/1.1[0m" 304 -
+2024-07-16 20:24:57,300 INFO: 188.252.198.78 - - [16/Jul/2024 20:24:57] "GET /uploads/output_polaroid_camera-5-removebg-preview.png HTTP/1.1" 200 -
+2024-07-16 20:24:57,309 INFO: 188.252.198.78 - - [16/Jul/2024 20:24:57] "GET /uploads/output_price_tag-5-removebg-preview.png HTTP/1.1" 200 -
+2024-07-16 20:24:57,436 INFO: 188.252.198.78 - - [16/Jul/2024 20:24:57] "GET /uploads/output_rainbow_palette-5-removebg-preview.png HTTP/1.1" 200 -
+2024-07-16 20:24:57,437 INFO: 188.252.198.78 - - [16/Jul/2024 20:24:57] "GET /uploads/output_ukraine_map-5-removebg-preview.png HTTP/1.1" 200 -
+2024-07-16 20:24:57,440 INFO: 188.252.198.78 - - [16/Jul/2024 20:24:57] "GET /uploads/output_various_photo_sizes-5-removebg-preview.png HTTP/1.1" 200 -
+2024-07-16 20:24:58,290 INFO: 188.252.198.78 - - [16/Jul/2024 20:24:58] "GET / HTTP/1.1" 200 -
+2024-07-16 20:24:58,692 INFO: 188.252.198.78 - - [16/Jul/2024 20:24:58] "[36mGET /static/styles.css HTTP/1.1[0m" 304 -
+2024-07-16 20:24:58,757 INFO: 188.252.198.78 - - [16/Jul/2024 20:24:58] "[36mGET /uploads/output_polaroid_camera-5-removebg-preview.png HTTP/1.1[0m" 304 -
+2024-07-16 20:24:58,760 INFO: 188.252.198.78 - - [16/Jul/2024 20:24:58] "[36mGET /uploads/output_price_tag-5-removebg-preview.png HTTP/1.1[0m" 304 -
+2024-07-16 20:24:58,826 INFO: 188.252.198.78 - - [16/Jul/2024 20:24:58] "[36mGET /uploads/output_ukraine_map-5-removebg-preview.png HTTP/1.1[0m" 304 -
+2024-07-16 20:24:58,830 INFO: 188.252.198.78 - - [16/Jul/2024 20:24:58] "[36mGET /uploads/output_rainbow_palette-5-removebg-preview.png HTTP/1.1[0m" 304 -
+2024-07-16 20:24:58,832 INFO: 188.252.198.78 - - [16/Jul/2024 20:24:58] "[36mGET /uploads/output_various_photo_sizes-5-removebg-preview.png HTTP/1.1[0m" 304 -
+2024-07-16 20:25:10,412 INFO: 188.252.198.78 - - [16/Jul/2024 20:25:10] "[32mPOST /add_order HTTP/1.1[0m" 302 -
+2024-07-16 20:25:10,548 INFO: 188.252.198.78 - - [16/Jul/2024 20:25:10] "GET /order_summary HTTP/1.1" 200 -
+2024-07-16 20:25:10,718 INFO: 188.252.198.78 - - [16/Jul/2024 20:25:10] "GET /order_summary HTTP/1.1" 200 -
+2024-07-16 20:25:11,097 INFO: 188.252.198.78 - - [16/Jul/2024 20:25:11] "[36mGET /static/styles.css HTTP/1.1[0m" 304 -
+2024-07-16 20:25:11,166 INFO: 188.252.198.78 - - [16/Jul/2024 20:25:11] "[36mGET /uploads/output_polaroid_camera-5-removebg-preview.png HTTP/1.1[0m" 304 -
+2024-07-16 20:25:11,171 INFO: 188.252.198.78 - - [16/Jul/2024 20:25:11] "GET /uploads/photo_2024-07-09%2010.34.04.jpeg HTTP/1.1" 200 -
+2024-07-16 20:25:11,233 INFO: 188.252.198.78 - - [16/Jul/2024 20:25:11] "GET /uploads/photo_2024-07-09%2010.34.06.jpeg HTTP/1.1" 200 -
+2024-07-16 20:25:11,240 INFO: 188.252.198.78 - - [16/Jul/2024 20:25:11] "GET /uploads/photo_2024-07-13%2016.06.24.jpeg HTTP/1.1" 200 -
+2024-07-16 20:25:11,253 INFO: 188.252.198.78 - - [16/Jul/2024 20:25:11] "GET /uploads/photo_2024-07-09%2010.34.03.jpeg HTTP/1.1" 200 -
+2024-07-16 20:25:11,256 INFO: 188.252.198.78 - - [16/Jul/2024 20:25:11] "GET /uploads/photo_2024-07-09%2010.34.05.jpeg HTTP/1.1" 200 -
+2024-07-16 20:25:11,300 INFO: 188.252.198.78 - - [16/Jul/2024 20:25:11] "[36mGET /uploads/output_price_tag-5-removebg-preview.png HTTP/1.1[0m" 304 -
+2024-07-16 20:25:11,430 INFO: 188.252.198.78 - - [16/Jul/2024 20:25:11] "[36mGET /uploads/output_rainbow_palette-5-removebg-preview.png HTTP/1.1[0m" 304 -
+2024-07-16 20:25:11,498 INFO: 188.252.198.78 - - [16/Jul/2024 20:25:11] "[36mGET /uploads/output_various_photo_sizes-5-removebg-preview.png HTTP/1.1[0m" 304 -
+2024-07-16 20:25:11,546 INFO: 188.252.198.78 - - [16/Jul/2024 20:25:11] "[36mGET /uploads/output_ukraine_map-5-removebg-preview.png HTTP/1.1[0m" 304 -
+2024-07-16 20:25:11,563 INFO: 188.252.198.78 - - [16/Jul/2024 20:25:11] "GET /uploads/IMG_7739.jpg HTTP/1.1" 200 -
+2024-07-16 20:25:18,462 INFO: 188.252.198.78 - - [16/Jul/2024 20:25:18] "GET /complete_order_form HTTP/1.1" 200 -
+2024-07-16 20:25:18,881 INFO: 188.252.198.78 - - [16/Jul/2024 20:25:18] "[36mGET /uploads/output_rainbow_palette-5-removebg-preview.png HTTP/1.1[0m" 304 -
+2024-07-16 20:25:18,944 INFO: 188.252.198.78 - - [16/Jul/2024 20:25:18] "[36mGET /static/styles.css HTTP/1.1[0m" 304 -
+2024-07-16 20:25:18,948 INFO: 188.252.198.78 - - [16/Jul/2024 20:25:18] "[36mGET /uploads/output_ukraine_map-5-removebg-preview.png HTTP/1.1[0m" 304 -
+2024-07-16 20:25:18,948 INFO: 188.252.198.78 - - [16/Jul/2024 20:25:18] "[36mGET /uploads/output_various_photo_sizes-5-removebg-preview.png HTTP/1.1[0m" 304 -
+2024-07-16 20:25:18,955 INFO: 188.252.198.78 - - [16/Jul/2024 20:25:18] "[36mGET /uploads/output_polaroid_camera-5-removebg-preview.png HTTP/1.1[0m" 304 -
+2024-07-16 20:25:18,955 INFO: 188.252.198.78 - - [16/Jul/2024 20:25:18] "[36mGET /uploads/output_price_tag-5-removebg-preview.png HTTP/1.1[0m" 304 -
+2024-07-16 20:25:19,010 INFO: 188.252.198.78 - - [16/Jul/2024 20:25:19] "[36mGET /uploads/IMG_7739.jpg HTTP/1.1[0m" 304 -
+2024-07-16 20:25:19,076 INFO: 188.252.198.78 - - [16/Jul/2024 20:25:19] "[36mGET /uploads/photo_2024-07-13%2016.06.24.jpeg HTTP/1.1[0m" 304 -
+2024-07-16 20:25:19,084 INFO: 188.252.198.78 - - [16/Jul/2024 20:25:19] "[36mGET /uploads/photo_2024-07-09%2010.34.06.jpeg HTTP/1.1[0m" 304 -
+2024-07-16 20:25:19,086 INFO: 188.252.198.78 - - [16/Jul/2024 20:25:19] "[36mGET /uploads/photo_2024-07-09%2010.34.03.jpeg HTTP/1.1[0m" 304 -
+2024-07-16 20:25:19,099 INFO: 188.252.198.78 - - [16/Jul/2024 20:25:19] "[36mGET /uploads/photo_2024-07-09%2010.34.04.jpeg HTTP/1.1[0m" 304 -
+2024-07-16 20:25:19,100 INFO: 188.252.198.78 - - [16/Jul/2024 20:25:19] "[36mGET /uploads/photo_2024-07-09%2010.34.05.jpeg HTTP/1.1[0m" 304 -
+2024-07-16 20:25:24,357 DEBUG: Processing complete_order route
+2024-07-16 20:25:24,359 DEBUG: Order ID: 160720249
+2024-07-16 20:25:24,365 DEBUG: Archive created: archives/160720249.zip
+2024-07-16 20:25:24,366 DEBUG: Using selector: EpollSelector
+2024-07-16 20:25:24,367 DEBUG: load_ssl_context verify=True cert=None trust_env=True http2=False
+2024-07-16 20:25:24,367 DEBUG: load_verify_locations cafile='/home/ec2-user/.local/lib/python3.7/site-packages/certifi/cacert.pem'
+2024-07-16 20:25:24,375 DEBUG: load_ssl_context verify=True cert=None trust_env=True http2=False
+2024-07-16 20:25:24,375 DEBUG: load_verify_locations cafile='/home/ec2-user/.local/lib/python3.7/site-packages/certifi/cacert.pem'
+2024-07-16 20:25:24,383 DEBUG: Entering: send_message
+2024-07-16 20:25:24,390 DEBUG: connect_tcp.started host='api.telegram.org' port=443 local_address=None timeout=5.0 socket_options=None
+2024-07-16 20:25:24,418 DEBUG: connect_tcp.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x7fc6c0756f90>
+2024-07-16 20:25:24,419 DEBUG: start_tls.started ssl_context=<ssl.SSLContext object at 0x7fc6c11c32d0> server_hostname='api.telegram.org' timeout=5.0
+2024-07-16 20:25:24,471 DEBUG: start_tls.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x7fc6c07b48d0>
+2024-07-16 20:25:24,471 DEBUG: send_request_headers.started request=<Request [b'POST']>
+2024-07-16 20:25:24,472 DEBUG: send_request_headers.complete
+2024-07-16 20:25:24,472 DEBUG: send_request_body.started request=<Request [b'POST']>
+2024-07-16 20:25:24,472 DEBUG: send_request_body.complete
+2024-07-16 20:25:24,472 DEBUG: receive_response_headers.started request=<Request [b'POST']>
+2024-07-16 20:25:24,533 DEBUG: receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Server', b'nginx/1.18.0'), (b'Date', b'Tue, 16 Jul 2024 20:25:24 GMT'), (b'Content-Type', b'application/json'), (b'Content-Length', b'734'), (b'Connection', b'keep-alive'), (b'Strict-Transport-Security', b'max-age=31536000; includeSubDomains; preload'), (b'Access-Control-Allow-Origin', b'*'), (b'Access-Control-Allow-Methods', b'GET, POST, OPTIONS'), (b'Access-Control-Expose-Headers', b'Content-Length,Content-Type,Date,Server,Connection')])
+2024-07-16 20:25:24,534 INFO: HTTP Request: POST https://api.telegram.org/bot7410874657:AAHibMVweWuCPsDlghx64W6gKMHWoz7yTiM/sendMessage "HTTP/1.1 200 OK"
+2024-07-16 20:25:24,535 DEBUG: receive_response_body.started request=<Request [b'POST']>
+2024-07-16 20:25:24,556 DEBUG: receive_response_body.complete
+2024-07-16 20:25:24,557 DEBUG: response_closed.started
+2024-07-16 20:25:24,557 DEBUG: response_closed.complete
+2024-07-16 20:25:24,559 DEBUG: Message(api_kwargs={'link_preview_options': {'is_disabled': True}}, channel_chat_created=False, chat=Chat(id=-1002243134010, title='Moments Замовлення', type=<ChatType.SUPERGROUP>), date=datetime.datetime(2024, 7, 16, 20, 25, 24, tzinfo=datetime.timezone.utc), delete_chat_photo=False, entities=(MessageEntity(length=10, offset=48, type=<MessageEntityType.PHONE_NUMBER>), MessageEntity(length=84, offset=112, type=<MessageEntityType.URL>)), from_user=User(first_name='Moments', id=7410874657, is_bot=True, username='Momentslab_bot'), group_chat_created=False, message_id=8, supergroup_chat_created=False, text='New Order:\n    Name: Максим Богданов\n    Phone: 0994531636\n    City: Харьков\n    Post Office: 3245\n    Archive: http://ec2-13-60-99-164.eu-north-1.compute.amazonaws.com:5000/archives/160720249.zip')
+2024-07-16 20:25:24,560 DEBUG: Exiting: send_message
+2024-07-16 20:25:24,560 DEBUG: Message sent to Telegram chat -1002243134010
+2024-07-16 20:25:24,563 INFO: 188.252.198.78 - - [16/Jul/2024 20:25:24] "[32mPOST /complete_order HTTP/1.1[0m" 302 -
+2024-07-16 20:25:24,643 INFO: 188.252.198.78 - - [16/Jul/2024 20:25:24] "GET /confirmation?archive_name=160720249.zip HTTP/1.1" 200 -
+2024-07-16 20:25:25,112 INFO: 188.252.198.78 - - [16/Jul/2024 20:25:25] "[36mGET /static/styles.css HTTP/1.1[0m" 304 -
+2024-07-16 20:25:34,418 INFO: 188.252.198.78 - - [16/Jul/2024 20:25:34] "GET /confirmation?archive_name=160720249.zip HTTP/1.1" 200 -
+2024-07-16 20:25:34,858 INFO: 188.252.198.78 - - [16/Jul/2024 20:25:34] "[36mGET /static/styles.css HTTP/1.1[0m" 304 -
+2024-07-16 20:28:38,800 INFO: 188.252.198.78 - - [16/Jul/2024 20:28:38] "GET /archives/160720249.zip HTTP/1.1" 200 -
+2024-07-16 20:32:24,730 INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://172.31.34.215:5000
+2024-07-16 20:32:24,731 INFO: [33mPress CTRL+C to quit[0m
+2024-07-16 20:32:24,732 INFO:  * Restarting with stat
+2024-07-16 20:32:25,155 WARNING:  * Debugger is active!
+2024-07-16 20:32:25,156 INFO:  * Debugger PIN: 137-796-129
+2024-07-16 20:32:30,221 INFO: 188.252.198.78 - - [16/Jul/2024 20:32:30] "GET /confirmation?archive_name=160720249.zip HTTP/1.1" 200 -
+2024-07-16 20:32:30,638 INFO: 188.252.198.78 - - [16/Jul/2024 20:32:30] "[36mGET /static/styles.css HTTP/1.1[0m" 304 -
+2024-07-16 20:32:36,501 INFO: 188.252.198.78 - - [16/Jul/2024 20:32:36] "GET / HTTP/1.1" 200 -
+2024-07-16 20:32:36,976 INFO: 188.252.198.78 - - [16/Jul/2024 20:32:36] "[36mGET /static/styles.css HTTP/1.1[0m" 304 -
+2024-07-16 20:32:43,311 INFO: 188.252.198.78 - - [16/Jul/2024 20:32:43] "[32mPOST /add_order HTTP/1.1[0m" 302 -
+2024-07-16 20:32:43,452 INFO: 188.252.198.78 - - [16/Jul/2024 20:32:43] "GET /order_summary HTTP/1.1" 200 -
+2024-07-16 20:32:43,588 INFO: 188.252.198.78 - - [16/Jul/2024 20:32:43] "GET /order_summary HTTP/1.1" 200 -
+2024-07-16 20:32:44,006 INFO: 188.252.198.78 - - [16/Jul/2024 20:32:44] "[36mGET /static/styles.css HTTP/1.1[0m" 304 -
+2024-07-16 20:32:44,068 INFO: 188.252.198.78 - - [16/Jul/2024 20:32:44] "GET /uploads/output_price_tag-5-removebg-preview.png HTTP/1.1" 200 -
+2024-07-16 20:32:44,070 INFO: 188.252.198.78 - - [16/Jul/2024 20:32:44] "GET /uploads/output_rainbow_palette-5-removebg-preview.png HTTP/1.1" 200 -
+2024-07-16 20:32:44,141 INFO: 188.252.198.78 - - [16/Jul/2024 20:32:44] "GET /uploads/output_ukraine_map-5-removebg-preview.png HTTP/1.1" 200 -
+2024-07-16 20:32:44,142 INFO: 188.252.198.78 - - [16/Jul/2024 20:32:44] "GET /uploads/output_various_photo_sizes-5-removebg-preview.png HTTP/1.1" 200 -
+2024-07-16 20:32:45,228 INFO: 188.252.198.78 - - [16/Jul/2024 20:32:45] "GET /complete_order_form HTTP/1.1" 200 -
+2024-07-16 20:32:45,652 INFO: 188.252.198.78 - - [16/Jul/2024 20:32:45] "[36mGET /static/styles.css HTTP/1.1[0m" 304 -
+2024-07-16 20:32:45,719 INFO: 188.252.198.78 - - [16/Jul/2024 20:32:45] "[36mGET /uploads/output_price_tag-5-removebg-preview.png HTTP/1.1[0m" 304 -
+2024-07-16 20:32:45,722 INFO: 188.252.198.78 - - [16/Jul/2024 20:32:45] "[36mGET /uploads/output_rainbow_palette-5-removebg-preview.png HTTP/1.1[0m" 304 -
+2024-07-16 20:32:45,723 INFO: 188.252.198.78 - - [16/Jul/2024 20:32:45] "[36mGET /uploads/output_various_photo_sizes-5-removebg-preview.png HTTP/1.1[0m" 304 -
+2024-07-16 20:32:45,726 INFO: 188.252.198.78 - - [16/Jul/2024 20:32:45] "[36mGET /uploads/output_ukraine_map-5-removebg-preview.png HTTP/1.1[0m" 304 -
+2024-07-16 20:32:48,675 DEBUG: Processing complete_order route
+2024-07-16 20:32:48,677 DEBUG: Order ID: 1607202410
+2024-07-16 20:32:48,678 DEBUG: Archive created: archives/1607202410.zip
+2024-07-16 20:32:48,679 INFO: 188.252.198.78 - - [16/Jul/2024 20:32:48] "[32mPOST /complete_order HTTP/1.1[0m" 302 -
+2024-07-16 20:32:48,750 INFO: 188.252.198.78 - - [16/Jul/2024 20:32:48] "GET /confirmation?archive_name=1607202410.zip HTTP/1.1" 200 -
+2024-07-16 20:32:49,229 INFO: 188.252.198.78 - - [16/Jul/2024 20:32:49] "[36mGET /static/styles.css HTTP/1.1[0m" 304 -
+2024-07-16 20:32:49,234 INFO: 188.252.198.78 - - [16/Jul/2024 20:32:49] "[36mGET /uploads/output_price_tag-5-removebg-preview.png HTTP/1.1[0m" 304 -
+2024-07-16 20:32:49,242 INFO: 188.252.198.78 - - [16/Jul/2024 20:32:49] "[36mGET /uploads/output_rainbow_palette-5-removebg-preview.png HTTP/1.1[0m" 304 -
+2024-07-16 20:32:49,364 INFO: 188.252.198.78 - - [16/Jul/2024 20:32:49] "[36mGET /uploads/output_various_photo_sizes-5-removebg-preview.png HTTP/1.1[0m" 304 -
+2024-07-16 20:32:49,368 INFO: 188.252.198.78 - - [16/Jul/2024 20:32:49] "[36mGET /uploads/output_ukraine_map-5-removebg-preview.png HTTP/1.1[0m" 304 -
+2024-07-16 20:35:15,951 INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://172.31.34.215:5000
+2024-07-16 20:35:15,951 INFO: [33mPress CTRL+C to quit[0m
+2024-07-16 20:35:15,953 INFO:  * Restarting with stat
+2024-07-16 20:35:16,404 WARNING:  * Debugger is active!
+2024-07-16 20:35:16,405 INFO:  * Debugger PIN: 137-796-129
+2024-07-16 20:35:18,008 INFO: 188.252.198.78 - - [16/Jul/2024 20:35:18] "GET /confirmation?archive_name=1607202410.zip HTTP/1.1" 200 -
+2024-07-16 20:35:18,424 INFO: 188.252.198.78 - - [16/Jul/2024 20:35:18] "[36mGET /uploads/output_rainbow_palette-5-removebg-preview.png HTTP/1.1[0m" 304 -
+2024-07-16 20:35:18,493 INFO: 188.252.198.78 - - [16/Jul/2024 20:35:18] "[36mGET /static/styles.css HTTP/1.1[0m" 304 -
+2024-07-16 20:35:18,494 INFO: 188.252.198.78 - - [16/Jul/2024 20:35:18] "[36mGET /uploads/output_price_tag-5-removebg-preview.png HTTP/1.1[0m" 304 -
+2024-07-16 20:35:18,556 INFO: 188.252.198.78 - - [16/Jul/2024 20:35:18] "[36mGET /uploads/output_various_photo_sizes-5-removebg-preview.png HTTP/1.1[0m" 304 -
+2024-07-16 20:35:18,622 INFO: 188.252.198.78 - - [16/Jul/2024 20:35:18] "[36mGET /uploads/output_ukraine_map-5-removebg-preview.png HTTP/1.1[0m" 304 -
+2024-07-16 20:35:47,307 INFO: 188.252.198.78 - - [16/Jul/2024 20:35:47] "GET / HTTP/1.1" 200 -
+2024-07-16 20:35:47,782 INFO: 188.252.198.78 - - [16/Jul/2024 20:35:47] "[36mGET /static/styles.css HTTP/1.1[0m" 304 -
+2024-07-16 20:35:47,785 INFO: 188.252.198.78 - - [16/Jul/2024 20:35:47] "[36mGET /uploads/output_price_tag-5-removebg-preview.png HTTP/1.1[0m" 304 -
+2024-07-16 20:35:47,788 INFO: 188.252.198.78 - - [16/Jul/2024 20:35:47] "[36mGET /uploads/output_rainbow_palette-5-removebg-preview.png HTTP/1.1[0m" 304 -
+2024-07-16 20:35:47,916 INFO: 188.252.198.78 - - [16/Jul/2024 20:35:47] "[36mGET /uploads/output_various_photo_sizes-5-removebg-preview.png HTTP/1.1[0m" 304 -
+2024-07-16 20:35:47,918 INFO: 188.252.198.78 - - [16/Jul/2024 20:35:47] "[36mGET /uploads/output_ukraine_map-5-removebg-preview.png HTTP/1.1[0m" 304 -
+2024-07-16 20:35:52,048 INFO: 188.252.198.78 - - [16/Jul/2024 20:35:52] "GET / HTTP/1.1" 200 -
+2024-07-16 20:35:52,520 INFO: 188.252.198.78 - - [16/Jul/2024 20:35:52] "[36mGET /static/styles.css HTTP/1.1[0m" 304 -
+2024-07-16 20:35:52,522 INFO: 188.252.198.78 - - [16/Jul/2024 20:35:52] "[36mGET /uploads/output_price_tag-5-removebg-preview.png HTTP/1.1[0m" 304 -
+2024-07-16 20:35:52,523 INFO: 188.252.198.78 - - [16/Jul/2024 20:35:52] "[36mGET /uploads/output_rainbow_palette-5-removebg-preview.png HTTP/1.1[0m" 304 -
+2024-07-16 20:35:52,652 INFO: 188.252.198.78 - - [16/Jul/2024 20:35:52] "[36mGET /uploads/output_various_photo_sizes-5-removebg-preview.png HTTP/1.1[0m" 304 -
+2024-07-16 20:35:52,656 INFO: 188.252.198.78 - - [16/Jul/2024 20:35:52] "[36mGET /uploads/output_ukraine_map-5-removebg-preview.png HTTP/1.1[0m" 304 -
+2024-07-16 20:36:01,304 INFO: 188.252.198.78 - - [16/Jul/2024 20:36:01] "GET /order_summary HTTP/1.1" 200 -
+2024-07-16 20:36:01,728 INFO: 188.252.198.78 - - [16/Jul/2024 20:36:01] "[36mGET /uploads/output_price_tag-5-removebg-preview.png HTTP/1.1[0m" 304 -
+2024-07-16 20:36:01,790 INFO: 188.252.198.78 - - [16/Jul/2024 20:36:01] "[36mGET /static/styles.css HTTP/1.1[0m" 304 -
+2024-07-16 20:36:01,798 INFO: 188.252.198.78 - - [16/Jul/2024 20:36:01] "[36mGET /uploads/output_ukraine_map-5-removebg-preview.png HTTP/1.1[0m" 304 -
+2024-07-16 20:36:01,800 INFO: 188.252.198.78 - - [16/Jul/2024 20:36:01] "[36mGET /uploads/output_rainbow_palette-5-removebg-preview.png HTTP/1.1[0m" 304 -
+2024-07-16 20:36:01,801 INFO: 188.252.198.78 - - [16/Jul/2024 20:36:01] "[36mGET /uploads/output_various_photo_sizes-5-removebg-preview.png HTTP/1.1[0m" 304 -
+2024-07-16 20:36:02,915 INFO: 188.252.198.78 - - [16/Jul/2024 20:36:02] "[32mPOST /clear_all HTTP/1.1[0m" 302 -
+2024-07-16 20:36:03,055 INFO: 188.252.198.78 - - [16/Jul/2024 20:36:03] "GET / HTTP/1.1" 200 -
+2024-07-16 20:36:03,226 INFO: 188.252.198.78 - - [16/Jul/2024 20:36:03] "GET / HTTP/1.1" 200 -
+2024-07-16 20:36:03,636 INFO: 188.252.198.78 - - [16/Jul/2024 20:36:03] "[36mGET /static/styles.css HTTP/1.1[0m" 304 -
+2024-07-16 20:36:09,947 INFO: 188.252.198.78 - - [16/Jul/2024 20:36:09] "[32mPOST /add_order HTTP/1.1[0m" 302 -
+2024-07-16 20:36:10,081 INFO: 188.252.198.78 - - [16/Jul/2024 20:36:10] "GET /order_summary HTTP/1.1" 200 -
+2024-07-16 20:36:10,239 INFO: 188.252.198.78 - - [16/Jul/2024 20:36:10] "GET /order_summary HTTP/1.1" 200 -
+2024-07-16 20:36:10,652 INFO: 188.252.198.78 - - [16/Jul/2024 20:36:10] "GET /uploads/output_price_tag-5-removebg-preview.png HTTP/1.1" 200 -
+2024-07-16 20:36:10,721 INFO: 188.252.198.78 - - [16/Jul/2024 20:36:10] "[36mGET /static/styles.css HTTP/1.1[0m" 304 -
+2024-07-16 20:36:10,722 INFO: 188.252.198.78 - - [16/Jul/2024 20:36:10] "GET /uploads/output_polaroid_camera-5-removebg-preview.png HTTP/1.1" 200 -
+2024-07-16 20:36:10,855 INFO: 188.252.198.78 - - [16/Jul/2024 20:36:10] "GET /uploads/output_rainbow_palette-5-removebg-preview.png HTTP/1.1" 200 -
+2024-07-16 20:36:10,856 INFO: 188.252.198.78 - - [16/Jul/2024 20:36:10] "GET /uploads/output_various_photo_sizes-5-removebg-preview.png HTTP/1.1" 200 -
+2024-07-16 20:36:10,857 INFO: 188.252.198.78 - - [16/Jul/2024 20:36:10] "GET /uploads/output_ukraine_map-5-removebg-preview.png HTTP/1.1" 200 -
+2024-07-16 20:36:12,386 INFO: 188.252.198.78 - - [16/Jul/2024 20:36:12] "GET /complete_order_form HTTP/1.1" 200 -
+2024-07-16 20:36:12,810 INFO: 188.252.198.78 - - [16/Jul/2024 20:36:12] "[36mGET /static/styles.css HTTP/1.1[0m" 304 -
+2024-07-16 20:36:12,879 INFO: 188.252.198.78 - - [16/Jul/2024 20:36:12] "[36mGET /uploads/output_polaroid_camera-5-removebg-preview.png HTTP/1.1[0m" 304 -
+2024-07-16 20:36:12,881 INFO: 188.252.198.78 - - [16/Jul/2024 20:36:12] "[36mGET /uploads/output_rainbow_palette-5-removebg-preview.png HTTP/1.1[0m" 304 -
+2024-07-16 20:36:12,882 INFO: 188.252.198.78 - - [16/Jul/2024 20:36:12] "[36mGET /uploads/output_ukraine_map-5-removebg-preview.png HTTP/1.1[0m" 304 -
+2024-07-16 20:36:12,885 INFO: 188.252.198.78 - - [16/Jul/2024 20:36:12] "[36mGET /uploads/output_price_tag-5-removebg-preview.png HTTP/1.1[0m" 304 -
+2024-07-16 20:36:12,885 INFO: 188.252.198.78 - - [16/Jul/2024 20:36:12] "[36mGET /uploads/output_various_photo_sizes-5-removebg-preview.png HTTP/1.1[0m" 304 -
+2024-07-16 20:36:17,253 DEBUG: Processing complete_order route
+2024-07-16 20:36:17,255 DEBUG: Order ID: 1607202411
+2024-07-16 20:36:17,257 DEBUG: Archive created: archives/1607202411.zip
+2024-07-16 20:36:17,258 INFO: 188.252.198.78 - - [16/Jul/2024 20:36:17] "[32mPOST /complete_order HTTP/1.1[0m" 302 -
+2024-07-16 20:36:17,328 INFO: 188.252.198.78 - - [16/Jul/2024 20:36:17] "GET /confirmation?archive_name=1607202411.zip HTTP/1.1" 200 -
+2024-07-16 20:36:17,815 INFO: 188.252.198.78 - - [16/Jul/2024 20:36:17] "[36mGET /static/styles.css HTTP/1.1[0m" 304 -
+2024-07-16 20:36:17,821 INFO: 188.252.198.78 - - [16/Jul/2024 20:36:17] "[36mGET /uploads/output_price_tag-5-removebg-preview.png HTTP/1.1[0m" 304 -
+2024-07-16 20:36:17,823 INFO: 188.252.198.78 - - [16/Jul/2024 20:36:17] "[36mGET /uploads/output_polaroid_camera-5-removebg-preview.png HTTP/1.1[0m" 304 -
+2024-07-16 20:36:17,950 INFO: 188.252.198.78 - - [16/Jul/2024 20:36:17] "[36mGET /uploads/output_rainbow_palette-5-removebg-preview.png HTTP/1.1[0m" 304 -
+2024-07-16 20:36:17,957 INFO: 188.252.198.78 - - [16/Jul/2024 20:36:17] "[36mGET /uploads/output_various_photo_sizes-5-removebg-preview.png HTTP/1.1[0m" 304 -
+2024-07-16 20:36:17,960 INFO: 188.252.198.78 - - [16/Jul/2024 20:36:17] "[36mGET /uploads/output_ukraine_map-5-removebg-preview.png HTTP/1.1[0m" 304 -
