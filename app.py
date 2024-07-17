@@ -177,7 +177,7 @@ def remove_photo():
     try:
         order_index = int(request.form['order_index'])
         photo_index = int(request.form['photo_index'])
-        
+
         if 0 <= order_index < len(session['orders']):
             if 0 <= photo_index < len(session['orders'][order_index]['photos']):
                 session['orders'][order_index]['photos'].pop(photo_index)
