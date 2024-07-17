@@ -181,8 +181,11 @@ def remove_photo():
         if 0 <= order_index < len(session['orders']):
             if 0 <= photo_index < len(session['orders'][order_index]['photos']):
                 session['orders'][order_index]['photos'].pop(photo_index)
+                # Check if the order list is empty and remove the order if it is
+                if len(session['orders'][order_index]['photos']) == 0:
+                    session['orders'].pop(order_index)
                 session.modified = True
-                return jsonify({'success': True, 'order': session['orders'][order_index]})
+                return jsonify({'success': True, 'redirect': url_for('index') if not session['orders'] else None})
         return jsonify({'success': False, 'error': 'Invalid index'})
     except Exception as e:
         logging.error(f"Error in remove_photo route: {e}")
