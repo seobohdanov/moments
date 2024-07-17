@@ -7,6 +7,7 @@
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const clearAllButton = document.getElementById('clear-all-button');
+            attachRemovePhotoListeners();
 
             clearAllButton.addEventListener('click', function () {
                 fetch("{{ url_for('clear_all') }}", {
@@ -34,28 +35,30 @@
                     body: `order_index=${orderIndex}&photo_index=${photoIndex}`
                 }).then(response => response.json()).then(data => {
                     if (data.success) {
-                        updateOrderList();
+                        const photoItem = document.querySelector(`#order-${orderIndex} .photo-item[data-photo-index="${photoIndex}"]`);
+                        photoItem.parentNode.removeChild(photoItem);
+
+                        // Check if the order list is empty and update buttons accordingly
+                        const orderList = document.querySelector(`#order-${orderIndex} .photo-list`);
+                        if (orderList.children.length === 0) {
+                            const orderElement = document.getElementById(`order-${orderIndex}`);
+                            orderElement.parentNode.removeChild(orderElement);
+
+                            if (document.querySelectorAll('.order-list .photo-list').length === 0) {
+                                window.location.href = "{{ url_for('index') }}";
+                            }
+                        } else {
+                            // Update data-photo-index for remaining photos
+                            orderList.querySelectorAll('.photo-item').forEach((item, newIndex) => {
+                                item.setAttribute('data-photo-index', newIndex);
+                            });
+                        }
                     } else {
                         console.error(data.error);
                     }
                 }).catch(error => {
                     console.error('Error:', error);
                 });
-            }
-
-            function updateOrderList() {
-                fetch("{{ url_for('order_summary') }}")
-                    .then(response => response.text())
-                    .then(html => {
-                        const parser = new DOMParser();
-                        const doc = parser.parseFromString(html, 'text/html');
-                        const newOrdersContainer = doc.querySelector('#orders-container');
-                        document.querySelector('#orders-container').innerHTML = newOrdersContainer.innerHTML;
-                        attachRemovePhotoListeners();
-                    })
-                    .catch(error => {
-                        console.error('Error:', error);
-                    });
             }
 
             function attachRemovePhotoListeners() {
@@ -68,8 +71,6 @@
                     });
                 });
             }
-
-            attachRemovePhotoListeners();
         });
     </script>
 </head>
