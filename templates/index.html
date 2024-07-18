@@ -177,24 +177,11 @@
                         // Update data-photo-index for remaining photos
                         orderList.querySelectorAll('.photo-item').forEach((item, index) => {
                             item.setAttribute('data-photo-index', index);
-                            item.querySelector('.remove-photo').setAttribute('data-photo-index', index);
                         });
 
                         // Check if there are no photos left and update buttons accordingly
                         if (orderList.children.length === 0) {
-                            const orderElement = document.getElementById(`order-${orderIndex}`);
-                            if (orderElement) {
-                                orderElement.parentNode.removeChild(orderElement);
-                            }
-
-                            // Update data-order-index for remaining orders
-                            document.querySelectorAll('.order-list > li').forEach((orderElement, newIndex) => {
-                                orderElement.id = `order-${newIndex}`;
-                                orderElement.querySelectorAll('.remove-photo').forEach(button => {
-                                    button.setAttribute('data-order-index', newIndex);
-                                });
-                            });
-
+                            document.getElementById(`order-${orderIndex}`).remove();
                             if (document.querySelectorAll('.order-list .photo-list').length === 0) {
                                 window.location.href = "{{ url_for('index') }}";
                             }
@@ -205,21 +192,6 @@
                     }
                 }).catch(error => {
                     console.error('Error:', error);
-                });
-            }
-
-            // Attach remove photo listeners for initial load
-            attachRemovePhotoListeners();
-
-            function attachRemovePhotoListeners() {
-                const removeButtons = document.querySelectorAll('.remove-photo');
-                removeButtons.forEach(button => {
-                    button.addEventListener('click', function () {
-                        const orderIndex = button.dataset.orderIndex;
-                        const photoIndex = button.dataset.photoIndex;
-                        console.log(`Removing photo ${photoIndex} from order ${orderIndex}`);
-                        removePhoto(orderIndex, photoIndex);
-                    });
                 });
             }
         });
@@ -246,7 +218,7 @@
                 <label for="paper-type">Paper Type:</label>
                 <input type="radio" id="matte" name="paper_type" value="matte">
                 <label for="matte">Matte</label>
-                                <input type="radio" id="glossy" name="paper_type" value="glossy" checked>
+                <input type="radio" id="glossy" name="paper_type" value="glossy" checked>
                 <label for="glossy">Glossy</label>
             </div>
             <div class="form-group">
@@ -257,13 +229,13 @@
                 </div>
                 <div class="preview"></div>
             </div>
-            <div class="form-group">
-                <div id="progress-bar" class="progress-bar"></div>
-            </div>
             <div class="button-group">
                 <button type="submit" id="submit-button" class="btn btn-primary">Add to Order</button>
                 <button type="button" id="clear-all-button" class="btn btn-danger" style="display:none;">Clear All</button>
-                <button type="button" id="skip-button" class="btn btn-secondary" style="display:none;" onclick="window.location.href='{{ url_for('order_summary') }}'">Skip to Order Summary</button>
+                <button type="button" id="skip-button" class="btn btn-secondary" style="display:none;" onclick="                    window.location.href='{{ url_for('order_summary') }}'">Skip to Order Summary</button>
+            </div>
+            <div class="form-group">
+                <div id="progress-bar" class="progress-bar"></div>
             </div>
             <p id="error-message" style="color: red;"></p>
         </form>
