@@ -61,7 +61,7 @@
                             console.error(`Photo item not found for order ${orderIndex} and photo ${photoIndex}`);
                         }
                     } else {
-                        console.error(data.error);
+                        console.error(`Error from server: ${data.error}`);
                     }
                 }).catch(error => {
                     console.error('Error:', error);
