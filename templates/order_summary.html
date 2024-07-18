@@ -36,22 +36,26 @@
                 }).then(response => response.json()).then(data => {
                     if (data.success) {
                         const photoItem = document.querySelector(`#order-${orderIndex} .photo-item[data-photo-index="${photoIndex}"]`);
-                        photoItem.parentNode.removeChild(photoItem);
+                        if (photoItem) {
+                            photoItem.parentNode.removeChild(photoItem);
 
-                        // Check if the order list is empty and update buttons accordingly
-                        const orderList = document.querySelector(`#order-${orderIndex} .photo-list`);
-                        if (orderList.children.length === 0) {
-                            const orderElement = document.getElementById(`order-${orderIndex}`);
-                            orderElement.parentNode.removeChild(orderElement);
+                            // Check if the order list is empty and update buttons accordingly
+                            const orderList = document.querySelector(`#order-${orderIndex} .photo-list`);
+                            if (orderList.children.length === 0) {
+                                const orderElement = document.getElementById(`order-${orderIndex}`);
+                                if (orderElement) {
+                                    orderElement.parentNode.removeChild(orderElement);
+                                }
 
-                            if (document.querySelectorAll('.order-list .photo-list').length === 0) {
-                                window.location.href = "{{ url_for('index') }}";
+                                if (document.querySelectorAll('.order-list .photo-list').length === 0) {
+                                    window.location.href = "{{ url_for('index') }}";
+                                }
+                            } else {
+                                // Update data-photo-index for remaining photos
+                                orderList.querySelectorAll('.photo-item').forEach((item, newIndex) => {
+                                    item.setAttribute('data-photo-index', newIndex);
+                                });
                             }
-                        } else {
-                            // Update data-photo-index for remaining photos
-                            orderList.querySelectorAll('.photo-item').forEach((item, newIndex) => {
-                                item.setAttribute('data-photo-index', newIndex);
-                            });
                         }
                     } else {
                         console.error(data.error);
@@ -67,6 +71,7 @@
                     button.addEventListener('click', function () {
                         const orderIndex = button.dataset.orderIndex;
                         const photoIndex = button.dataset.photoIndex;
+                        console.log(`Removing photo ${photoIndex} from order ${orderIndex}`);
                         removePhoto(orderIndex, photoIndex);
                     });
                 });
