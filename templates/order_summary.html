@@ -27,6 +27,7 @@
             });
 
             function removePhoto(orderIndex, photoIndex) {
+                console.log(`Attempting to remove photo ${photoIndex} from order ${orderIndex}`);
                 fetch("{{ url_for('remove_photo') }}", {
                     method: "POST",
                     headers: {
@@ -56,6 +57,8 @@
                                     item.setAttribute('data-photo-index', newIndex);
                                 });
                             }
+                        } else {
+                            console.error(`Photo item not found for order ${orderIndex} and photo ${photoIndex}`);
                         }
                     } else {
                         console.error(data.error);
