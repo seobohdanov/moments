@@ -173,6 +173,11 @@ h3 {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
+.photo-preview {
+    width: 100px; /* Размер превью, можно изменить */
+    height: auto;
+}
+
 .remove-photo {
     position: absolute;
     top: 5px;
@@ -187,11 +192,6 @@ h3 {
     text-align: center;
     line-height: 20px;
     font-size: 12px;
-}
-
-.photo-preview {
-    width: 100px; /* или нужный вам размер */
-    height: auto;
 }
 
 /* Drag and Drop */
