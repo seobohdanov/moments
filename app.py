@@ -178,14 +178,24 @@ def remove_photo():
         order_index = int(request.form['order_index'])
         photo_index = int(request.form['photo_index'])
         
+        logging.debug(f"Received request to remove photo. order_index={order_index}, photo_index={photo_index}")
+        logging.debug(f"Current orders: {session['orders']}")
+
         if 0 <= order_index < len(session['orders']):
             if 0 <= photo_index < len(session['orders'][order_index]['photos']):
+                logging.debug(f"Removing photo at index {photo_index} from order {order_index}")
                 session['orders'][order_index]['photos'].pop(photo_index)
                 # Check if the order list is empty and remove the order if it is
                 if len(session['orders'][order_index]['photos']) == 0:
                     session['orders'].pop(order_index)
                 session.modified = True
+                logging.debug(f"Updated orders: {session['orders']}")
                 return jsonify({'success': True, 'redirect': url_for('index') if not session['orders'] else None})
+            else:
+                logging.error(f"Invalid photo_index: {photo_index} for order_index: {order_index}")
+        else:
+            logging.error(f"Invalid order_index: {order_index}")
+
         return jsonify({'success': False, 'error': f'Invalid index: order_index={order_index}, photo_index={photo_index}'})
     except Exception as e:
         logging.error(f"Error in remove_photo route: {e}")
