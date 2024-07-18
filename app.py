@@ -17,6 +17,17 @@ if not os.path.exists(app.config['UPLOAD_FOLDER']):
     os.makedirs(app.config['UPLOAD_FOLDER'])
 if not os.path.exists(app.config['ARCHIVE_FOLDER']):
     os.makedirs(app.config['ARCHIVE_FOLDER'])
+if not os.path.exists('logs'):
+    os.makedirs('logs')
+
+# Настройка логирования
+file_handler = RotatingFileHandler('logs/app.log', maxBytes=10240, backupCount=10)
+file_handler.setFormatter(logging.Formatter('%(asctime)s %(levelname)s: %(message)s [in %(pathname)s:%(lineno)d]'))
+file_handler.setLevel(logging.DEBUG)
+
+app.logger.addHandler(file_handler)
+app.logger.setLevel(logging.DEBUG)
+app.logger.info('App startup')
 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in app.config['ALLOWED_EXTENSIONS']
@@ -36,7 +47,7 @@ def index():
         total_photos = sum(len(order['photos']) for order in orders)
         return render_template('index.html', orders=orders, total_photos=total_photos)
     except Exception as e:
-        logging.error(f"Error in index route: {e}")
+        app.logger.error(f"Error in index route: {e}")
         return "An error occurred. Check logs for details.", 500
 
 @app.route('/add_order', methods=['POST'])
@@ -65,7 +76,7 @@ def add_order():
 
         return redirect(url_for('order_summary'))
     except Exception as e:
-        logging.error(f"Error in add_order route: {e}")
+        app.logger.error(f"Error in add_order route: {e}")
         return "An error occurred. Check logs for details.", 500
 
 @app.route('/order_summary')
@@ -74,7 +85,7 @@ def order_summary():
         orders = session.get('orders', [])
         return render_template('order_summary.html', orders=orders)
     except Exception as e:
-        logging.error(f"Error in order_summary route: {e}")
+        app.logger.error(f"Error in order_summary route: {e}")
         return "An error occurred. Check logs for details.", 500
 
 @app.route('/complete_order_form')
@@ -83,7 +94,7 @@ def complete_order_form():
         orders = session.get('orders', [])
         return render_template('complete_order_form.html', orders=orders)
     except Exception as e:
-        logging.error(f"Error in complete_order_form route: {e}")
+        app.logger.error(f"Error in complete_order_form route: {e}")
         return "An error occurred. Check logs for details.", 500
 
 @app.route('/complete_order', methods=['POST'])
@@ -104,7 +115,7 @@ def complete_order():
         
         return redirect(url_for('confirmation', archive_name=archive_name))
     except Exception as e:
-        logging.error(f"Error in complete_order route: {e}")
+        app.logger.error(f"Error in complete_order route: {e}")
         return "An error occurred. Check logs for details.", 500
 
 @app.route('/confirmation')
@@ -116,7 +127,7 @@ def confirmation():
         total_photos = sum(len(order['photos']) for order in orders)
         return render_template('confirmation.html', user_info=user_info, archive_name=archive_name, orders=orders, total_photos=total_photos)
     except Exception as e:
-        logging.error(f"Error in confirmation route: {e}")
+        app.logger.error(f"Error in confirmation route: {e}")
         return "An error occurred. Check logs for details.", 500
 
 def create_order_archive(user_info, orders):
@@ -132,7 +143,7 @@ def create_order_archive(user_info, orders):
                     archive.write(photo_path, os.path.join(folder_name, photo))
         return archive_name
     except Exception as e:
-        logging.error(f"Error in create_order_archive function: {e}")
+        app.logger.error(f"Error in create_order_archive function: {e}")
         raise
 
 def send_order_to_telegram(user_info, archive_name):
@@ -154,14 +165,14 @@ def send_order_to_telegram(user_info, archive_name):
             'disable_web_page_preview': True
         })
     except Exception as e:
-        logging.error(f"Failed to send message to Telegram: {e}")
+        app.logger.error(f"Failed to send message to Telegram: {e}")
 
 @app.route('/uploads/<filename>')
 def uploaded_file(filename):
     try:
         return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
     except Exception as e:
-        logging.error(f"Error in uploaded_file route: {e}")
+        app.logger.error(f"Error in uploaded_file route: {e}")
         return "An error occurred. Check logs for details.", 500
 
 @app.route('/archives/<filename>')
@@ -169,7 +180,7 @@ def download_archive(filename):
     try:
         return send_from_directory(app.config['ARCHIVE_FOLDER'], filename)
     except Exception as e:
-        logging.error(f"Error in download_archive route: {e}")
+        app.logger.error(f"Error in download_archive route: {e}")
         return "An error occurred. Check logs for details.", 500
 
 @app.route('/remove_photo', methods=['POST'])
@@ -178,29 +189,29 @@ def remove_photo():
         order_index = int(request.form['order_index'])
         photo_index = int(request.form['photo_index'])
 
-        logging.debug(f"Received request to remove photo. order_index={order_index}, photo_index={photo_index}")
-        logging.debug(f"Current orders: {session['orders']}")
+        app.logger.debug(f"Received request to remove photo. order_index={order_index}, photo_index={photo_index}")
+        app.logger.debug(f"Current orders: {session['orders']}")
 
         if 0 <= order_index < len(session['orders']):
             if 0 <= photo_index < len(session['orders'][order_index]['photos']):
-                logging.debug(f"Removing photo at index {photo_index} from order {order_index}")
+                app.logger.debug(f"Removing photo at index {photo_index} from order {order_index}")
                 session['orders'][order_index]['photos'].pop(photo_index)
                 # Check if the order list is empty and remove the order if it is
                 if len(session['orders'][order_index]['photos']) == 0:
                     session['orders'].pop(order_index)
                 session.modified = True
-                logging.debug(f"Updated orders: {session['orders']}")
+                app.logger.debug(f"Updated orders: {session['orders']}")
                 return jsonify({'success': True, 'redirect': url_for('index') if not session['orders'] else None})
             else:
-                logging.error(f"Invalid photo_index: {photo_index} for order_index: {order_index}. Photos in order: {session['orders'][order_index]['photos']}")
+                app.logger.error(f"Invalid photo_index: {photo_index} for order_index: {order_index}. Photos in order: {session['orders'][order_index]['photos']}")
         else:
-            logging.error(f"Invalid order_index: {order_index}")
+                        app.logger.error(f"Invalid order_index: {order_index}")
 
         return jsonify({'success': False, 'error': f'Invalid index: order_index={order_index}, photo_index={photo_index}'})
     except Exception as e:
-        logging.error(f"Error in remove_photo route: {e}")
+        app.logger.error(f"Error in remove_photo route: {e}")
         return jsonify({'success': False, 'error': 'An error occurred. Check logs for details.'})
-        
+
 @app.route('/clear_all', methods=['POST'])
 def clear_all():
     try:
@@ -208,7 +219,7 @@ def clear_all():
         session.modified = True
         return jsonify({'success': True, 'redirect': url_for('index')})
     except Exception as e:
-        logging.error(f"Error in clear_all route: {e}")
+        app.logger.error(f"Error in clear_all route: {e}")
         return jsonify({'success': False, 'error': 'An error occurred. Check logs for details.'})
 
 if __name__ == '__main__':
