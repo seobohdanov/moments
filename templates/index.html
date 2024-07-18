@@ -58,7 +58,6 @@
                             const div = document.createElement('div');
                             div.classList.add('photo-container');
                             const image = new Image();
-                            image.height = 100;
                             image.title = file.name;
                             image.src = reader.result;
 
@@ -245,9 +244,9 @@
             </div>
             <div class="form-group">
                 <label for="paper-type">Paper Type:</label>
-                                <input type="radio" id="matte" name="paper_type" value="matte">
+                <input type="radio" id="matte" name="paper_type" value="matte">
                 <label for="matte">Matte</label>
-                <input type="radio" id="glossy" name="paper_type" value="glossy" checked>
+                                <input type="radio" id="glossy" name="paper_type" value="glossy" checked>
                 <label for="glossy">Glossy</label>
             </div>
             <div class="form-group">
@@ -261,9 +260,11 @@
             <div class="form-group">
                 <div id="progress-bar" class="progress-bar"></div>
             </div>
-            <button type="submit" id="submit-button" class="btn btn-primary">Add to Order</button>
-            <button type="button" id="clear-all-button" class="btn btn-danger" style="display:none;">Clear All</button>
-            <button type="button" id="skip-button" class="btn btn-secondary" style="display:none;" onclick="window.location.href='{{ url_for('order_summary') }}'">Skip to Order Summary</button>
+            <div class="button-group">
+                <button type="submit" id="submit-button" class="btn btn-primary">Add to Order</button>
+                <button type="button" id="clear-all-button" class="btn btn-danger" style="display:none;">Clear All</button>
+                <button type="button" id="skip-button" class="btn btn-secondary" style="display:none;" onclick="window.location.href='{{ url_for('order_summary') }}'">Skip to Order Summary</button>
+            </div>
             <p id="error-message" style="color: red;"></p>
         </form>
         <div id="loader" class="loader" style="display:none;"></div>

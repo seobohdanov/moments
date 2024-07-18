@@ -162,11 +162,12 @@ h3 {
 .photo-container {
     position: relative;
     display: inline-block;
+    width: calc(50% - 10px); /* Two photos per row */
 }
 
 .preview img,
 .photo-list img {
-    width: 100px;
+    width: 100%;
     height: auto;
     border-radius: 5px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -196,6 +197,7 @@ h3 {
     text-align: center;
     transition: background-color 0.3s ease;
     cursor: pointer;
+    margin-bottom: 20px; /* Added margin to separate from buttons */
 }
 
 .drop-area.highlight {
@@ -255,5 +257,17 @@ input[type="file"] {
         width: 100%;
         padding: 12px;
         font-size: 18px;
+        margin-bottom: 10px;
+    }
+    .photo-container,
+    .order-list .photo-item {
+        width: calc(50% - 10px); /* Two photos per row on smaller screens */
+    }
+}
+
+@media (min-width: 769px) {
+    .photo-container,
+    .order-list .photo-item {
+        width: calc(33.33% - 10px); /* Three photos per row on larger screens */
     }
 }
