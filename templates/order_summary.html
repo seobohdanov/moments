@@ -94,6 +94,11 @@
 <body>
     <div class="container">
         <h1>Order Summary</h1>
+        <div id="button-container">
+            <button type="button" id="clear-all-button" class="btn btn-danger">Clear All</button>
+            <button type="button" class="btn btn-secondary" onclick="window.location.href='{{ url_for('index') }}'">Add More Photos</button>
+            <button type="button" class="btn btn-primary" onclick="window.location.href='{{ url_for('complete_order_form') }}'">Complete Order</button>
+        </div>
         <div id="orders-container">
             {% if orders %}
                 <ul class="order-list">
@@ -119,9 +124,6 @@
                 <p>No orders yet.</p>
             {% endif %}
         </div>
-        <button type="button" id="clear-all-button" class="btn btn-danger">Clear All</button>
-        <button type="button" class="btn btn-secondary" onclick="window.location.href='{{ url_for('index') }}'">Add More Photos</button>
-        <button type="button" class="btn btn-primary" onclick="window.location.href='{{ url_for('complete_order_form') }}'">Complete Order</button>
     </div>
 </body>
 </html>
