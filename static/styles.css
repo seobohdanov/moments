@@ -135,22 +135,7 @@ h3 {
     background-color: #c82333;
 }
 
-/* Order List */
-.order-list {
-    list-style: none;
-    margin-top: 20px;
-    padding: 0;
-}
-
-.order-list li {
-    background-color: #f8f9fa;
-    padding: 15px;
-    border-radius: 5px;
-    margin-bottom: 10px;
-    border: 1px solid #e9ecef;
-}
-
-/* Photo Preview */
+/* Photo Preview and Order List */
 .preview,
 .photo-list {
     display: flex;
@@ -162,7 +147,7 @@ h3 {
 .photo-container {
     position: relative;
     display: inline-block;
-    width: calc(33.33% - 10px); /* Three photos per row */
+    width: calc(25% - 10px); /* Four photos per row */
 }
 
 .preview img,
@@ -174,7 +159,7 @@ h3 {
 }
 
 .photo-preview {
-    width: 100%; /* Чтобы занимать всю ширину контейнера */
+    width: 100%;
     height: auto;
 }
 
@@ -242,7 +227,7 @@ h3 {
 }
 
 @keyframes spin {
-        0% { transform: rotate(0deg); }
+    0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
 
@@ -273,6 +258,6 @@ input[type="file"] {
 @media (min-width: 769px) {
     .photo-container,
     .order-list .photo-item {
-        width: calc(33.33% - 10px); /* Three photos per row на больших экранах */
+        width: calc(25% - 10px); /* Four photos per row на больших экранах */
     }
 }
