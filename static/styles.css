@@ -189,6 +189,11 @@ h3 {
     font-size: 12px;
 }
 
+.photo-preview {
+    width: 100px; /* или нужный вам размер */
+    height: auto;
+}
+
 /* Drag and Drop */
 .drop-area {
     border: 2px dashed #007bff;
