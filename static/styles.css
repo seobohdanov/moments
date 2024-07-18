@@ -162,7 +162,7 @@ h3 {
 .photo-container {
     position: relative;
     display: inline-block;
-    width: calc(50% - 10px); /* Two photos per row */
+    width: calc(33.33% - 10px); /* Three photos per row */
 }
 
 .preview img,
@@ -174,7 +174,7 @@ h3 {
 }
 
 .photo-preview {
-    width: 100px; /* или нужный вам размер */
+    width: 100%; /* Чтобы занимать всю ширину контейнера */
     height: auto;
 }
 
@@ -242,7 +242,7 @@ h3 {
 }
 
 @keyframes spin {
-    0% { transform: rotate(0deg); }
+        0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
 
@@ -266,13 +266,13 @@ input[type="file"] {
     }
     .photo-container,
     .order-list .photo-item {
-        width: calc(50% - 10px); /* Two photos per row on smaller screens */
+        width: calc(50% - 10px); /* Two photos per row на маленьких экранах */
     }
 }
 
 @media (min-width: 769px) {
     .photo-container,
     .order-list .photo-item {
-        width: calc(33.33% - 10px); /* Three photos per row on larger screens */
+        width: calc(33.33% - 10px); /* Three photos per row на больших экранах */
     }
 }
