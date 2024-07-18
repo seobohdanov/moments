@@ -48,6 +48,14 @@
                                     orderElement.parentNode.removeChild(orderElement);
                                 }
 
+                                // Update data-order-index for remaining orders
+                                document.querySelectorAll('.order-list > li').forEach((orderElement, newIndex) => {
+                                    orderElement.id = `order-${newIndex}`;
+                                    orderElement.querySelectorAll('.remove-photo').forEach(button => {
+                                        button.setAttribute('data-order-index', newIndex);
+                                    });
+                                });
+
                                 if (document.querySelectorAll('.order-list .photo-list').length === 0) {
                                     window.location.href = "{{ url_for('index') }}";
                                 }
