@@ -258,7 +258,7 @@ input[type="file"] {
     h1 {
         font-size: 24px;
     }
-    .btn {
+        .btn {
         width: 100%;
         padding: 12px;
         font-size: 18px;
@@ -276,3 +276,4 @@ input[type="file"] {
         width: calc(33.33% - 10px); /* Three photos per row on larger screens */
     }
 }
+       
