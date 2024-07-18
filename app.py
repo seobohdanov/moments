@@ -133,12 +133,15 @@ def confirmation():
 
 def create_order_archive(user_info, orders):
     try:
-        timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
-        archive_name = f"order_{user_info['last_name']}_{user_info['first_name']}_{timestamp}.zip"
+        base_timestamp = datetime.now().strftime('%d%m%Y')
+        order_count = get_next_order_count(base_timestamp)
+        archive_name = f"{base_timestamp}_{order_count}_{user_info['last_name']}.zip"
         archive_path = os.path.join(app.config['ARCHIVE_FOLDER'], archive_name)
+        
         with zipfile.ZipFile(archive_path, 'w') as archive:
-            for order_index, order in enumerate(orders):
-                folder_name = f"{order_index + 1}_{order['size']}_{order['paper_type']}".replace(' ', '_')
+            for order in orders:
+                material = 'm' if order['paper_type'] == 'matte' else 'g'
+                folder_name = f"{order['size']}_{len(order['photos'])}_{material}"
                 for photo in order['photos']:
                     photo_path = os.path.join(app.config['UPLOAD_FOLDER'], photo)
                     archive.write(photo_path, os.path.join(folder_name, photo))
@@ -146,6 +149,11 @@ def create_order_archive(user_info, orders):
     except Exception as e:
         app.logger.error(f"Error in create_order_archive function: {e}")
         raise
+
+def get_next_order_count(base_timestamp):
+    archives = os.listdir(app.config['ARCHIVE_FOLDER'])
+    same_day_archives = [name for name in archives if name.startswith(base_timestamp)]
+    return len(same_day_archives) + 1
 
 def send_order_to_telegram(user_info, archive_name):
     try:
@@ -202,7 +210,7 @@ def remove_photo():
                     session['orders'].pop(order_index)
                 session.modified = True
                 app.logger.debug(f"Updated orders: {session['orders']}")
-                return jsonify({'success': True, 'redirect': url_for('index') if not session['orders'] else None})
+                                return jsonify({'success': True, 'redirect': url_for('index') if not session['orders'] else None})
             else:
                 app.logger.error(f"Invalid photo_index: {photo_index} for order_index: {order_index}. Photos in order: {session['orders'][order_index]['photos']}")
         else:
