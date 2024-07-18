@@ -4,6 +4,7 @@ import uuid
 import zipfile
 from datetime import datetime
 import logging
+from logging.handlers import RotatingFileHandler
 import httpx
 
 app = Flask(__name__)
@@ -205,7 +206,7 @@ def remove_photo():
             else:
                 app.logger.error(f"Invalid photo_index: {photo_index} for order_index: {order_index}. Photos in order: {session['orders'][order_index]['photos']}")
         else:
-                        app.logger.error(f"Invalid order_index: {order_index}")
+            app.logger.error(f"Invalid order_index: {order_index}")
 
         return jsonify({'success': False, 'error': f'Invalid index: order_index={order_index}, photo_index={photo_index}'})
     except Exception as e:
