@@ -58,6 +58,7 @@
                             const div = document.createElement('div');
                             div.classList.add('photo-container');
                             const image = new Image();
+                            image.height = 100;
                             image.title = file.name;
                             image.src = reader.result;
 
@@ -229,7 +230,7 @@
                 </div>
                 <div class="button-group">
                     <button type="submit" id="submit-button" class="btn btn-primary">Add to Order</button>
-                    <button type="button" id="clear-all-button" class="btn btn-danger" style="display:none;">Clear All</button>
+                                        <button type="button" id="clear-all-button" class="btn btn-danger" style="display:none;">Clear All</button>
                     <button type="button" id="skip-button" class="btn btn-secondary" style="display:none;" onclick="window.location.href='{{ url_for('order_summary') }}'">Skip to Order Summary</button>
                 </div>
                 <div class="preview"></div>
@@ -253,7 +254,7 @@
                         <li class="photo-item" data-photo-index="{{ photo_index }}">
                             <div class="photo-container">
                                 <img src="{{ url_for('uploaded_file', filename=photo) }}" alt="{{ photo }}" class="photo-preview">
-                                <button class="remove-photo" data-order-index="{{ order_index }}" data-photo-index="{{ photo_index }}">X</button>
+                                <button class="remove-photo" onclick="removePhoto({{ order_index }}, {{ photo_index }})">X</button>
                             </div>
                         </li>
                         {% endfor %}
@@ -265,4 +266,3 @@
     </div>
 </body>
 </html>
-                
