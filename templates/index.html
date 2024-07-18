@@ -178,11 +178,16 @@
                         // Update data-photo-index for remaining photos
                         orderList.querySelectorAll('.photo-item').forEach((item, index) => {
                             item.setAttribute('data-photo-index', index);
+                            item.querySelector('.remove-photo').setAttribute('data-photo-index', index);
                         });
 
                         // Check if there are no photos left and update buttons accordingly
                         if (orderList.children.length === 0) {
-                            document.getElementById(`order-${orderIndex}`).remove();
+                            const orderElement = document.getElementById(`order-${orderIndex}`);
+                            if (orderElement) {
+                                orderElement.parentNode.removeChild(orderElement);
+                            }
+
                             // Update data-order-index for remaining orders
                             document.querySelectorAll('.order-list > li').forEach((orderElement, newIndex) => {
                                 orderElement.id = `order-${newIndex}`;
@@ -201,6 +206,21 @@
                     }
                 }).catch(error => {
                     console.error('Error:', error);
+                });
+            }
+
+            // Attach remove photo listeners for initial load
+            attachRemovePhotoListeners();
+
+            function attachRemovePhotoListeners() {
+                const removeButtons = document.querySelectorAll('.remove-photo');
+                removeButtons.forEach(button => {
+                    button.addEventListener('click', function () {
+                        const orderIndex = button.dataset.orderIndex;
+                        const photoIndex = button.dataset.photoIndex;
+                        console.log(`Removing photo ${photoIndex} from order ${orderIndex}`);
+                        removePhoto(orderIndex, photoIndex);
+                    });
                 });
             }
         });
@@ -225,7 +245,7 @@
             </div>
             <div class="form-group">
                 <label for="paper-type">Paper Type:</label>
-                <input type="radio" id="matte" name="paper_type" value="matte">
+                                <input type="radio" id="matte" name="paper_type" value="matte">
                 <label for="matte">Matte</label>
                 <input type="radio" id="glossy" name="paper_type" value="glossy" checked>
                 <label for="glossy">Glossy</label>
@@ -235,7 +255,7 @@
                 <div id="drop-area" class="drop-area">
                     <p>Drag & Drop files here or click to select files</p>
                     <input type="file" id="photos" name="photos" multiple class="form-control-file" accept=".jpg,.jpeg,.png,.gif,.heic,.webp">
-                  </div>
+                </div>
                 <div class="preview"></div>
             </div>
             <div class="form-group">
@@ -260,7 +280,7 @@
                         <li class="photo-item" data-photo-index="{{ photo_index }}">
                             <div class="photo-container">
                                 <img src="{{ url_for('uploaded_file', filename=photo) }}" alt="{{ photo }}" class="photo-preview">
-                                <button class="remove-photo" onclick="removePhoto({{ order_index }}, {{ photo_index }})">X</button>
+                                <button class="remove-photo" data-order-index="{{ order_index }}" data-photo-index="{{ photo_index }}">X</button>
                             </div>
                         </li>
                         {% endfor %}
