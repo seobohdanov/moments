@@ -33,6 +33,23 @@
     </div>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
+            setTimeout(function () {
+                fetch("{{ url_for('clear_all') }}", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/x-www-form-urlencoded"
+                    }
+                }).then(response => response.json()).then(data => {
+                    if (data.success) {
+                        window.location.href = "{{ url_for('index') }}";
+                    } else {
+                        console.error('Clear all failed.');
+                    }
+                }).catch(error => {
+                    console.error('Error:', error);
+                });
+            }, 5000);  // Таймер на 5 секунд
+
             document.getElementById('btn-another-order').addEventListener('click', function() {
                 fetch("{{ url_for('clear_all') }}", {
                     method: "POST",
