@@ -48,7 +48,6 @@ def clear_session():
 @app.route('/')
 def index():
     try:
-        clear_session()
         if 'user_id' not in session:
             session['user_id'] = str(uuid.uuid4())  # Генерация уникального идентификатора для сессии
         orders = session.get('orders', [])
@@ -235,7 +234,8 @@ def remove_photo():
 def clear_all():
     try:
         session.pop('orders', None)
-        clear_session()
+        session.pop('user_info', None)
+        session.pop('order_submitted', None)
         session.modified = True
         return jsonify({'success': True, 'redirect': url_for('index')})
     except Exception as e:
