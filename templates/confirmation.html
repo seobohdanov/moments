@@ -9,7 +9,7 @@
     <div class="container">
         <h1>Order Confirmed</h1>
         <p>Thank you, {{ user_info.first_name }} {{ user_info.last_name }}! Your order will be delivered to {{ user_info.city }}, Post Office No. {{ user_info.post_office }}.</p>
-        <button class="btn-another-order" id="btn-another-order">Place Another Order</button>
+        <button class="btn btn-primary" id="btn-another-order">Place Another Order</button>
         <h2>Current Orders</h2>
         <ul class="order-list">
             {% for order_index, order in enumerate(orders) %}
@@ -22,7 +22,6 @@
                     <li class="photo-item" data-photo-index="{{ photo_index }}">
                         <div class="photo-container">
                             <img src="{{ url_for('uploaded_file', filename=photo) }}" alt="{{ photo }}" class="photo-preview">
-                            <button class="remove-photo" data-order-index="{{ order_index }}" data-photo-index="{{ photo_index }}">X</button>
                         </div>
                     </li>
                     {% endfor %}
@@ -51,5 +50,5 @@
             });
         });
     </script>
-</body
+</body>
 </html>

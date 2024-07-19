@@ -162,19 +162,7 @@ h3 {
 }
 
 .remove-photo {
-    position: absolute;
-    top: 5px;
-    right: 5px;
-    background: #ff5c5c;
-    color: white;
-    border: none;
-    border-radius: 50%;
-    cursor: pointer;
-    width: 20px;
-    height: 20px;
-    text-align: center;
-    line-height: 20px;
-    font-size: 12px;
+    display: none; /* Убрали крестики */
 }
 
 /* Drag and Drop */
