@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
-    <div class="container">
+    <div class="container confirmation">
         <h1>Order Confirmed</h1>
         <p>Thank you, {{ user_info.first_name }} {{ user_info.last_name }}! Your order will be delivered to {{ user_info.city }}, Post Office No. {{ user_info.post_office }}.</p>
         <button class="btn btn-primary" id="btn-another-order">Place Another Order</button>
@@ -44,7 +44,8 @@
                     } else {
                         console.error('Clear all failed.');
                     }
-                }).catch(error => {
+                }).
+                catch(error => {
                     console.error('Error:', error);
                 });
             });

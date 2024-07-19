@@ -156,13 +156,35 @@ h3 {
 
 .photo-preview {
     width: 100%;
-    height: 150px; /* Увеличил высоту фото-превью */
+    height: auto; /* Убрали фиксированную высоту, чтобы сохранить пропорции */
     border-radius: 5px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .remove-photo {
-    display: none; /* Убрали крестики */
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background: #ff5c5c;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    line-height: 20px;
+    font-size: 12px;
+}
+
+/* Confirmation Page Specific */
+.confirmation .remove-photo {
+    display: none; /* Убрали крестики только на странице confirmation */
+}
+
+.total-photos {
+    margin-top: 20px;
+    font-weight: bold;
 }
 
 /* Drag and Drop */
@@ -248,10 +270,4 @@ input[type="file"] {
     .photo-item {
         width: calc(25% - 10px); /* Four photos per row on large screens */
     }
-}
-
-/* Confirmation Page Specific */
-.total-photos {
-    margin-top: 20px;
-    font-weight: bold;
 }
