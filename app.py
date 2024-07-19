@@ -129,7 +129,7 @@ def complete_order():
 
         delayed_clear_session(5)  # Очистка сессии через 5 секунд
         
-        return render_template('confirmation.html', archive_name=archive_name, user_info=user_info)
+        return render_template('confirmation.html', archive_name=archive_name, user_info=user_info, orders=session.get('orders', []))
     except Exception as e:
         app.logger.error(f"Error in complete_order route: {e}")
         return "An error occurred. Check logs for details.", 500
