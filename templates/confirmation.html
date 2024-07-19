@@ -4,79 +4,6 @@
     <meta charset="UTF-8">
     <title>Order Confirmed</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-    <style>
-        .photo-preview {
-            width: 100%;
-            height: auto;
-            border-radius: 5px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-        .photo-container {
-            position: relative;
-            width: calc(25% - 10px); /* Four photos per row */
-            margin-bottom: 10px;
-        }
-        .photo-list {
-            list-style-type: none;
-            padding: 0;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-        .photo-item {
-            list-style: none;
-            width: calc(25% - 10px); /* Four photos per row */
-        }
-        @media (max-width: 768px) {
-            .photo-item {
-                width: calc(50% - 10px); /* Two photos per row on small screens */
-            }
-        }
-        .form-group {
-            margin-bottom: 15px;
-        }
-        .form-control {
-            width: 100%;
-            padding: 10px;
-            box-sizing: border-box;
-            margin-top: 5px;
-        }
-        .container {
-            max-width: 700px;
-            margin: 50px auto;
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-        .order-list {
-            list-style-type: none;
-            padding: 0;
-        }
-        .order-list li {
-            border-bottom: 1px solid #ddd;
-            padding: 10px 0;
-        }
-        .order-list li:last-child {
-            border-bottom: none;
-        }
-        .total-photos {
-            margin-top: 20px;
-            font-weight: bold;
-        }
-        .btn-another-order {
-            display: block;
-            margin: 20px auto; /* Center the button */
-            background-color: #007bff;
-            color: white;
-            padding: 10px 20px;
-            text-align: center;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            text-decoration: none;
-        }
-    </style>
 </head>
 <body>
     <div class="container">
@@ -84,16 +11,18 @@
         <p>Thank you, {{ user_info.first_name }} {{ user_info.last_name }}! Your order will be delivered to {{ user_info.city }}, Post Office No. {{ user_info.post_office }}.</p>
         <button class="btn-another-order" id="btn-another-order">Place Another Order</button>
         <h2>Current Orders</h2>
-        <p class="total-photos"><strong>Total Photos:</strong> {% for order in orders %}{{ order.size }} {{ order.paper_type }}, {{ order.photos|length }}{% if not loop.last %}; {% endif %}{% endfor %}</p>
         <ul class="order-list">
             {% for order_index, order in enumerate(orders) %}
             <li id="order-{{ order_index }}">
-                <p><strong>Size:</strong> {{ order.size }}, <strong>Paper Type:</strong> {{ order.paper_type }}, <strong>Quantity:</strong> {{ order.photos|length }}</p>
+                <p><strong>Size:</strong> {{ order.size }}</p>
+                <p><strong>Paper Type:</strong> {{ order.paper_type }}</p>
+                <p><strong>Photos:</strong></p>
                 <ul class="photo-list">
                     {% for photo_index, photo in enumerate(order.photos) %}
                     <li class="photo-item" data-photo-index="{{ photo_index }}">
                         <div class="photo-container">
                             <img src="{{ url_for('uploaded_file', filename=photo) }}" alt="{{ photo }}" class="photo-preview">
+                            <button class="remove-photo" data-order-index="{{ order_index }}" data-photo-index="{{ photo_index }}">X</button>
                         </div>
                     </li>
                     {% endfor %}
@@ -122,5 +51,5 @@
             });
         });
     </script>
-</body>
+</body
 </html>

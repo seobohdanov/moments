@@ -156,7 +156,7 @@ h3 {
 
 .photo-preview {
     width: 100%;
-    height: auto;
+    height: 150px; /* Увеличил высоту фото-превью */
     border-radius: 5px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
@@ -260,4 +260,10 @@ input[type="file"] {
     .photo-item {
         width: calc(25% - 10px); /* Four photos per row on large screens */
     }
+}
+
+/* Confirmation Page Specific */
+.total-photos {
+    margin-top: 20px;
+    font-weight: bold;
 }
