@@ -22,7 +22,7 @@
         }
         .photo-container {
             position: relative;
-            width: calc(25% - 10px); /* Four photos per row */
+            width: calc(25% - 10px);
             margin-bottom: 10px;
         }
         .container {
@@ -53,7 +53,7 @@
         }
         .photo-item {
             list-style: none;
-            width: calc(25% - 10px); /* Four photos per row */
+            width: calc(25% - 10px);
         }
         .total-photos {
             margin-top: 20px;
@@ -73,7 +73,7 @@
         }
         @media (max-width: 768px) {
             .photo-item {
-                width: calc(50% - 10px); /* Two photos per row on small screens */
+                width: calc(50% - 10px);
             }
         }
     </style>
@@ -90,8 +90,8 @@
             <li id="order-{{ order_index }}">
                 <p><strong>Size:</strong> {{ order.size }}, <strong>Paper Type:</strong> {{ order.paper_type }}, <strong>Quantity:</strong> {{ order.photos|length }}</p>
                 <ul class="photo-list">
-                    {% for photo_index, photo in enumerate(order.photos) %}
-                    <li class="photo-item" data-photo-index="{{ photo_index }}">
+                    {% for photo in order.photos %}
+                    <li class="photo-item">
                         <div class="photo-container">
                             <img src="{{ url_for('uploaded_file', filename=photo) }}" alt="{{ photo }}" class="photo-preview">
                         </div>
