@@ -14,9 +14,55 @@
             box-sizing: border-box;
             margin-top: 5px;
         }
-        .btn-another-order {
-            display: block;
+        .photo-preview {
+            width: 100%;
+            height: auto;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .photo-container {
+            position: relative;
+            width: calc(25% - 10px); /* Four photos per row */
+            margin-bottom: 10px;
+        }
+        .container {
+            max-width: 700px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .order-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        .order-list li {
+            border-bottom: 1px solid #ddd;
+            padding: 10px 0;
+        }
+        .order-list li:last-child {
+            border-bottom: none;
+        }
+        .photo-list {
+            list-style-type: none;
+            padding: 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .photo-item {
+            list-style: none;
+            width: calc(25% - 10px); /* Four photos per row */
+        }
+        .total-photos {
             margin-top: 20px;
+            font-weight: bold;
+        }
+        @media (max-width: 768px) {
+            .photo-item {
+                width: calc(50% - 10px); /* Two photos per row on small screens */
+            }
         }
     </style>
 </head>
@@ -67,13 +113,12 @@
             {% endfor %}
         </ul>
         <p><strong>Total Photos:</strong> {{ total_photos }}</p>
-        <button class="btn btn-primary btn-another-order" onclick="window.location.href='{{ url_for('index') }}'">Place another order</button>
     </div>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             function removePhoto(orderIndex, photoIndex) {
                 fetch("{{ url_for('remove_photo') }}", {
-                    method: "POST",
+                                        method: "POST",
                     headers: {
                         "Content-Type": "application/x-www-form-urlencoded"
                     },

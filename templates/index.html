@@ -227,6 +227,33 @@
             attachRemovePhotoListeners();
         });
     </script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Attach an event listener to the 'Place Another Order' button
+        document.querySelector('.btn-another-order').addEventListener('click', function(e) {
+            e.preventDefault();
+            fetch("{{ url_for('clear_all') }}", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded"
+                }
+            }).then(response => response.json()).then(data => {
+                if (data.success) {
+                    window.location.href = "{{ url_for('index') }}";
+                } else {
+                    console.error('Clear all failed.');
+                }
+            }).catch(error => {
+                console.error('Error:', error);
+            });
+        });
+
+        // Prevent back navigation
+        window.onpopstate = function(event) {
+            history.go(1);
+        };
+    });
+</script>
 </head>
 <body>
     <div class="container">

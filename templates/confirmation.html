@@ -15,21 +15,23 @@
             margin-top: 5px;
         }
         .photo-preview {
-            width: 100px;
+            width: 100%;
             height: auto;
-            margin: 5px;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
         .photo-container {
-            display: inline-block;
             position: relative;
+            width: calc(25% - 10px); /* Four photos per row */
+            margin-bottom: 10px;
         }
         .container {
-            max-width: 800px;
-            margin: 0 auto;
+            max-width: 700px;
+            margin: 50px auto;
             padding: 20px;
-            background: #fff;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
         .order-list {
             list-style-type: none;
@@ -47,14 +49,32 @@
             padding: 0;
             display: flex;
             flex-wrap: wrap;
+            gap: 10px;
         }
         .photo-item {
-            margin-right: 10px;
-            margin-bottom: 10px;
+            list-style: none;
+            width: calc(25% - 10px); /* Four photos per row */
         }
         .total-photos {
             margin-top: 20px;
             font-weight: bold;
+        }
+        .btn-another-order {
+            display: block;
+            margin-top: 20px;
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        @media (max-width: 768px) {
+            .photo-item {
+                width: calc(50% - 10px); /* Two photos per row on small screens */
+            }
         }
     </style>
 </head>
@@ -62,6 +82,7 @@
     <div class="container">
         <h1>Order Confirmed</h1>
         <p>Thank you, {{ user_info.first_name }} {{ user_info.last_name }}! Your order will be delivered to {{ user_info.city }}, Post Office No. {{ user_info.post_office }}.</p>
+        <button class="btn-another-order" onclick="window.location.href='{{ url_for('index') }}'">Place Another Order</button>
         <h2>Current Orders</h2>
         <p class="total-photos"><strong>Total Photos:</strong> {% for order in orders %}{{ order.size }} {{ order.paper_type }}, {{ order.photos|length }}{% if not loop.last %}; {% endif %}{% endfor %}</p>
         <ul class="order-list">
