@@ -5,15 +5,6 @@
     <title>Order Confirmed</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
     <style>
-        .form-group {
-            margin-bottom: 15px;
-        }
-        .form-control {
-            width: 100%;
-            padding: 10px;
-            box-sizing: border-box;
-            margin-top: 5px;
-        }
         .photo-preview {
             width: 100%;
             height: auto;
@@ -22,8 +13,33 @@
         }
         .photo-container {
             position: relative;
-            width: calc(25% - 10px);
+            width: calc(25% - 10px); /* Four photos per row */
             margin-bottom: 10px;
+        }
+        .photo-list {
+            list-style-type: none;
+            padding: 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .photo-item {
+            list-style: none;
+            width: calc(25% - 10px); /* Four photos per row */
+        }
+        @media (max-width: 768px) {
+            .photo-item {
+                width: calc(50% - 10px); /* Two photos per row on small screens */
+            }
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-control {
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+            margin-top: 5px;
         }
         .container {
             max-width: 700px;
@@ -44,17 +60,6 @@
         .order-list li:last-child {
             border-bottom: none;
         }
-        .photo-list {
-            list-style-type: none;
-            padding: 0;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-        .photo-item {
-            list-style: none;
-            width: calc(25% - 10px);
-        }
         .total-photos {
             margin-top: 20px;
             font-weight: bold;
@@ -71,11 +76,6 @@
             cursor: pointer;
             text-decoration: none;
         }
-        @media (max-width: 768px) {
-            .photo-item {
-                width: calc(50% - 10px);
-            }
-        }
     </style>
 </head>
 <body>
@@ -90,8 +90,8 @@
             <li id="order-{{ order_index }}">
                 <p><strong>Size:</strong> {{ order.size }}, <strong>Paper Type:</strong> {{ order.paper_type }}, <strong>Quantity:</strong> {{ order.photos|length }}</p>
                 <ul class="photo-list">
-                    {% for photo in order.photos %}
-                    <li class="photo-item">
+                    {% for photo_index, photo in enumerate(order.photos) %}
+                    <li class="photo-item" data-photo-index="{{ photo_index }}">
                         <div class="photo-container">
                             <img src="{{ url_for('uploaded_file', filename=photo) }}" alt="{{ photo }}" class="photo-preview">
                         </div>
