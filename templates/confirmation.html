@@ -57,7 +57,7 @@
         }
         .total-photos {
             margin-top: 20px;
-            font-weight: bold;
+            font-weight:             font-weight: bold;
         }
         .btn-another-order {
             display: block;
@@ -82,7 +82,7 @@
     <div class="container">
         <h1>Order Confirmed</h1>
         <p>Thank you, {{ user_info.first_name }} {{ user_info.last_name }}! Your order will be delivered to {{ user_info.city }}, Post Office No. {{ user_info.post_office }}.</p>
-        <button class="btn-another-order" onclick="window.location.href='{{ url_for('index') }}'">Place Another Order</button>
+        <button class="btn-another-order" id="btn-another-order">Place Another Order</button>
         <h2>Current Orders</h2>
         <p class="total-photos"><strong>Total Photos:</strong> {% for order in orders %}{{ order.size }} {{ order.paper_type }}, {{ order.photos|length }}{% if not loop.last %}; {% endif %}{% endfor %}</p>
         <ul class="order-list">
@@ -102,5 +102,25 @@
             {% endfor %}
         </ul>
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            document.getElementById('btn-another-order').addEventListener('click', function() {
+                fetch("{{ url_for('clear_all') }}", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/x-www-form-urlencoded"
+                    }
+                }).then(response => response.json()).then(data => {
+                    if (data.success) {
+                        window.location.href = "{{ url_for('index') }}";
+                    } else {
+                        console.error('Clear all failed.');
+                    }
+                }).catch(error => {
+                    console.error('Error:', error);
+                });
+            });
+        });
+    </script>
 </body>
 </html>
