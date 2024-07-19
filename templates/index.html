@@ -101,14 +101,12 @@
 
             const form = document.getElementById('orderForm');
             form.addEventListener('submit', function (e) {
+                e.preventDefault();
                 if (filesArray.length === 0 && !hasExistingOrders()) {
-                    e.preventDefault();
                     errorMessage.textContent = 'Please upload at least one photo.';
                 } else if (filesArray.length > 0) {
-                    e.preventDefault();
                     uploadFiles();
                 } else if (filesArray.length === 0 && hasExistingOrders()) {
-                    e.preventDefault();
                     errorMessage.textContent = 'Please upload at least one photo for the new size or skip to order summary.';
                 }
             });
@@ -235,9 +233,9 @@
             <div class="form-group">
                 <label for="size">Photo Size:</label>
                 <select id="size" name="size" class="form-control">
-                                        <option value="9x9">9x9</option>
+                    <option value="9x9">9x9</option>
                     <option value="9x11">9x11</option>
-                    <option value="10x15">10x15</option>
+                                        <option value="10x15">10x15</option>
                     <option value="15x21">15x21</option>
                     <option value="21x30">21x30</option>
                     <option value="30x40">30x40</option>

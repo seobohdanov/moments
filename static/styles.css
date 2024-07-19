@@ -145,7 +145,8 @@ h3 {
 }
 
 .photo-item {
-    flex: 1 1 calc(25% - 10px); /* Four photos per row */
+    list-style: none;
+    width: calc(25% - 10px); /* Four photos per row */
 }
 
 .photo-container {
@@ -246,13 +247,13 @@ input[type="file"] {
         font-size: 18px;
         margin-bottom: 10px;
     }
-    .photo-item {
-        flex: 1 1 calc(50% - 10px); /* Two photos per row на маленьких экранах */
+        .photo-item {
+        width: calc(50% - 10px); /* Two photos per row на маленьких экранах */
     }
 }
 
 @media (min-width: 769px) {
     .photo-item {
-        flex: 1 1 calc(25% - 10px); /* Four photos per row на больших экранах */
+        width: calc(25% - 10px); /* Four photos per row на больших экранах */
     }
 }
