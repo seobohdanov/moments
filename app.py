@@ -8,7 +8,7 @@ from logging.handlers import RotatingFileHandler
 import httpx
 
 app = Flask(__name__)
-app.secret_key = 'supersecretkey'  # Секретный ключ для сессий
+app.secret_key = os.urandom(24)  # Секретный ключ для сессий
 app.config['UPLOAD_FOLDER'] = 'uploads'
 app.config['ALLOWED_EXTENSIONS'] = {'png', 'jpg', 'jpeg', 'gif', 'heic', 'webp'}
 app.config['ARCHIVE_FOLDER'] = 'archives'
