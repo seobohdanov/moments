@@ -6,6 +6,7 @@ from datetime import datetime
 import logging
 from logging.handlers import RotatingFileHandler
 import httpx
+from threading import Timer
 
 app = Flask(__name__)
 app.secret_key = os.urandom(24)  # Секретный ключ для сессий
@@ -44,6 +45,9 @@ def clear_session():
     session.pop('order_submitted', None)
     session.pop('user_info', None)
     session.pop('orders', None)  # Очистка текущих заказов
+
+def delayed_clear_session(delay):
+    Timer(delay, clear_session).start()
 
 @app.route('/')
 def index():
@@ -122,9 +126,9 @@ def complete_order():
 
         archive_name = create_order_archive(user_info, session['orders'])
         send_order_to_telegram(user_info, archive_name)
-        
-        clear_session()  # Очистка сессии после завершения заказа
 
+        delayed_clear_session(5)  # Очистка сессии через 5 секунд
+        
         return redirect(url_for('confirmation', archive_name=archive_name))
     except Exception as e:
         app.logger.error(f"Error in complete_order route: {e}")
@@ -210,12 +214,12 @@ def remove_photo():
         photo_index = int(request.form['photo_index'])
 
         app.logger.debug(f"Received request to remove photo. order_index={order_index}, photo_index={photo_index}")
-        app.logger.debug(f"Current orders: {        session['orders']}")
+        app.logger.debug(f"Current orders: {session['orders']}")
 
         if 0 <= order_index < len(session['orders']):
             if 0 <= photo_index < len(session['orders'][order_index]['photos']):
                 app.logger.debug(f"Removing photo at index {photo_index} from order {order_index}")
-                session['orders'][order_index]['photos'].pop(photo_index)
+                session['orders'][order_index]['photos'].pop(                photo_index)
                 # Check if the order list is empty and remove the order if it is
                 if len(session['orders'][order_index]['photos']) == 0:
                     session['orders'].pop(order_index)
