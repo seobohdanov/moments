@@ -53,7 +53,7 @@
 
                 filesArray.forEach((file, index) => {
                     if (/\.(jpe?g|png|gif|heic|webp)$/i.test(file.name)) {
-                                               const reader = new FileReader();
+                        const reader = new FileReader();
 
                         reader.addEventListener("load", () => {
                             const div = document.createElement('div');
@@ -213,7 +213,7 @@
             }
 
             function attachRemovePhotoListeners() {
-                const removeButtons = document.querySelectorAll('.remove-photo');
+                const removeButtons = document.querySelectorAll('.                remove-photo');
                 removeButtons.forEach(button => {
                     button.addEventListener('click', function () {
                         const orderIndex = button.dataset.orderIndex;
@@ -253,7 +253,7 @@
             history.go(1);
         };
     });
-</script>
+    </script>
 </head>
 <body>
     <div class="container">
@@ -306,7 +306,7 @@
                 {% for order_index, order in enumerate(orders) %}
                 <li id="order-{{ order_index }}">
                     <p><strong>Size:</strong> {{ order.size }}</p>
-                                        <p><strong>Paper Type:</strong> {{ order.paper_type }}</p>
+                    <p><strong>Paper Type:</strong> {{ order.paper_type }}</p>
                     <p><strong>Photos:</strong></p>
                     <ul class="photo-list">
                         {% for photo_index, photo in enumerate(order.photos) %}

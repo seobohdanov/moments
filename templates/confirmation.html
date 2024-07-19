@@ -44,11 +44,15 @@
                     } else {
                         console.error('Clear all failed.');
                     }
-                }).
-                catch(error => {
+                }).catch(error => {
                     console.error('Error:', error);
                 });
             });
+
+            // Prevent back navigation
+            window.onpopstate = function(event) {
+                history.go(1);
+            };
         });
     </script>
 </body>

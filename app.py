@@ -39,9 +39,14 @@ def utility_processor():
         return enumerate(iterable)
     return dict(enumerate=enumerate_func)
 
+def clear_session():
+    session.pop('order_submitted', None)
+    session.pop('user_info', None)
+
 @app.route('/')
 def index():
     try:
+        clear_session()
         if 'user_id' not in session:
             session['user_id'] = str(uuid.uuid4())  # Генерация уникального идентификатора для сессии
         orders = session.get('orders', [])
@@ -92,6 +97,8 @@ def order_summary():
 @app.route('/complete_order_form')
 def complete_order_form():
     try:
+        if 'order_submitted' in session:
+            return redirect(url_for('index'))
         orders = session.get('orders', [])
         return render_template('complete_order_form.html', orders=orders)
     except Exception as e:
@@ -109,6 +116,7 @@ def complete_order():
             'post_office': request.form['post_office']
         }
         session['user_info'] = user_info
+        session['order_submitted'] = True
         session.modified = True
 
         archive_name = create_order_archive(user_info, session['orders'])
@@ -210,7 +218,8 @@ def remove_photo():
                     session['orders'].pop(order_index)
                 session.modified = True
                 app.logger.debug(f"Updated orders: {session['orders']}")
-                return jsonify({'success': True, 'redirect': url_for('index') if not session['orders'] else None})
+                return jsonify({'success':
+                 True, 'redirect': url_for('index') if not session['orders'] else None})
             else:
                 app.logger.error(f"Invalid photo_index: {photo_index} for order_index: {order_index}. Photos in order: {session['orders'][order_index]['photos']}")
         else:
@@ -225,6 +234,7 @@ def remove_photo():
 def clear_all():
     try:
         session.pop('orders', None)
+        clear_session()
         session.modified = True
         return jsonify({'success': True, 'redirect': url_for('index')})
     except Exception as e:
