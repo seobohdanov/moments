@@ -14,17 +14,6 @@
             box-sizing: border-box;
             margin-top: 5px;
         }
-        .photo-preview {
-            width: 100%;
-            height: auto;
-            border-radius: 5px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-        .photo-container {
-            position: relative;
-            width: calc(25% - 10px); /* Four photos per row */
-            margin-bottom: 10px;
-        }
         .container {
             max-width: 700px;
             margin: 50px auto;
@@ -54,6 +43,31 @@
         .photo-item {
             list-style: none;
             width: calc(25% - 10px); /* Four photos per row */
+        }
+        .photo-container {
+            position: relative;
+            width: 100%;
+        }
+        .photo-preview {
+            width: 100%;
+            height: auto;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .remove-photo {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background: #ff5c5c;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            width: 20px;
+            height: 20px;
+            text-align: center;
+            line-height: 20px;
+            font-size: 12px;
         }
         .total-photos {
             margin-top: 20px;
