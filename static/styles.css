@@ -182,6 +182,25 @@ h3 {
     display: none; /* Убрали крестики только на странице confirmation */
 }
 
+/* Order List Item */
+.order-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.order-list li {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+}
+
+.order-list li:last-child {
+    margin-bottom: 0;
+}
+
 .total-photos {
     margin-top: 20px;
     font-weight: bold;
