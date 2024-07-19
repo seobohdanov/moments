@@ -193,12 +193,14 @@ h3 {
 }
 
 /* Progress Bar */
+.progress-bar-container {
+    margin-top: 10px;
+}
 .progress-bar {
     height: 20px;
     background-color: #e9ecef;
     border-radius: 5px;
     overflow: hidden;
-    margin-top: 10px;
 }
 
 .progress-bar div {
@@ -234,6 +236,7 @@ input[type="file"] {
     padding: 5px;
 }
 
+/* Mobile styles */
 @media (max-width: 768px) {
     .container {
         padding: 15px;
@@ -247,13 +250,14 @@ input[type="file"] {
         font-size: 18px;
         margin-bottom: 10px;
     }
-        .photo-item {
-        width: calc(50% - 10px); /* Two photos per row на маленьких экранах */
+    .photo-item {
+        width: calc(50% - 10px); /* Two photos per row on small screens */
     }
 }
 
+/* Tablet and larger styles */
 @media (min-width: 769px) {
     .photo-item {
-        width: calc(25% - 10px); /* Four photos per row на больших экранах */
+        width: calc(25% - 10px); /* Four photos per row on large screens */
     }
 }

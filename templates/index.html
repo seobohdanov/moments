@@ -8,6 +8,7 @@
         document.addEventListener('DOMContentLoaded', function () {
             const dropArea = document.getElementById('drop-area');
             const fileInput = document.getElementById('photos');
+            const progressBarContainer = document.getElementById('progress-bar-container');
             const progressBar = document.getElementById('progress-bar');
             const submitButton = document.getElementById('submit-button');
             const clearAllButton = document.getElementById('clear-all-button');
@@ -52,11 +53,12 @@
 
                 filesArray.forEach((file, index) => {
                     if (/\.(jpe?g|png|gif|heic|webp)$/i.test(file.name)) {
-                        const reader = new FileReader();
+                                               const reader = new FileReader();
 
                         reader.addEventListener("load", () => {
                             const div = document.createElement('div');
                             div.classList.add('photo-container');
+                            div.classList.add('photo-item'); // Добавлено, чтобы фото были правильного размера
                             const image = new Image();
                             image.classList.add('photo-preview');
                             image.title = file.name;
@@ -235,7 +237,7 @@
                 <select id="size" name="size" class="form-control">
                     <option value="9x9">9x9</option>
                     <option value="9x11">9x11</option>
-                                        <option value="10x15">10x15</option>
+                    <option value="10x15">10x15</option>
                     <option value="15x21">15x21</option>
                     <option value="21x30">21x30</option>
                     <option value="30x40">30x40</option>
@@ -261,12 +263,14 @@
                     <button type="button" id="clear-all-button" class="btn btn-danger" style="display:none;">Clear All</button>
                     <button type="button" id="skip-button" class="btn btn-secondary" style="display:none;" onclick="window.location.href='{{ url_for('order_summary') }}'">Skip to Order Summary</button>
                 </div>
+                <div id="progress-bar-container" class="progress-bar-container">
+                    <div id="progress-bar" class="progress-bar"><div></div></div>
+                </div>
                 <div class="preview"></div>
             </div>
             <div class="form-group">
-                <div id="progress-bar" class="progress-bar"></div>
+                <p id="error-message" style="color: red;"></p>
             </div>
-            <p id="error-message" style="color: red;"></p>
         </form>
         <div id="loader" class="loader" style="display:none;"></div>
         {% if orders %}
@@ -275,7 +279,7 @@
                 {% for order_index, order in enumerate(orders) %}
                 <li id="order-{{ order_index }}">
                     <p><strong>Size:</strong> {{ order.size }}</p>
-                    <p><strong>Paper Type:</strong> {{ order.paper_type }}</p>
+                                        <p><strong>Paper Type:</strong> {{ order.paper_type }}</p>
                     <p><strong>Photos:</strong></p>
                     <ul class="photo-list">
                         {% for photo_index, photo in enumerate(order.photos) %}
