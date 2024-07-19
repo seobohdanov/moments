@@ -150,14 +150,14 @@ h3 {
     width: calc(25% - 10px); /* Four photos per row */
 }
 
-.preview .photo-preview, .photo-list .photo-preview {
+.photo-preview {
     width: 100%;
     height: auto;
     border-radius: 5px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.preview .remove-photo, .photo-list .remove-photo {
+.remove-photo {
     position: absolute;
     top: 5px;
     right: 5px;
@@ -234,7 +234,7 @@ input[type="file"] {
     .container {
         padding: 15px;
     }
-        h1 {
+    h1 {
         font-size: 24px;
     }
     .btn {
