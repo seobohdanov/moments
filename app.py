@@ -123,6 +123,8 @@ def complete_order():
         archive_name = create_order_archive(user_info, session['orders'])
         send_order_to_telegram(user_info, archive_name)
         
+        clear_session()  # Очистка сессии после завершения заказа
+
         return redirect(url_for('confirmation', archive_name=archive_name))
     except Exception as e:
         app.logger.error(f"Error in complete_order route: {e}")
@@ -208,7 +210,7 @@ def remove_photo():
         photo_index = int(request.form['photo_index'])
 
         app.logger.debug(f"Received request to remove photo. order_index={order_index}, photo_index={photo_index}")
-        app.logger.debug(f"Current orders: {session['orders']}")
+        app.logger.debug(f"Current orders: {        session['orders']}")
 
         if 0 <= order_index < len(session['orders']):
             if 0 <= photo_index < len(session['orders'][order_index]['photos']):
