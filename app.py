@@ -150,7 +150,7 @@ def complete_order():
         send_order_to_telegram(user_info, archive_name)
 
         delayed_clear_session(5)  # Очистка сессии через 5 секунд
-        
+
         return jsonify(success=True, next_url=url_for('load_content', page='confirmation', archive_name=archive_name))
     except Exception as e:
         app.logger.error(f"Error in complete_order route: {e}")
@@ -174,7 +174,7 @@ def create_order_archive(user_info, orders):
         order_count = get_next_order_count(base_timestamp)
         archive_name = f"{base_timestamp}_{order_count}_{user_info['last_name']}.zip"
         archive_path = os.path.join(app.config['ARCHIVE_FOLDER'], archive_name)
-        
+
         with zipfile.ZipFile(archive_path, 'w') as archive:
             for order in orders:
                 material = 'm' if order['paper_type'] == 'matte' else 'g'

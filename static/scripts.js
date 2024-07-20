@@ -8,7 +8,12 @@ document.addEventListener('DOMContentLoaded', function () {
                 'Content-Type': 'text/html'
             }
         })
-        .then(response => response.text())
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok ' + response.statusText);
+            }
+            return response.text();
+        })
         .then(html => {
             contentContainer.innerHTML = html;
             attachEventListeners(); // Re-attach event listeners after content load
