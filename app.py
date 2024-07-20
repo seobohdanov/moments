@@ -218,7 +218,7 @@ def remove_photo():
             if 0 <= photo_index < len(session['orders'][order_index]['photos']):
                                 session['orders'][order_index]['photos'].pop(photo_index)
             if len(session['orders'][order_index]['photos']) == 0:
-                    session['orders'].pop(order_index)
+                session['orders'].pop(order_index)
                 session.modified = True
                 return jsonify(success=True)
         return jsonify(success=False, error='Invalid index')
