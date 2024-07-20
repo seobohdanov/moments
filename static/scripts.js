@@ -37,7 +37,12 @@ document.addEventListener('DOMContentLoaded', function () {
                     method: 'POST',
                     body: formData
                 })
-                .then(response => response.json())
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok ' + response.statusText);
+                    }
+                    return response.json();
+                })
                 .then(data => {
                     if (data.success) {
                         loadContent(data.next_url); // Load next page
@@ -57,7 +62,12 @@ document.addEventListener('DOMContentLoaded', function () {
                     method: 'POST',
                     body: formData
                 })
-                .then(response => response.json())
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok ' + response.statusText);
+                    }
+                    return response.json();
+                })
                 .then(data => {
                     if (data.success) {
                         loadContent(data.next_url); // Load confirmation page
@@ -84,13 +94,21 @@ document.addEventListener('DOMContentLoaded', function () {
                     "Content-Type": "application/x-www-form-urlencoded"
                 },
                 body: `order_index=${orderIndex}&photo_index=${photoIndex}`
-            }).then(response => response.json()).then(data => {
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok ' + response.statusText);
+                }
+                return response.json();
+            })
+            .then(data => {
                 if (data.success) {
                     loadContent(window.location.href); // Reload current content
                 } else {
                     console.error(`Error from server: ${data.error}`);
                 }
-            }).catch(error => {
+            })
+            .catch(error => {
                 console.error('Error:', error);
             });
         }
