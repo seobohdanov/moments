@@ -61,6 +61,27 @@ def index():
         app.logger.error(f"Error in index route: {e}")
         return "An error occurred. Check logs for details.", 500
 
+@app.route('/load_content')
+def load_content():
+    try:
+        page = request.args.get('page')
+        orders = session.get('orders', [])
+        user_info = session.get('user_info', {})
+        total_photos = sum(len(order['photos']) for order in orders)
+
+        if page == 'order_summary':
+            return render_template('order_summary.html', orders=orders)
+        elif page == 'complete_order_form':
+            return render_template('complete_order_form.html', orders=orders, total_photos=total_photos)
+        elif page == 'confirmation':
+            archive_name = request.args.get('archive_name')
+            return render_template('confirmation.html', archive_name=archive_name, user_info=user_info, orders=orders, total_photos=total_photos)
+        else:
+            return render_template('index.html', orders=orders, total_photos=total_photos)
+    except Exception as e:
+        app.logger.error(f"Error in load_content route: {e}")
+        return "An error occurred. Check logs for details.", 500
+
 @app.route('/add_order', methods=['POST'])
 def add_order():
     try:
@@ -85,7 +106,7 @@ def add_order():
         session['orders'].append(order)
         session.modified = True
 
-        return jsonify(success=True, next_url=url_for('order_summary'))
+        return jsonify(success=True, next_url=url_for('load_content', page='order_summary'))
     except Exception as e:
         app.logger.error(f"Error in add_order route: {e}")
         return jsonify(success=False, error=str(e))
@@ -130,10 +151,10 @@ def complete_order():
 
         delayed_clear_session(5)  # Очистка сессии через 5 секунд
         
-        return render_template('confirmation.html', archive_name=archive_name, user_info=user_info, orders=session.get('orders', []))
+        return jsonify(success=True, next_url=url_for('load_content', page='confirmation', archive_name=archive_name))
     except Exception as e:
         app.logger.error(f"Error in complete_order route: {e}")
-        return "An error occurred. Check logs for details.", 500
+        return jsonify(success=False, error=str(e))
 
 @app.route('/confirmation')
 def confirmation():
