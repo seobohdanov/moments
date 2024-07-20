@@ -27,6 +27,7 @@
         ];
 
         function loadStep(stepIndex) {
+            console.log("Loading step:", stepIndex);
             if (stepIndex >= 0 && stepIndex < steps.length) {
                 $.ajax({
                     url: steps[stepIndex].url,
@@ -35,6 +36,7 @@
                         $('#content').html(data);
                         currentStep = stepIndex;
                         updateNavigation();
+                        attachFormHandlers();  // Attach form handlers after loading content
                     },
                     error: function (error) {
                         console.error('Error loading step:', error);
@@ -46,6 +48,29 @@
         function updateNavigation() {
             $('#prev-step').toggle(currentStep > 0);
             $('#next-step').toggle(currentStep < steps.length - 1);
+        }
+
+        function attachFormHandlers() {
+            const form = $('#orderForm');
+            if (form.length > 0) {
+                form.on('submit', function (e) {
+                    e.preventDefault();
+                    const formData = new FormData(form[0]);
+                    $.ajax({
+                        url: form.attr('action'),
+                        method: 'POST',
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                        success: function (data) {
+                            loadStep(currentStep + 1);
+                        },
+                        error: function (error) {
+                            console.error('Error submitting form:', error);
+                        }
+                    });
+                });
+            }
         }
 
         $(document).ready(function () {
