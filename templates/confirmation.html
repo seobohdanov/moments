@@ -10,7 +10,7 @@
     <div class="container confirmation">
         <h1>Order Confirmed</h1>
         <p>Thank you, {{ user_info.first_name }} {{ user_info.last_name }}! Your order will be delivered to {{ user_info.city }}, Post Office No. {{ user_info.post_office }}.</p>
-        <button class="btn btn-primary" id="btn-another-order">Place Another Order</button>
+        <button class="btn btn-primary btn-next" data-page="index">Place Another Order</button>
         <h2>Current Orders</h2>
         <ul class="order-list">
             {% for order_index, order in enumerate(orders) %}
@@ -33,33 +33,33 @@
     </div>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            document.getElementById('btn-another-order').addEventListener('click', function() {
-                loadContent('{{ url_for('index') }}');
+            document.querySelector('.btn-next').addEventListener('click', function() {
+                const page = this.getAttribute('data-page');
+                loadContent(`/load_content?page=${page}`);
             });
-
-            function loadContent(url) {
-                fetch(url, {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'text/html'
-                    }
-                })
-                .then(response => response.text())
-                .then(html => {
-                    document.querySelector('.container').innerHTML = html;
-                    attachEventListeners(); // Re-attach event listeners after content load
-                })
-                               .catch(error => console.error('Error loading content:', error));
-            }
-
-            function attachEventListeners() {
-                document.querySelector('.btn-another-order').addEventListener('click', function() {
-                    loadContent('{{ url_for('index') }}');
-                });
-            }
-
-            attachEventListeners(); // Initial attachment of event listeners
         });
+
+        function loadContent(url) {
+            fetch(url, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'text/html'
+                }
+            })
+            .then(response => response.text())
+            .then(html => {
+                document.querySelector('.container').innerHTML = html;
+                attachEventListeners(); // Re-attach event listeners after content load
+            })
+            .catch(error => console.error('Error loading content:', error));
+        }
+
+        function attachEventListeners() {
+            document.querySelector('.btn-next').addEventListener('click', function() {
+                const page = this.getAttribute('data-page');
+                loadContent(`/load_content?page=${page}`);
+            });
+        }
     </script>
 </body>
 </html>

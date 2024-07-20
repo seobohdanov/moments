@@ -35,8 +35,8 @@
             {% endif %}
         </div>
         <div id="button-container">
-            <button type="button" class="btn btn-secondary" onclick="loadContent('{{ url_for('index') }}')">Add More Photos</button>
-            <button type="button" class="btn btn-primary" onclick="loadContent('{{ url_for('complete_order_form') }}')">Complete Order</button>
+            <button type="button" class="btn btn-secondary btn-next" data-page="index">Add More Photos</button>
+            <button type="button" class="btn btn-primary btn-next" data-page="complete_order_form">Complete Order</button>
         </div>
     </div>
     <script src="{{ url_for('static', filename='scripts.js') }}"></script>

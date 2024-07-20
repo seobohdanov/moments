@@ -84,7 +84,7 @@
 <body>
     <div class="container">
         <h1>Complete Order</h1>
-        <form action="{{ url_for('complete_order') }}" method="post">
+        <form id="completeOrderForm" action="{{ url_for('complete_order') }}" method="post">
             <div class="form-group">
                 <label for="first_name">First Name:</label>
                 <input type="text" id="first_name" name="first_name" class="form-control" required>
@@ -131,6 +131,24 @@
     </div>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
+            document.getElementById('completeOrderForm').addEventListener('submit', function (e) {
+                e.preventDefault();
+                const formData = new FormData(this);
+                fetch(this.action, {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        loadContent(data.next_url); // Load confirmation page
+                    } else {
+                        console.error('Error:', data.error);
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+            });
+
             function removePhoto(orderIndex, photoIndex) {
                 fetch("{{ url_for('remove_photo') }}", {
                     method: "POST",

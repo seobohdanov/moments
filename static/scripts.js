@@ -17,29 +17,32 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function attachEventListeners() {
-        document.getElementById('orderForm').addEventListener('submit', function (e) {
-            e.preventDefault();
-            const formData = new FormData(this);
-            fetch(this.action, {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    loadContent(data.next_url); // Load order summary
-                } else {
-                    console.error('Error:', data.error);
-                }
-            })
-            .catch(error => console.error('Error:', error));
-        });
-
         document.querySelectorAll('.btn-next').forEach(button => {
             button.addEventListener('click', function () {
-                loadContent(this.dataset.url);
+                const page = this.getAttribute('data-page');
+                loadContent(`/load_content?page=${page}`);
             });
         });
+
+        if (document.getElementById('orderForm')) {
+            document.getElementById('orderForm').addEventListener('submit', function (e) {
+                e.preventDefault();
+                const formData = new FormData(this);
+                fetch(this.action, {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        loadContent(data.next_url); // Load next page
+                    } else {
+                        console.error('Error:', data.error);
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+            });
+        }
 
         document.querySelectorAll('.remove-photo').forEach(button => {
             button.addEventListener('click', function () {

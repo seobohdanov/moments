@@ -28,7 +28,7 @@
         <div class="button-group">
             <button type="submit" id="submit-button" class="btn btn-primary">Add to Order</button>
             <button type="button" id="clear-all-button" class="btn btn-danger" style="display:none;">Clear All</button>
-            <button type="button" id="skip-button" class="btn btn-secondary" style="display:none;" onclick="loadContent('{{ url_for('order_summary') }}')">Skip to Order Summary</button>
+            <button type="button" id="skip-button" class="btn btn-secondary btn-next" data-page="order_summary" style="display:none;">Skip to Order Summary</button>
         </div>
         <div id="progress-bar-container" class="progress-bar-container">
             <div id="progress-bar" class="progress-bar"><div></div></div>
@@ -38,4 +38,4 @@
     <div class="form-group">
         <p id="error-message" style="color: red;"></p>
     </div>
-</form>
+</form> 
