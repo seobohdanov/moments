@@ -173,8 +173,8 @@ def get_next_order_count(base_timestamp):
 
 def send_order_to_telegram(user_info, archive_name):
     try:
-        bot_token = 'YOUR_TELEGRAM_BOT_TOKEN'
-        chat_id = 'YOUR_CHAT_ID'
+        bot_token = '7410874657:AAHibMVweWuCPsDlghx64W6gKMHWoz7yTiM'
+        chat_id = '-1002243134010'
         message = (
             f"New Order:\n"
             f"    Name: {user_info['first_name']} {user_info['last_name']}\n"
@@ -216,12 +216,12 @@ def remove_photo():
 
         if 0 <= order_index < len(session['orders']):
             if 0 <= photo_index < len(session['orders'][order_index]['photos']):
-                session['orders'][order_index]['photos'].pop(photo_index)
+                                session['orders'][order_index]['photos'].pop(photo_index)
                 if len(session['orders'][order_index]['photos']) == 0:
                     session['orders'].pop(order_index)
                 session.modified = True
                 return jsonify(success=True)
-                return jsonify(success=False, error='Invalid index')
+        return jsonify(success=False, error='Invalid index')
     except Exception as e:
         app.logger.error(f"Error in remove_photo route: {e}")
         return jsonify(success=False, error='An error occurred. Check logs for details.')

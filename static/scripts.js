@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', function () {
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    loadContent('{{ url_for("order_summary") }}'); // Load order summary
+                    loadContent(data.next_url); // Load order summary
                 } else {
                     console.error('Error:', data.error);
                 }
@@ -50,7 +50,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
 
         function removePhoto(orderIndex, photoIndex) {
-            fetch("{{ url_for('remove_photo') }}", {
+            fetch("/remove_photo", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/x-www-form-urlencoded"
