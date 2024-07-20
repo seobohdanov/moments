@@ -44,6 +44,26 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         }
 
+        if (document.getElementById('completeOrderForm')) {
+            document.getElementById('completeOrderForm').addEventListener('submit', function (e) {
+                e.preventDefault();
+                const formData = new FormData(this);
+                fetch(this.action, {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        loadContent(data.next_url); // Load confirmation page
+                    } else {
+                        console.error('Error:', data.error);
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+            });
+        }
+
         document.querySelectorAll('.remove-photo').forEach(button => {
             button.addEventListener('click', function () {
                 const orderIndex = this.dataset.orderIndex;
