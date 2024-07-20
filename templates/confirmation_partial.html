@@ -1,0 +1,66 @@
+<div id="confirmation-content">
+    <h1>Order Confirmed</h1>
+    <p>Thank you, {{ user_info.first_name }} {{ user_info.last_name }}! Your order will be delivered to {{ user_info.city }}, Post Office No. {{ user_info.post_office }}.</p>
+    <button class="btn btn-primary" id="btn-another-order">Place Another Order</button>
+    <h2>Current Orders</h2>
+    <ul class="order-list">
+        {% for order_index, order in enumerate(orders) %}
+        <li id="order-{{ order_index }}">
+            <p><strong>Size:</strong> {{ order.size }}</p>
+            <p><strong>Paper Type:</strong> {{ order.paper_type }}</p>
+            <p><strong>Photos:</strong></p>
+            <ul class="photo-list">
+                {% for photo_index, photo in enumerate(order.photos) %}
+                <li class="photo-item" data-photo-index="{{ photo_index }}">
+                    <div class="photo-container">
+                        <img src="{{ url_for('uploaded_file', filename=photo) }}" alt="{{ photo }}" class="photo-preview">
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        setTimeout(function () {
+            fetch("{{ url_for('clear_all') }}", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded"
+                }
+            }).then(response => response.json()).then(data => {
+                if (data.success) {
+                    window.location.href = "{{ url_for('index') }}";
+                } else {
+                    console.error('Clear all failed.');
+                }
+            }).catch(error => {
+                console.error('Error:', error);
+            });
+        }, 5000);  // Таймер на 5 секунд
+
+        document.getElementById('btn-another-order').addEventListener('click', function() {
+            fetch("{{ url_for('clear_all') }}", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded"
+                }
+            }).then(response => response.json()).then(data => {
+                if (data.success) {
+                    window.location.href = "{{ url_for('index') }}";
+                } else {
+                    console.error('Clear all failed.');
+                }
+            }).catch(error => {
+                console.error('Error:', error);
+            });
+        });
+
+        // Prevent back navigation
+        window.onpopstate = function(event) {
+            history.go(1);
+        };
+    });
+</script>

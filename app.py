@@ -53,12 +53,24 @@ def delayed_clear_session(delay):
 def index():
     try:
         if 'user_id' not in session:
-            session['user_id'] = str(uuid.uuid4())  # Генерация уникального идентификатора для сессии
+            session['user_id'] = str(uuid.uuid4())
         orders = session.get('orders', [])
         total_photos = sum(len(order['photos']) for order in orders)
         return render_template('index.html', orders=orders, total_photos=total_photos)
     except Exception as e:
         app.logger.error(f"Error in index route: {e}")
+        return "An error occurred. Check logs for details.", 500
+
+@app.route('/index_partial')
+def index_partial():
+    try:
+        if 'user_id' not in session:
+            session['user_id'] = str(uuid.uuid4())
+        orders = session.get('orders', [])
+        total_photos = sum(len(order['photos']) for order in orders)
+        return render_template('index_partial.html', orders=orders, total_photos=total_photos)
+    except Exception as e:
+        app.logger.error(f"Error in index_partial route: {e}")
         return "An error occurred. Check logs for details.", 500
 
 @app.route('/add_order', methods=['POST'])
@@ -85,29 +97,29 @@ def add_order():
         session['orders'].append(order)
         session.modified = True
 
-        return redirect(url_for('order_summary'))
+        return redirect(url_for('order_summary_partial'))
     except Exception as e:
         app.logger.error(f"Error in add_order route: {e}")
         return "An error occurred. Check logs for details.", 500
 
-@app.route('/order_summary')
-def order_summary():
+@app.route('/order_summary_partial')
+def order_summary_partial():
     try:
         orders = session.get('orders', [])
-        return render_template('order_summary.html', orders=orders)
+        return render_template('order_summary_partial.html', orders=orders)
     except Exception as e:
-        app.logger.error(f"Error in order_summary route: {e}")
+        app.logger.error(f"Error in order_summary_partial route: {e}")
         return "An error occurred. Check logs for details.", 500
 
-@app.route('/complete_order_form')
-def complete_order_form():
+@app.route('/complete_order_form_partial')
+def complete_order_form_partial():
     try:
         if 'order_submitted' in session:
-            return redirect(url_for('index'))
+            return redirect(url_for('index_partial'))
         orders = session.get('orders', [])
-        return render_template('complete_order_form.html', orders=orders)
+        return render_template('complete_order_form_partial.html', orders=orders)
     except Exception as e:
-        app.logger.error(f"Error in complete_order_form route: {e}")
+        app.logger.error(f"Error in complete_order_form_partial route: {e}")
         return "An error occurred. Check logs for details.", 500
 
 @app.route('/complete_order', methods=['POST'])
@@ -129,19 +141,19 @@ def complete_order():
 
         delayed_clear_session(5)  # Очистка сессии через 5 секунд
         
-        return render_template('confirmation.html', archive_name=archive_name, user_info=user_info, orders=session.get('orders', []))
+        return render_template('confirmation_partial.html', archive_name=archive_name, user_info=user_info, orders=session.get('orders', []))
     except Exception as e:
         app.logger.error(f"Error in complete_order route: {e}")
         return "An error occurred. Check logs for details.", 500
 
-@app.route('/confirmation')
-def confirmation():
+@app.route('/confirmation_partial')
+def confirmation_partial():
     try:
         archive_name = request.args.get('archive_name')
         user_info = session.get('user_info', {})
         orders = session.get('orders', [])
         total_photos = sum(len(order['photos']) for order in orders)
-        return render_template('confirmation.html', user_info=user_info, archive_name=archive_name, orders=orders, total_photos=total_photos)
+        return render_template('confirmation_partial.html', user_info=user_info, archive_name=archive_name, orders=orders, total_photos=total_photos)
     except Exception as e:
         app.logger.error(f"Error in confirmation route: {e}")
         return "An error occurred. Check logs for details.", 500
@@ -219,7 +231,7 @@ def remove_photo():
         if 0 <= order_index < len(session['orders']):
             if 0 <= photo_index < len(session['orders'][order_index]['photos']):
                 app.logger.debug(f"Removing photo at index {photo_index} from order {order_index}")
-                session['orders'][order_index]['photos'].pop(                photo_index)
+                session['orders'][order_index]['photos'].pop(photo_index)
                 # Check if the order list is empty and remove the order if it is
                 if len(session['orders'][order_index]['photos']) == 0:
                     session['orders'].pop(order_index)

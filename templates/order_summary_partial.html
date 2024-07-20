@@ -1,0 +1,33 @@
+<div id="order-summary-content">
+    <h1>Order Summary</h1>
+    <div id="button-container">
+        <button type="button" id="clear-all-button" class="btn btn-danger">Clear All</button>
+        <button type="button" class="btn btn-secondary" onclick="window.location.href='{{ url_for('index') }}'">Add More Photos</button>
+        <button type="button" class="btn btn-primary" onclick="window.location.href='{{ url_for('complete_order_form') }}'">Complete Order</button>
+    </div>
+    <div id="orders-container">
+        {% if orders %}
+            <ul class="order-list">
+                {% for order_index, order in enumerate(orders) %}
+                <li id="order-{{ order_index }}">
+                    <p><strong>Size:</strong> {{ order.size }}</p>
+                    <p><strong>Paper Type:</strong> {{ order.paper_type }}</p>
+                    <p><strong>Photos:</strong></p>
+                    <ul class="photo-list">
+                        {% for photo_index, photo in enumerate(order.photos) %}
+                        <li class="photo-item" data-photo-index="{{ photo_index }}">
+                            <div class="photo-container">
+                                <img src="{{ url_for('uploaded_file', filename=photo) }}" alt="{{ photo }}" class="photo-preview">
+                                <button class="remove-photo" data-order-index="{{ order_index }}" data-photo-index="{{ photo_index }}">X</button>
+                            </div>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No orders yet.</p>
+        {% endif %}
+    </div>
+</div>
