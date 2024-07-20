@@ -240,7 +240,7 @@ def remove_photo():
             return jsonify({'success': True, 'redirect': url_for('index_partial') if not session['orders'] else None})
         else:
             app.logger.error(f"Invalid photo_index: {photo_index} for order_index: {order_index}. Photos in order: {session['orders'][order_index]['photos']}")
-    else:
+        else:
         app.logger.error(f"Invalid order_index: {order_index}")
 
     return jsonify({'success': False, 'error': f'Invalid index: order_index={order_index}, photo_index={photo_index}'})
