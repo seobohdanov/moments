@@ -229,25 +229,24 @@ def remove_photo():
         app.logger.debug(f"Current orders: {session['orders']}")
 
         if 0 <= order_index < len(session['orders']):
-        if 0 <= photo_index < len(session['orders'][order_index]['photos']):
-            app.logger.debug(f"Removing photo at index {photo_index} from order {order_index}")
-            session['orders'][order_index]['photos'].pop(photo_index)
-            # Check if the order list is empty and remove the order if it is
-            if len(session['orders'][order_index]['photos']) == 0:
-                session['orders'].pop(order_index)
-            session.modified = True
-            app.logger.debug(f"Updated orders: {session['orders']}")
-            return jsonify({'success': True, 'redirect': url_for('index_partial') if not session['orders'] else None})
+            if 0 <= photo_index < len(session['orders'][order_index]['photos']):
+                app.logger.debug(f"Removing photo at index {photo_index} from order {order_index}")
+                session['orders'][order_index]['photos'].pop(photo_index)
+                # Check if the order list is empty and remove the order if it is
+                if len(session['orders'][order_index]['photos']) == 0:
+                    session['orders'].pop(order_index)
+                session.modified = True
+                app.logger.debug(f"Updated orders: {session['orders']}")
+                return jsonify({'success': True, 'redirect': url_for('index_partial') if not session['orders'] else None})
+            else:
+                app.logger.error(f"Invalid photo_index: {photo_index} for order_index: {order_index}. Photos in order: {session['orders'][order_index]['photos']}")
         else:
-            app.logger.error(f"Invalid photo_index: {photo_index} for order_index: {order_index}. Photos in order: {session['orders'][order_index]['photos']}")
-        else:
-        app.logger.error(f"Invalid order_index: {order_index}")
+            app.logger.error(f"Invalid order_index: {order_index}")
 
-    return jsonify({'success': False, 'error': f'Invalid index: order_index={order_index}, photo_index={photo_index}'})
-except Exception as e:
-    app.logger.error(f"Error in remove_photo route: {e}")
-    return jsonify({'success': False, 'error': 'An error occurred. Check logs for details.'})
-
+        return jsonify({'success': False, 'error': f'Invalid index: order_index={order_index}, photo_index={photo_index}'})
+    except Exception as e:
+        app.logger.error(f"Error in remove_photo route: {e}")
+        return jsonify({'success': False, 'error': 'An error occurred. Check logs for details.'})
 @app.route('/clear_all', methods=['POST'])
 def clear_all():
     try:
