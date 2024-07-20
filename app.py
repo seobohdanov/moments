@@ -237,7 +237,7 @@ def remove_photo():
                     session['orders'].pop(order_index)
                 session.modified = True
                 app.logger.debug(f"Updated orders: {session['orders']}")
-                return jsonify({'success': True, 'redirect': url_for('index') if not session['orders'] else None})
+                return jsonify({'success': True, 'redirect': url_for('index_partial') if not session['orders'] else None})
             else:
                 app.logger.error(f"Invalid photo_index: {photo_index} for order_index: {order_index}. Photos in order: {session['orders'][order_index]['photos']}")
         else:
@@ -255,7 +255,7 @@ def clear_all():
         session.pop('user_info', None)
         session.pop('order_submitted', None)
         session.modified = True
-        return jsonify({'success': True, 'redirect': url_for('index')})
+        return jsonify({'success': True, 'redirect': url_for('index_partial')})
     except Exception as e:
         app.logger.error(f"Error in clear_all route: {e}")
         return jsonify({'success': False, 'error': 'An error occurred. Check logs for details.'})
