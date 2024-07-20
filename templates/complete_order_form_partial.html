@@ -22,7 +22,7 @@
             <input type="text" id="post_office" name="post_office" class="form-control" required>
         </div>
         <button type="submit" class="btn btn-success">Submit Order</button>
-       </form>
+    </form>
     <h2>Current Orders</h2>
     <ul class="order-list">
         {% for order_index, order in enumerate(orders) %}
@@ -43,5 +43,4 @@
         </li>
         {% endfor %}
     </ul>
-    <p><strong>Total Photos:</strong> {{ total_photos }}</p>
 </div>

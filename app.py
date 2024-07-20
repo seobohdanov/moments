@@ -155,7 +155,7 @@ def confirmation_partial():
         total_photos = sum(len(order['photos']) for order in orders)
         return render_template('confirmation_partial.html', user_info=user_info, archive_name=archive_name, orders=orders, total_photos=total_photos)
     except Exception as e:
-        app.logger.error(f"Error in confirmation route: {e}")
+        app.logger.error(f"Error in confirmation_partial route: {e}")
         return "An error occurred. Check logs for details.", 500
 
 def create_order_archive(user_info, orders):
