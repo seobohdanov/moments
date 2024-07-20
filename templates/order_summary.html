@@ -24,7 +24,7 @@
                                     <img src="{{ url_for('uploaded_file', filename=photo) }}" alt="{{ photo }}" class="photo-preview">
                                     <button class="remove-photo" data-order-index="{{ order_index }}" data-photo-index="{{ photo_index }}">X</button>
                                 </div>
-                                 </li>
+                            </li>
                             {% endfor %}
                         </ul>
                     </li>
@@ -35,6 +35,7 @@
             {% endif %}
         </div>
         <div id="button-container">
+            <button type="button" class="btn btn-danger" id="clear-all">Clear All</button>
             <button type="button" class="btn btn-secondary btn-next" data-page="index">Add More Photos</button>
             <button type="button" class="btn btn-primary btn-next" data-page="complete_order_form">Complete Order</button>
         </div>

@@ -87,6 +87,12 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         });
 
+        if (document.getElementById('clear-all')) {
+            document.getElementById('clear-all').addEventListener('click', function () {
+                clearAll();
+            });
+        }
+
         function removePhoto(orderIndex, photoIndex) {
             fetch("/remove_photo", {
                 method: "POST",
@@ -94,6 +100,31 @@ document.addEventListener('DOMContentLoaded', function () {
                     "Content-Type": "application/x-www-form-urlencoded"
                 },
                 body: `order_index=${orderIndex}&photo_index=${photoIndex}`
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok ' + response.statusText);
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.success) {
+                    loadContent(window.location.href); // Reload current content
+                } else {
+                    console.error(`Error from server: ${data.error}`);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+
+        function clearAll() {
+            fetch("/clear_all", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded"
+                }
             })
             .then(response => {
                 if (!response.ok) {
