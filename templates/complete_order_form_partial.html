@@ -34,7 +34,7 @@
                 {% for photo_index, photo in enumerate(order.photos) %}
                 <li class="photo-item" data-photo-index="{{ photo_index }}">
                     <div class="photo-container">
-                        <img src="{{ url_for('uploaded_file', filename=photo) }}" alt="{{ photo }}" class="photo-preview">
+                                                <img src="{{ url_for('uploaded_file', filename=photo) }}" alt="{{ photo }}" class="photo-preview">
                         <button class="remove-photo" data-order-index="{{ order_index }}" data-photo-index="{{ photo_index }}">X</button>
                     </div>
                 </li>
@@ -44,3 +44,27 @@
         {% endfor %}
     </ul>
 </div>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('.remove-photo').forEach(button => {
+            button.addEventListener('click', function() {
+                const orderIndex = this.getAttribute('data-order-index');
+                const photoIndex = this.getAttribute('data-photo-index');
+
+                fetch('{{ url_for('remove_photo') }}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: `order_index=${orderIndex}&photo_index=${photoIndex}`
+                }).then(response => response.json()).then(data => {
+                    if (data.success) {
+                        document.querySelector(`#order-${orderIndex} .photo-item[data-photo-index="${photoIndex}"]`).remove();
+                    } else {
+                        console.error('Failed to remove photo:', data.error);
+                    }
+                }).catch(error => console.error('Error:', error));
+            });
+        });
+    });
+</script>

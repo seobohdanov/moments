@@ -41,3 +41,30 @@
         </div>
     </form>
 </div>
+<script>
+    document.getElementById('photos').addEventListener('change', function(event) {
+        const preview = document.querySelector('.preview');
+        preview.innerHTML = '';
+        const files = event.target.files;
+
+        function readAndPreview(file) {
+            if ( /\.(jpe?g|png|gif|heic|webp)$/i.test(file.name) ) {
+                const reader = new FileReader();
+
+                reader.addEventListener('load', function() {
+                    const image = new Image();
+                    image.height = 100;
+                    image.title = file.name;
+                    image.src = this.result;
+                    preview.appendChild(image);
+                });
+
+                reader.readAsDataURL(file);
+            }
+        }
+
+        if (files) {
+            [].forEach.call(files, readAndPreview);
+        }
+    });
+</script>
