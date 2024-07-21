@@ -2,6 +2,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const contentContainer = document.getElementById('content-container');
     const photoInput = document.getElementById('photos');
     const previewContainer = document.querySelector('.preview');
+    const errorMessage = document.getElementById('error-message');
+    const submitButton = document.getElementById('submit-button');
 
     function loadContent(url) {
         fetch(url, {
@@ -36,7 +38,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 e.preventDefault();
                 const formData = new FormData(this);
                 if (!photoInput.files.length) {
-                    document.getElementById('error-message').innerText = 'Не выбрано ни одной фотографии';
+                    errorMessage.innerText = 'No photos selected';
                     return;
                 }
                 fetch(this.action, {
@@ -140,8 +142,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
         function checkPhotoCount() {
             const photoCount = document.querySelectorAll('.photo-item').length;
-            document.getElementById('submit-button').disabled = photoCount === 0;
-            document.getElementById('error-message').innerText = photoCount === 0 ? 'Не выбрано ни одной фотографии' : '';
+            submitButton.disabled = photoCount === 0;
+            if (photoCount === 0 && errorMessage) {
+                errorMessage.innerText = 'No photos selected';
+            } else if (errorMessage) {
+                errorMessage.innerText = '';
+            }
         }
 
         function removePhoto(orderIndex, photoIndex) {
