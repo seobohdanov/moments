@@ -185,7 +185,7 @@ document.addEventListener('DOMContentLoaded', function () {
             fetch("/remove_photo", {
                 method: "POST",
                 headers: {
-                    "Content-Type": "application/x-www-form-urlencoded"
+                                        "Content-Type": "application/x-www-form-urlencoded"
                 },
                 body: `order_index=${orderIndex}&photo_index=${photoIndex}`
             })
@@ -195,7 +195,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
                 return response.json();
             })
-                        .then(data => {
+            .then(data => {
                 if (data.success) {
                     if (data.redirect_url) {
                         window.location.href = data.redirect_url;
@@ -232,6 +232,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         allSelectedPhotos = [];
                         updatePreview();
                         checkPhotoCount();
+                        loadContent('/');
                     }
                 } else {
                     console.error(`Error from server: ${data.error}`);
