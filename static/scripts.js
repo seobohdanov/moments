@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', function () {
     let allSelectedPhotos = [];
 
     function loadContent(url) {
+        console.log(`Loading content from URL: ${url}`);
         fetch(url, {
             method: 'GET',
             headers: {
@@ -28,6 +29,7 @@ document.addEventListener('DOMContentLoaded', function () {
         document.querySelectorAll('.btn-next').forEach(button => {
             button.addEventListener('click', function () {
                 const page = this.getAttribute('data-page');
+                console.log(`Navigating to page: ${page}`);
                 loadContent(`/load_content?page=${page}`);
             });
         });
@@ -107,18 +109,21 @@ document.addEventListener('DOMContentLoaded', function () {
             button.addEventListener('click', function () {
                 const orderIndex = this.dataset.orderIndex;
                 const photoIndex = this.dataset.photoIndex;
+                console.log(`Removing photo index: ${photoIndex} from order index: ${orderIndex}`);
                 removePhoto(orderIndex, photoIndex);
             });
         });
 
         if (document.getElementById('clear-all-button')) {
             document.getElementById('clear-all-button').addEventListener('click', function () {
+                console.log("Clear All button clicked");
                 clearAll();
             });
         }
 
         if (document.getElementById('clear-all')) {
             document.getElementById('clear-all').addEventListener('click', function () {
+                console.log("Clear All button clicked");
                 clearAll();
             });
         }
@@ -126,6 +131,17 @@ document.addEventListener('DOMContentLoaded', function () {
         const photoInput = document.getElementById('photos');
         if (photoInput) {
             photoInput.addEventListener('change', handleFileSelect);
+        }
+
+        // Check if place-another-order button exists
+        const placeAnotherOrderButton = document.getElementById('place-another-order');
+        if (placeAnotherOrderButton) {
+            placeAnotherOrderButton.addEventListener('click', function () {
+                console.log("Place Another Order button clicked");
+                clearAllAndRedirect();
+            });
+        } else {
+            console.warn("Place Another Order button not found");
         }
     }
 
@@ -234,20 +250,20 @@ document.addEventListener('DOMContentLoaded', function () {
                     } else {
                         // Update data-photo-index for remaining photos
                         orderList.querySelectorAll('.photo-item').forEach((item, newIndex) => {
-                            item.setAttribute('data-photo-index', newIndex);
-                            item.querySelector('.remove-photo').setAttribute('data-photo-index', newIndex);
-                        });
+                                                        item.setAttribute('data-photo-index', newIndex);
+                                item.querySelector('.remove-photo').setAttribute('data-photo-index', newIndex);
+                            });
+                        }
+                    } else {
+                        console.error(`Photo item not found for order ${orderIndex} and photo ${photoIndex}`);
                     }
                 } else {
-                    console.error(`Photo item not found for order ${orderIndex} and photo ${photoIndex}`);
+                    console.error(`Error from server: ${data.error}`);
                 }
-            } else {
-                console.error(`Error from server: ${data.error}`);
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
     }
 
     function clearAll() {
@@ -255,7 +271,7 @@ document.addEventListener('DOMContentLoaded', function () {
             method: "POST",
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded"
-                            }
+            }
         })
         .then(response => {
             if (!response.ok) {
@@ -304,8 +320,13 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // Attach event listener for "Place Another Order" button
-    document.getElementById('place-another-order').addEventListener('click', function () {
-        console.log("Place Another Order button clicked");
-        clearAllAndRedirect();
-    });
+    const placeAnotherOrderButton = document.getElementById('place-another-order');
+    if (placeAnotherOrderButton) {
+        placeAnotherOrderButton.addEventListener('click', function () {
+            console.log("Place Another Order button clicked");
+            clearAllAndRedirect();
+        });
+    } else {
+        console.warn("Place Another Order button not found");
+    }
 });
