@@ -87,9 +87,9 @@
             function attachEventListeners() {
                 document.querySelectorAll('.remove-photo').forEach(button => {
                     button.addEventListener('click', function () {
-                                                const orderIndex = button.dataset.orderIndex;
+                        const orderIndex = button.dataset.orderIndex;
                         const photoIndex = button.dataset.photoIndex;
-                        removePhoto(orderIndex, photoIndex);
+                                               removePhoto(orderIndex, photoIndex);
                     });
                 });
 

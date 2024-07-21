@@ -52,6 +52,8 @@ document.addEventListener('DOMContentLoaded', function () {
                     document.getElementById('error-message').innerText = 'No photos selected';
                     return;
                 }
+                document.getElementById('submit-button').disabled = true; // Disable the button to prevent multiple submissions
+
                 const formData = new FormData(orderForm);
                 allSelectedPhotos.forEach((file, index) => {
                     formData.append('photos', file, file.name);
@@ -79,10 +81,12 @@ document.addEventListener('DOMContentLoaded', function () {
                     } else {
                         console.error('Network response was not ok');
                     }
+                    document.getElementById('submit-button').disabled = false; // Re-enable the button after the request is complete
                 });
 
                 xhr.addEventListener('error', function () {
                     console.error('Error during the upload');
+                    document.getElementById('submit-button').disabled = false; // Re-enable the button if there's an error
                 });
 
                 xhr.send(formData);
@@ -148,7 +152,7 @@ document.addEventListener('DOMContentLoaded', function () {
         if (placeAnotherOrderButton) {
             placeAnotherOrderButton.addEventListener('click', function () {
                 console.log("Place Another Order button clicked");
-                clearAllAndRedirect();
+                                clearAllAndRedirect();
             });
         } else {
             console.warn("Place Another Order button not found");
@@ -164,7 +168,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function updatePreview() {
-                const previewContainer = document.querySelector('.preview');
+        const previewContainer = document.querySelector('.preview');
         if (previewContainer) {
             previewContainer.innerHTML = '';
             allSelectedPhotos.forEach((file, index) => {
@@ -328,16 +332,5 @@ document.addEventListener('DOMContentLoaded', function () {
     attachEventListeners(); // Initial attachment of event listeners
     if (document.querySelector('.preview')) {
         updatePreview();
-    }
-
-    // Attach event listener for "Place Another Order" button
-    const placeAnotherOrderButton = document.getElementById('place-another-order');
-    if (placeAnotherOrderButton) {
-        placeAnotherOrderButton.addEventListener('click', function () {
-            console.log("Place Another Order button clicked");
-            clearAllAndRedirect();
-        });
-    } else {
-        console.warn("Place Another Order button not found");
     }
 });
