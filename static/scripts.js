@@ -21,12 +21,7 @@ document.addEventListener('DOMContentLoaded', function () {
             attachEventListeners(); // Re-attach event listeners after content load
             if (url.includes('order_form')) {
                 updatePreview();
-                if (fromOrderSummary && allSelectedPhotos.length > 0) {
-                    document.getElementById('skip-button').style.display = 'inline-block';
-                } else {
-                    document.getElementById('skip-button').style.display = 'none';
-                }
-                fromOrderSummary = false;
+                toggleSkipButton();
             }
         })
         .catch(error => console.error('Error loading content:', error));
@@ -260,9 +255,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
                         if (document.querySelectorAll('.order-list .photo-list').length === 0) {
                             // Redirect to order form page if no orders left
-                            window.location.href = '/';
-                        }
-                    } else {
+                            window.location.href = '/';                    } else {
                         // Update data-photo-index for remaining photos
                         orderList.querySelectorAll('.photo-item').forEach((item, newIndex) => {
                             item.setAttribute('data-photo-index', newIndex);
@@ -329,8 +322,21 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
+    function toggleSkipButton() {
+        const skipButton = document.getElementById('skip-button');
+        if (skipButton) {
+            if (fromOrderSummary && allSelectedPhotos.length > 0) {
+                skipButton.style.display = 'inline-block';
+            } else {
+                skipButton.style.display = 'none';
+            }
+        }
+    }
+
     attachEventListeners(); // Initial attachment of event listeners
     if (document.querySelector('.preview')) {
         updatePreview();
     }
+    toggleSkipButton(); // Ensure the skip button is correctly displayed/hidden on initial load
 });
+                       
