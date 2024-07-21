@@ -36,11 +36,11 @@ document.addEventListener('DOMContentLoaded', function () {
         if (document.getElementById('orderForm')) {
             document.getElementById('orderForm').addEventListener('submit', function (e) {
                 e.preventDefault();
-                const formData = new FormData(this);
                 if (!photoInput.files.length) {
                     errorMessage.innerText = 'No photos selected';
                     return;
                 }
+                const formData = new FormData(this);
                 fetch(this.action, {
                     method: 'POST',
                     body: formData
@@ -144,8 +144,6 @@ document.addEventListener('DOMContentLoaded', function () {
             const photoCount = document.querySelectorAll('.photo-item').length;
             submitButton.disabled = photoCount === 0;
             if (photoCount === 0 && errorMessage) {
-                errorMessage.innerText = 'No photos selected';
-            } else if (errorMessage) {
                 errorMessage.innerText = '';
             }
         }
