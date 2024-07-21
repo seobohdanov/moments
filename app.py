@@ -215,7 +215,10 @@ def send_order_to_telegram(user_info, archive_name):
         })
     except Exception as e:
         app.logger.error(f"Failed to send message to Telegram: {e}")
-
+@app.before_request
+def before_request():
+    if request.headers.get('X-Forwarded-Proto') == 'https':
+        request.environ['wsgi.url_scheme'] = 'https'
 @app.route('/uploads/<filename>')
 def uploaded_file(filename):
     try:
