@@ -137,49 +137,49 @@ document.addEventListener('DOMContentLoaded', function () {
         checkPhotoCount();
     }
 
-   function updatePreview() {
-    const previewContainer = document.querySelector('.preview');
-    if (previewContainer) {
-        previewContainer.innerHTML = '';
-        allSelectedPhotos.forEach((file, index) => {
-            const reader = new FileReader();
-            reader.onload = function (e) {
-                const photoItem = document.createElement('div');
-                photoItem.classList.add('photo-item');
-                photoItem.dataset.photoIndex = index;
+    function updatePreview() {
+        const previewContainer = document.querySelector('.preview');
+        if (previewContainer) {
+            previewContainer.innerHTML = '';
+            allSelectedPhotos.forEach((file, index) => {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    const photoItem = document.createElement('div');
+                    photoItem.classList.add('photo-item');
+                    photoItem.dataset.photoIndex = index;
 
-                const photoContainer = document.createElement('div');
-                photoContainer.classList.add('photo-container');
+                    const photoContainer = document.createElement('div');
+                    photoContainer.classList.add('photo-container');
 
-                const img = document.createElement('img');
-                img.src = e.target.result;
-                img.classList.add('photo-preview');
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+                    img.classList.add('photo-preview');
 
-                const removeButton = document.createElement('button');
-                removeButton.classList.add('remove-photo');
-                removeButton.innerText = 'X';
-                removeButton.dataset.photoIndex = index;
-                removeButton.addEventListener('click', function () {
-                    allSelectedPhotos.splice(photoItem.dataset.photoIndex, 1);
-                    updatePreview();
-                    checkPhotoCount();
-                    if (allSelectedPhotos.length === 0) {
-                        clearAll();
-                    }
-                });
+                    const removeButton = document.createElement('button');
+                    removeButton.classList.add('remove-photo');
+                    removeButton.innerText = 'X';
+                    removeButton.dataset.photoIndex = index;
+                    removeButton.addEventListener('click', function () {
+                        allSelectedPhotos.splice(photoItem.dataset.photoIndex, 1);
+                        updatePreview();
+                        checkPhotoCount();
+                        if (allSelectedPhotos.length === 0) {
+                            clearAll();
+                        }
+                    });
 
-                photoContainer.appendChild(img);
-                photoContainer.appendChild(removeButton);
-                photoItem.appendChild(photoContainer);
-                previewContainer.appendChild(photoItem);
-            }
-            reader.readAsDataURL(file);
-        });
-        document.getElementById('photos').value = ''; // Clear the file input to allow re-selecting the same files if needed
-    } else {
-        console.error('Preview container not found');
+                    photoContainer.appendChild(img);
+                    photoContainer.appendChild(removeButton);
+                    photoItem.appendChild(photoContainer);
+                    previewContainer.appendChild(photoItem);
+                }
+                reader.readAsDataURL(file);
+            });
+            document.getElementById('photos').value = ''; // Clear the file input to allow re-selecting the same files if needed
+        } else {
+            console.error('Preview container not found');
+        }
     }
-}
 
     function checkPhotoCount() {
         const photoCount = allSelectedPhotos.length;
@@ -265,7 +265,7 @@ document.addEventListener('DOMContentLoaded', function () {
         })
         .then(data => {
             if (data.success) {
-                window.location.href = '/'; // Redirect to order form page
+                                window.location.href = data.redirect_url; // Redirect to the order form page
             } else {
                 console.error(`Error from server: ${data.error}`);
             }
@@ -276,4 +276,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     attachEventListeners(); // Initial attachment of event listeners
+    if (document.querySelector('.preview')) {
+        updatePreview();
+    }
 });
