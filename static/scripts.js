@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 console.log(`Navigating to page: ${page}`);
                 loadContent(`/load_content?page=${page}`);
                 if (page === 'order_summary') {
-                    localStorage.setItem('fromOrderSummary', true);
+                    localStorage.setItem('fromOrderSummary', 'true');
                 }
             });
         });
@@ -256,6 +256,13 @@ document.addEventListener('DOMContentLoaded', function () {
                         if (document.querySelectorAll('.order-list .photo-list').length === 0) {
                             // Redirect to order form page if no orders left
                             window.location.href = '/';
+                        }
+                    } else {
+                        // Update data-photo-index for remaining photos
+                        orderList.querySelectorAll('.photo-item').forEach((item, newIndex) => {
+                            item.setAttribute('data-photo-index',                                newIndex);
+                                item.querySelector('.remove-photo').setAttribute('data-photo-index',newIndex);
+                            });
                         }
                     } else {
                         // Update data-photo-index for remaining photos
