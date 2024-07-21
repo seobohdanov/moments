@@ -152,7 +152,7 @@ document.addEventListener('DOMContentLoaded', function () {
         if (placeAnotherOrderButton) {
             placeAnotherOrderButton.addEventListener('click', function () {
                 console.log("Place Another Order button clicked");
-                                clearAllAndRedirect();
+                clearAllAndRedirect();
             });
         } else {
             console.warn("Place Another Order button not found");
@@ -217,7 +217,7 @@ document.addEventListener('DOMContentLoaded', function () {
         submitButton.disabled = photoCount === 0;
         const errorMessage = document.getElementById('error-message');
         if (photoCount === 0) {
-            errorMessage.innerText = '';
+            errorMessage.innerText = 'No photos selected';
         } else {
             errorMessage.innerText = '';
         }
