@@ -156,6 +156,9 @@ document.addEventListener('DOMContentLoaded', function () {
                         allSelectedPhotos.splice(photoItem.dataset.photoIndex, 1);
                         updatePreview();
                         checkPhotoCount();
+                        if (allSelectedPhotos.length === 0) {
+                            clearAll();
+                        }
                     });
 
                     photoContainer.appendChild(img);
@@ -222,7 +225,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     allSelectedPhotos = [];
                     updatePreview();
                     checkPhotoCount();
-                    loadContent('/load_content?page=order_summary');
+                    loadContent('/');
                 } else {
                     console.error(`Error from server: ${data.error}`);
                 }
