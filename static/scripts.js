@@ -1,5 +1,7 @@
 document.addEventListener('DOMContentLoaded', function () {
     const contentContainer = document.getElementById('content-container');
+    const photoInput = document.getElementById('photos');
+    const previewContainer = document.querySelector('.preview');
 
     function loadContent(url) {
         fetch(url, {
@@ -33,6 +35,10 @@ document.addEventListener('DOMContentLoaded', function () {
             document.getElementById('orderForm').addEventListener('submit', function (e) {
                 e.preventDefault();
                 const formData = new FormData(this);
+                if (!photoInput.files.length) {
+                    document.getElementById('error-message').innerText = 'Не выбрано ни одной фотографии';
+                    return;
+                }
                 fetch(this.action, {
                     method: 'POST',
                     body: formData
@@ -93,6 +99,24 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         }
 
+        if (photoInput) {
+            photoInput.addEventListener('change', updatePreview);
+        }
+
+        function updatePreview() {
+            previewContainer.innerHTML = '';
+            Array.from(photoInput.files).forEach(file => {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+                    img.classList.add('photo-preview');
+                    previewContainer.appendChild(img);
+                }
+                reader.readAsDataURL(file);
+            });
+        }
+
         function removePhoto(orderIndex, photoIndex) {
             fetch("/remove_photo", {
                 method: "POST",
@@ -109,7 +133,20 @@ document.addEventListener('DOMContentLoaded', function () {
             })
             .then(data => {
                 if (data.success) {
-                    loadContent(window.location.href); // Reload current content
+                    const photoItem = document.querySelector(`#order-${orderIndex} .photo-item[data-photo-index="${photoIndex}"]`);
+                    if (photoItem) {
+                        photoItem.parentNode.removeChild(photoItem);
+                    }
+                    const orderList = document.querySelector(`#order-${orderIndex} .photo-list`);
+                    if (orderList.children.length === 0) {
+                        const orderElement = document.getElementById(`order-${orderIndex}`);
+                        if (orderElement) {
+                            orderElement.parentNode.removeChild(orderElement);
+                        }
+                        if (document.querySelectorAll('.order-list .photo-list').length === 0) {
+                            loadContent('/load_content?page=index');
+                        }
+                    }
                 } else {
                     console.error(`Error from server: ${data.error}`);
                 }

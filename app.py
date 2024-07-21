@@ -91,6 +91,8 @@ def add_order():
         size = request.form['size']
         paper_type = request.form.get('paper_type', 'glossy')
         photos = request.files.getlist('photos')
+        if not photos:
+            return jsonify(success=False, error='No photos selected')
         photo_filenames = []
         for photo in photos:
             if photo and allowed_file(photo.filename):
