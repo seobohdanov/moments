@@ -127,28 +127,10 @@
             </li>
             {% endfor %}
         </ul>
-                <p><strong>Total Photos:</strong> {{ total_photos }}</p>
+        <p><strong>Total Photos:</strong> {{ total_photos }}</p>
     </div>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            document.getElementById('completeOrderForm').addEventListener('submit', function (e) {
-                e.preventDefault();
-                const formData = new FormData(this);
-                fetch(this.action, {
-                    method: 'POST',
-                    body: formData
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        loadContent(data.next_url); // Load confirmation page
-                    } else {
-                        console.error('Error:', data.error);
-                    }
-                })
-                .catch(error => console.error('Error:', error));
-            });
-
             function removePhoto(orderIndex, photoIndex) {
                 fetch("{{ url_for('remove_photo') }}", {
                     method: "POST",
@@ -201,7 +183,7 @@
 
             function attachRemovePhotoListeners() {
                 const removeButtons = document.querySelectorAll('.remove-photo');
-                removeButtons.forEach(button => {
+                                removeButtons.forEach(button => {
                     button.addEventListener('click', function () {
                         const orderIndex = button.dataset.orderIndex;
                         const photoIndex = button.dataset.photoIndex;
