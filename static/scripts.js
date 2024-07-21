@@ -1,12 +1,4 @@
 document.addEventListener('DOMContentLoaded', function () {
-    const contentContainer = document.getElementById('content-container');
-    const photoInput = document.getElementById('photos');
-    const previewContainer = document.querySelector('.preview');
-    const errorMessage = document.getElementById('error-message');
-    const submitButton = document.getElementById('submit-button');
-    const clearAllButton = document.getElementById('clear-all-button');
-    const skipButton = document.getElementById('skip-button');
-    const progressBar = document.getElementById('progress-bar');
     let allSelectedPhotos = [];
 
     function loadContent(url) {
@@ -23,8 +15,11 @@ document.addEventListener('DOMContentLoaded', function () {
             return response.text();
         })
         .then(html => {
-            contentContainer.innerHTML = html;
+            document.querySelector('#content-container').innerHTML = html;
             attachEventListeners(); // Re-attach event listeners after content load
+            if (url.includes('order_form')) {
+                updatePreview();
+            }
         })
         .catch(error => console.error('Error loading content:', error));
     }
@@ -37,25 +32,26 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         });
 
-        if (document.getElementById('orderForm')) {
-            document.getElementById('orderForm').addEventListener('submit', function (e) {
+        const orderForm = document.getElementById('orderForm');
+        if (orderForm) {
+            orderForm.addEventListener('submit', function (e) {
                 e.preventDefault();
                 if (allSelectedPhotos.length === 0) {
-                    errorMessage.innerText = 'No photos selected';
+                    document.getElementById('error-message').innerText = 'No photos selected';
                     return;
                 }
-                const formData = new FormData(this);
+                const formData = new FormData(orderForm);
                 allSelectedPhotos.forEach((file, index) => {
                     formData.append('photos', file, file.name);
                 });
 
                 const xhr = new XMLHttpRequest();
-                xhr.open('POST', this.action, true);
+                xhr.open('POST', orderForm.action, true);
                 xhr.upload.addEventListener('progress', function (e) {
                     if (e.lengthComputable) {
                         const percentComplete = (e.loaded / e.total) * 100;
-                        progressBar.style.width = percentComplete + '%';
-                        progressBar.innerText = Math.round(percentComplete) + '%';
+                        document.getElementById('progress-bar').style.width = percentComplete + '%';
+                        document.getElementById('progress-bar').innerText = Math.round(percentComplete) + '%';
                     }
                 });
 
@@ -81,11 +77,12 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         }
 
-        if (document.getElementById('completeOrderForm')) {
-            document.getElementById('completeOrderForm').addEventListener('submit', function (e) {
+        const completeOrderForm = document.getElementById('completeOrderForm');
+        if (completeOrderForm) {
+            completeOrderForm.addEventListener('submit', function (e) {
                 e.preventDefault();
-                const formData = new FormData(this);
-                fetch(this.action, {
+                const formData = new FormData(completeOrderForm);
+                fetch(completeOrderForm.action, {
                     method: 'POST',
                     body: formData
                 })
@@ -114,144 +111,137 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         });
 
-        if (clearAllButton) {
-            clearAllButton.addEventListener('click', function () {
+        if (document.getElementById('clear-all-button')) {
+            document.getElementById('clear-all-button').addEventListener('click', function () {
                 clearAll();
             });
         }
 
+        const photoInput = document.getElementById('photos');
         if (photoInput) {
             photoInput.addEventListener('change', handleFileSelect);
         }
+    }
 
-        function handleFileSelect(event) {
-            Array.from(event.target.files).forEach(file => {
-                allSelectedPhotos.push(file);
-            });
-            updatePreview();
-            checkPhotoCount();
-        }
+    function handleFileSelect(event) {
+        Array.from(event.target.files).forEach(file => {
+            allSelectedPhotos.push(file);
+        });
+        updatePreview();
+        checkPhotoCount();
+    }
 
-        function updatePreview() {
-            previewContainer.innerHTML = '';
-            allSelectedPhotos.forEach((file, index) => {
-                const reader = new FileReader();
-                reader.onload = function (e) {
-                    const photoItem = document.createElement('div');
-                    photoItem.classList.add('photo-item');
-                    photoItem.dataset.photoIndex = index;
+    function updatePreview() {
+        const previewContainer = document.querySelector('.preview');
+        previewContainer.innerHTML = '';
+        allSelectedPhotos.forEach((file, index) => {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                const photoItem = document.createElement('div');
+                photoItem.classList.add('photo-item');
+                photoItem.dataset.photoIndex = index;
 
-                    const photoContainer = document.createElement('div');
-                    photoContainer.classList.add('photo-container');
+                const photoContainer = document.createElement('div');
+                photoContainer.classList.add('photo-container');
 
-                    const img = document.createElement('img');
-                    img.src = e.target.result;
-                    img.classList.add('photo-preview');
+                const img = document.createElement('img');
+                img.src = e.target.result;
+                img.classList.add('photo-preview');
 
-                    const removeButton = document.createElement('button');
-                    removeButton.classList.add('remove-photo');
-                    removeButton.innerText = 'X';
-                    removeButton.dataset.photoIndex = index;
-                    removeButton.addEventListener('click', function () {
-                        allSelectedPhotos.splice(photoItem.dataset.photoIndex, 1);
-                        updatePreview();
-                        checkPhotoCount();
-                        if (allSelectedPhotos.length === 0) {
-                            clearAll();
-                        }
-                    });
+                const removeButton = document.createElement('button');
+                removeButton.classList.add('remove-photo');
+                removeButton.innerText = 'X';
+                removeButton.dataset.photoIndex = index;
+                removeButton.addEventListener('click', function () {
+                    allSelectedPhotos.splice(photoItem.dataset.photoIndex, 1);
+                    updatePreview();
+                    checkPhotoCount();
+                    if (allSelectedPhotos.length === 0) {
+                        clearAll();
+                    }
+                });
 
-                    photoContainer.appendChild(img);
-                    photoContainer.appendChild(removeButton);
-                    photoItem.appendChild(photoContainer);
-                    previewContainer.appendChild(photoItem);
-                }
-                reader.readAsDataURL(file);
-            });
-            photoInput.value = ''; // Clear the file input to allow re-selecting the same files if needed
-        }
-
-        function checkPhotoCount() {
-            const photoCount = allSelectedPhotos.length;
-            submitButton.disabled = photoCount === 0;
-            if (photoCount === 0 && errorMessage) {
-                errorMessage.innerText = '';
-            } else {
-                errorMessage.innerText = '';
+                photoContainer.appendChild(img);
+                photoContainer.appendChild(removeButton);
+                photoItem.appendChild(photoContainer);
+                previewContainer.appendChild(photoItem);
             }
-        }
+            reader.readAsDataURL(file);
+        });
+        document.getElementById('photos').value = ''; // Clear the file input to allow re-selecting the same files if needed
+    }
 
-        function removePhoto(orderIndex, photoIndex) {
-            fetch("/remove_photo", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/x-www-form-urlencoded"
-                },
-                body: `order_index=${orderIndex}&photo_index=${photoIndex}`
-            })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok ' + response.statusText);
-                }
-                return response.json();
-            })
-            .then(data => {
-                if (data.success) {
-                    if (data.redirect_url) {
-                        window.location.href = data.redirect_url;
-                    } else {
-                        loadContent('/load_content?page=order_summary');
-                    }
+    function checkPhotoCount() {
+        const photoCount = allSelectedPhotos.length;
+        const submitButton = document.getElementById('submit-button');
+        submitButton.disabled = photoCount === 0;
+        if (photoCount === 0) {
+            document.getElementById('error-message').innerText = '';
+        } else {
+            document.getElementById('error-message').innerText = '';
+        }
+    }
+
+    function removePhoto(orderIndex, photoIndex) {
+        fetch("/remove_photo", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+            body: `order_index=${orderIndex}&photo_index=${photoIndex}`
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok ' + response.statusText);
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data.success) {
+                if (data.redirect_url) {
+                    window.location.href = data.redirect_url;
                 } else {
-                    console.error(`Error from server: ${data.error}`);
+                    loadContent('/load_content?page=order_summary');
                 }
-                updateIndices();
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
-        }
+            } else {
+                console.error(`Error from server: ${data.error}`);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    }
 
-        function clearAll() {
-            fetch("/clear_all", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/x-www-form-urlencoded"
-                }
-            })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok ' + response.statusText);
-                }
-                return response.json();
-            })
-            .then(data => {
-                if (data.success) {
-                    if (data.redirect_url) {
-                        window.location.href = data.redirect_url;
-                    } else {
-                        allSelectedPhotos = [];
-                        updatePreview();
-                        checkPhotoCount();
-                        loadContent('/');
-                    }
+    function clearAll() {
+        fetch("/clear_all", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            }
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok ' + response.statusText);
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data.success) {
+                if (data.redirect_url) {
+                    window.location.href = data.redirect_url;
                 } else {
-                    console.error(`Error from server: ${data.error}`);
+                    allSelectedPhotos = [];
+                    updatePreview();
+                    checkPhotoCount();
+                    loadContent('/');
                 }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
-        }
-
-        function updateIndices() {
-            document.querySelectorAll('.photo-item').forEach((item, index) => {
-                item.dataset.photoIndex = index;
-                item.querySelector('.remove-photo').dataset.photoIndex = index;
-            });
-        }
-
-        checkPhotoCount(); // Initial check for photos
+            } else {
+                console.error(`Error from server: ${data.error}`);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
     }
 
     attachEventListeners(); // Initial attachment of event listeners
