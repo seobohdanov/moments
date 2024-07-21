@@ -4,6 +4,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const previewContainer = document.querySelector('.preview');
     const errorMessage = document.getElementById('error-message');
     const submitButton = document.getElementById('submit-button');
+    const clearAllButton = document.getElementById('clear-all-button');
+    const skipButton = document.getElementById('skip-button');
 
     function loadContent(url) {
         fetch(url, {
@@ -95,8 +97,8 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         });
 
-        if (document.getElementById('clear-all')) {
-            document.getElementById('clear-all').addEventListener('click', function () {
+        if (clearAllButton) {
+            clearAllButton.addEventListener('click', function () {
                 clearAll();
             });
         }
@@ -144,6 +146,8 @@ document.addEventListener('DOMContentLoaded', function () {
             const photoCount = document.querySelectorAll('.photo-item').length;
             submitButton.disabled = photoCount === 0;
             if (photoCount === 0 && errorMessage) {
+                errorMessage.innerText = '';
+            } else {
                 errorMessage.innerText = '';
             }
         }
