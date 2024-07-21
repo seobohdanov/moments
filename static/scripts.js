@@ -105,16 +105,43 @@ document.addEventListener('DOMContentLoaded', function () {
 
         function updatePreview() {
             previewContainer.innerHTML = '';
-            Array.from(photoInput.files).forEach(file => {
+            Array.from(photoInput.files).forEach((file, index) => {
                 const reader = new FileReader();
                 reader.onload = function (e) {
+                    const photoItem = document.createElement('div');
+                    photoItem.classList.add('photo-item');
+                    photoItem.dataset.photoIndex = index;
+
+                    const photoContainer = document.createElement('div');
+                    photoContainer.classList.add('photo-container');
+
                     const img = document.createElement('img');
                     img.src = e.target.result;
                     img.classList.add('photo-preview');
-                    previewContainer.appendChild(img);
+
+                    const removeButton = document.createElement('button');
+                    removeButton.classList.add('remove-photo');
+                    removeButton.innerText = 'X';
+                    removeButton.dataset.photoIndex = index;
+                    removeButton.addEventListener('click', function () {
+                        photoItem.remove();
+                        checkPhotoCount();
+                    });
+
+                    photoContainer.appendChild(img);
+                    photoContainer.appendChild(removeButton);
+                    photoItem.appendChild(photoContainer);
+                    previewContainer.appendChild(photoItem);
                 }
                 reader.readAsDataURL(file);
             });
+            checkPhotoCount();
+        }
+
+        function checkPhotoCount() {
+            const photoCount = document.querySelectorAll('.photo-item').length;
+            document.getElementById('submit-button').disabled = photoCount === 0;
+            document.getElementById('error-message').innerText = photoCount === 0 ? 'Не выбрано ни одной фотографии' : '';
         }
 
         function removePhoto(orderIndex, photoIndex) {
@@ -180,6 +207,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 console.error('Error:', error);
             });
         }
+
+        checkPhotoCount(); // Initial check for photos
     }
 
     attachEventListeners(); // Initial attachment of event listeners

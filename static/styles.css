@@ -145,18 +145,23 @@ h3 {
 }
 
 .photo-item {
-    list-style: none;
-    width: calc(25% - 10px); /* Four photos per row */
+    position: relative;
+    display: inline-block;
+    margin: 10px;
+    width: 150px; /* Примерный размер превью */
+    height: 150px;
+    overflow: hidden;
 }
 
 .photo-container {
     position: relative;
     width: 100%;
+    height: 100%;
 }
 
 .photo-preview {
     width: 100%;
-    height: auto; /* Убрали фиксированную высоту, чтобы сохранить пропорции */
+    height: auto;
     border-radius: 5px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
