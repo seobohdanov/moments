@@ -185,7 +185,7 @@ document.addEventListener('DOMContentLoaded', function () {
             fetch("/remove_photo", {
                 method: "POST",
                 headers: {
-                                        "Content-Type": "application/x-www-form-urlencoded"
+                    "Content-Type": "application/x-www-form-urlencoded"
                 },
                 body: `order_index=${orderIndex}&photo_index=${photoIndex}`
             })
@@ -205,6 +205,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 } else {
                     console.error(`Error from server: ${data.error}`);
                 }
+                updateIndices();
             })
             .catch(error => {
                 console.error('Error:', error);
@@ -240,6 +241,13 @@ document.addEventListener('DOMContentLoaded', function () {
             })
             .catch(error => {
                 console.error('Error:', error);
+            });
+        }
+
+        function updateIndices() {
+            document.querySelectorAll('.photo-item').forEach((item, index) => {
+                item.dataset.photoIndex = index;
+                item.querySelector('.remove-photo').dataset.photoIndex = index;
             });
         }
 

@@ -20,7 +20,7 @@
                         <ul class="photo-list">
                             {% for photo_index, photo in enumerate(order.photos) %}
                             <li class="photo-item" data-photo-index="{{ photo_index }}">
-                                <div class="photo-container">
+                                                                <div class="photo-container">
                                     <img src="{{ url_for('uploaded_file', filename=photo) }}" alt="{{ photo }}" class="photo-preview">
                                     <button class="remove-photo" data-order-index="{{ order_index }}" data-photo-index="{{ photo_index }}">X</button>
                                 </div>
@@ -58,6 +58,7 @@
                 .then(html => {
                     document.querySelector('.container').innerHTML = html;
                     attachEventListeners(); // Re-attach event listeners after content load
+                    updateIndices(); // Update indices after loading content
                 })
                 .catch(error => console.error('Error loading content:', error));
             }
@@ -79,6 +80,7 @@
                     } else {
                         console.error(`Error from server: ${data.error}`);
                     }
+                    updateIndices(); // Update indices after removing photo
                 }).catch(error => {
                     console.error('Error:', error);
                 });
@@ -136,7 +138,15 @@
                 });
             }
 
+            function updateIndices() {
+                document.querySelectorAll('.photo-item').forEach((item, index) => {
+                    item.dataset.photoIndex = index;
+                    item.querySelector('.remove-photo').dataset.photoIndex = index;
+                });
+            }
+
             attachEventListeners(); // Initial attachment of event listeners
+            updateIndices(); // Initial update of indices
         });
     </script>
 </body>
