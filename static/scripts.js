@@ -137,8 +137,9 @@ document.addEventListener('DOMContentLoaded', function () {
         checkPhotoCount();
     }
 
-    function updatePreview() {
-        const previewContainer = document.querySelector('.preview');
+   function updatePreview() {
+    const previewContainer = document.querySelector('.preview');
+    if (previewContainer) {
         previewContainer.innerHTML = '';
         allSelectedPhotos.forEach((file, index) => {
             const reader = new FileReader();
@@ -149,7 +150,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 const photoContainer = document.createElement('div');
                 photoContainer.classList.add('photo-container');
-                                const img = document.createElement('img');
+
+                const img = document.createElement('img');
                 img.src = e.target.result;
                 img.classList.add('photo-preview');
 
@@ -174,7 +176,10 @@ document.addEventListener('DOMContentLoaded', function () {
             reader.readAsDataURL(file);
         });
         document.getElementById('photos').value = ''; // Clear the file input to allow re-selecting the same files if needed
+    } else {
+        console.error('Preview container not found');
     }
+}
 
     function checkPhotoCount() {
         const photoCount = allSelectedPhotos.length;
