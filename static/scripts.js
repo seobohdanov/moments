@@ -260,15 +260,9 @@ document.addEventListener('DOMContentLoaded', function () {
                     } else {
                         // Update data-photo-index for remaining photos
                         orderList.querySelectorAll('.photo-item').forEach((item, newIndex) => {
-                            item.setAttribute('data-photo-index',                                newIndex);
-                                item.querySelector('.remove-photo').setAttribute('data-photo-index',newIndex);
-                            });
-                        }
-                    } else {
-                        // Update data-photo-index for remaining photos
-                        orderList.querySelectorAll('.photo-item').forEach((item, newIndex) => {
                             item.setAttribute('data-photo-index', newIndex);
-                            item.querySelector('.remove-photo').setAttribute('data-photo-index', newIndex);
+                            item.querySelector('.remove-photo').setAttribute
+                            ('data-photo-index', newIndex);
                         });
                     }
                 } else {
