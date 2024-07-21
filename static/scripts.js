@@ -216,6 +216,7 @@ document.addEventListener('DOMContentLoaded', function () {
         } else {
             errorMessage.innerText = '';
         }
+        toggleSkipButton(); // Check the skip button visibility after checking photo count
     }
 
     function removePhoto(orderIndex, photoIndex) {
@@ -255,7 +256,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
                         if (document.querySelectorAll('.order-list .photo-list').length === 0) {
                             // Redirect to order form page if no orders left
-                            window.location.href = '/';                    } else {
+                                                       window.location.href = '/';
+                        }
+                    } else {
                         // Update data-photo-index for remaining photos
                         orderList.querySelectorAll('.photo-item').forEach((item, newIndex) => {
                             item.setAttribute('data-photo-index', newIndex);
@@ -339,4 +342,3 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     toggleSkipButton(); // Ensure the skip button is correctly displayed/hidden on initial load
 });
-                       
