@@ -45,7 +45,9 @@
         </form>
         <h2>Current Orders</h2>
         <div id="orders-container">
-            {% if orders %}
+            {% if not orders %}
+                <p>No Orders Yet</p>
+            {% else %}
                 <ul class="order-list">
                     {% for order_index, order in enumerate(orders) %}
                     <li id="order-{{ order_index }}">
@@ -65,8 +67,6 @@
                     </li>
                     {% endfor %}
                 </ul>
-            {% else %}
-                <p>No orders yet.</p>
             {% endif %}
         </div>
         <p><strong>Total Photos:</strong> {{ total_photos }}</p>

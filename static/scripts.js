@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
     let allSelectedPhotos = [];
+    let fromOrderSummary = false; // Track if the user came from Order Summary page
 
     function loadContent(url) {
         console.log(`Loading content from URL: ${url}`);
@@ -20,6 +21,12 @@ document.addEventListener('DOMContentLoaded', function () {
             attachEventListeners(); // Re-attach event listeners after content load
             if (url.includes('order_form')) {
                 updatePreview();
+                if (fromOrderSummary && allSelectedPhotos.length > 0) {
+                    document.getElementById('skip-button').style.display = 'inline-block';
+                } else {
+                    document.getElementById('skip-button').style.display = 'none';
+                }
+                fromOrderSummary = false;
             }
         })
         .catch(error => console.error('Error loading content:', error));
@@ -29,6 +36,9 @@ document.addEventListener('DOMContentLoaded', function () {
         document.querySelectorAll('.btn-next').forEach(button => {
             button.addEventListener('click', function () {
                 const page = this.getAttribute('data-page');
+                if (page === 'order_summary') {
+                    fromOrderSummary = true;
+                }
                 console.log(`Navigating to page: ${page}`);
                 loadContent(`/load_content?page=${page}`);
             });
@@ -154,7 +164,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function updatePreview() {
-        const previewContainer = document.querySelector('.preview');
+                const previewContainer = document.querySelector('.preview');
         if (previewContainer) {
             previewContainer.innerHTML = '';
             allSelectedPhotos.forEach((file, index) => {
@@ -201,10 +211,11 @@ document.addEventListener('DOMContentLoaded', function () {
         const photoCount = allSelectedPhotos.length;
         const submitButton = document.getElementById('submit-button');
         submitButton.disabled = photoCount === 0;
+        const errorMessage = document.getElementById('error-message');
         if (photoCount === 0) {
-            document.getElementById('error-message').innerText = '';
+            errorMessage.innerText = '';
         } else {
-            document.getElementById('error-message').innerText = '';
+            errorMessage.innerText = '';
         }
     }
 
@@ -250,20 +261,20 @@ document.addEventListener('DOMContentLoaded', function () {
                     } else {
                         // Update data-photo-index for remaining photos
                         orderList.querySelectorAll('.photo-item').forEach((item, newIndex) => {
-                                                        item.setAttribute('data-photo-index', newIndex);
-                                item.querySelector('.remove-photo').setAttribute('data-photo-index', newIndex);
-                            });
-                        }
-                    } else {
-                        console.error(`Photo item not found for order ${orderIndex} and photo ${photoIndex}`);
+                            item.setAttribute('data-photo-index', newIndex);
+                            item.querySelector('.remove-photo').setAttribute('data-photo-index', newIndex);
+                        });
                     }
                 } else {
-                    console.error(`Error from server: ${data.error}`);
+                    console.error(`Photo item not found for order ${orderIndex} and photo ${photoIndex}`);
                 }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
+            } else {
+                console.error(`Error from server: ${data.error}`);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
     }
 
     function clearAll() {

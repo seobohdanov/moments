@@ -44,7 +44,7 @@
             <ul class="order-list">
                 {% for order_index, order in enumerate(orders) %}
                 <li id="order-{{ order_index }}">
-                    <p><strong>Size:</strong> {{ order.size }}</p>
+                                        <p><strong>Size:</strong> {{ order.size }}</p>
                     <p><strong>Paper Type:</strong> {{ order.paper_type }}</p>
                     <p><strong>Photos:</strong></p>
                     <ul class="photo-list">
@@ -59,6 +59,9 @@
                 </li>
                 {% endfor %}
             </ul>
+            {% if not orders %}
+                <p>No Orders Yet</p>
+            {% endif %}
             <p><strong>Total Photos:</strong> {{ total_photos }}</p>
         </div>
     </div>

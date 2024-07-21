@@ -7,10 +7,12 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
-       <div class="container">
+    <div class="container">
         <h1>Order Summary</h1>
         <div id="orders-container">
-            {% if orders %}
+            {% if not orders %}
+                <p>No Orders Yet</p>
+            {% else %}
                 <ul class="order-list">
                     {% for order_index, order in enumerate(orders) %}
                     <li id="order-{{ order_index }}">
@@ -30,8 +32,6 @@
                     </li>
                     {% endfor %}
                 </ul>
-            {% else %}
-                <p>No orders yet.</p>
             {% endif %}
         </div>
         <div id="button-container">
@@ -87,7 +87,7 @@
             function attachEventListeners() {
                 document.querySelectorAll('.remove-photo').forEach(button => {
                     button.addEventListener('click', function () {
-                        const orderIndex = button.dataset.orderIndex;
+                                                const orderIndex = button.dataset.orderIndex;
                         const photoIndex = button.dataset.photoIndex;
                         removePhoto(orderIndex, photoIndex);
                     });
