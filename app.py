@@ -93,10 +93,11 @@ def add_order():
         photos = request.files.getlist('photos')
         if not photos:
             return jsonify(success=False, error='No photos selected')
+
         photo_filenames = []
         for photo in photos:
             if photo and allowed_file(photo.filename):
-                filename = photo.filename
+                filename = str(uuid.uuid4()) + '_' + photo.filename  # Генерация уникального имени файла
                 photo.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
                 photo_filenames.append(filename)
         

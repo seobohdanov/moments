@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const submitButton = document.getElementById('submit-button');
     const clearAllButton = document.getElementById('clear-all-button');
     const skipButton = document.getElementById('skip-button');
+    let allSelectedPhotos = [];
 
     function loadContent(url) {
         fetch(url, {
@@ -38,11 +39,15 @@ document.addEventListener('DOMContentLoaded', function () {
         if (document.getElementById('orderForm')) {
             document.getElementById('orderForm').addEventListener('submit', function (e) {
                 e.preventDefault();
-                if (!photoInput.files.length && document.querySelectorAll('.photo-item').length === 0) {
+                if (allSelectedPhotos.length === 0) {
                     errorMessage.innerText = 'No photos selected';
                     return;
                 }
                 const formData = new FormData(this);
+                allSelectedPhotos.forEach((file, index) => {
+                    formData.append('photos', file, file.name);
+                });
+
                 fetch(this.action, {
                     method: 'POST',
                     body: formData
@@ -108,13 +113,13 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         function updatePreview() {
-            previewContainer.innerHTML = '';
             Array.from(photoInput.files).forEach((file, index) => {
+                allSelectedPhotos.push(file);
                 const reader = new FileReader();
                 reader.onload = function (e) {
                     const photoItem = document.createElement('div');
                     photoItem.classList.add('photo-item');
-                    photoItem.dataset.photoIndex = index;
+                    photoItem.dataset.photoIndex = allSelectedPhotos.length - 1;
 
                     const photoContainer = document.createElement('div');
                     photoContainer.classList.add('photo-container');
@@ -126,8 +131,9 @@ document.addEventListener('DOMContentLoaded', function () {
                     const removeButton = document.createElement('button');
                     removeButton.classList.add('remove-photo');
                     removeButton.innerText = 'X';
-                    removeButton.dataset.photoIndex = index;
+                    removeButton.dataset.photoIndex = allSelectedPhotos.length - 1;
                     removeButton.addEventListener('click', function () {
+                        allSelectedPhotos.splice(photoItem.dataset.photoIndex, 1);
                         photoItem.remove();
                         checkPhotoCount();
                     });
@@ -143,7 +149,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         function checkPhotoCount() {
-            const photoCount = document.querySelectorAll('.photo-item').length;
+            const photoCount = allSelectedPhotos.length;
             submitButton.disabled = photoCount === 0;
             if (photoCount === 0 && errorMessage) {
                 errorMessage.innerText = '';
@@ -206,6 +212,7 @@ document.addEventListener('DOMContentLoaded', function () {
             })
             .then(data => {
                 if (data.success) {
+                    allSelectedPhotos = [];
                     loadContent(window.location.href); // Reload current content
                 } else {
                     console.error(`Error from server: ${data.error}`);
