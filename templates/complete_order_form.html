@@ -178,8 +178,8 @@
                                 });
 
                                 if (document.querySelectorAll('.order-list .photo-list').length === 0) {
-                                    // Refresh the page content without redirecting to order summary
-                                    loadContent('/load_content?page=complete_order_form');
+                                    // Redirect to order form page
+                                    window.location.href = '/';
                                 }
                             } else {
                                 // Update data-photo-index for remaining photos
