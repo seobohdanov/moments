@@ -183,7 +183,7 @@
 
             function attachRemovePhotoListeners() {
                 const removeButtons = document.querySelectorAll('.remove-photo');
-                                removeButtons.forEach(button => {
+                removeButtons.forEach(button => {
                     button.addEventListener('click', function () {
                         const orderIndex = button.dataset.orderIndex;
                         const photoIndex = button.dataset.photoIndex;

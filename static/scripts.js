@@ -47,7 +47,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 const xhr = new XMLHttpRequest();
                 xhr.open('POST', orderForm.action, true);
-                                xhr.upload.addEventListener('progress', function (e) {
+                xhr.upload.addEventListener('progress', function (e) {
                     if (e.lengthComputable) {
                         const percentComplete = (e.loaded / e.total) * 100;
                         document.getElementById('progress-bar').style.width = percentComplete + '%';
@@ -204,10 +204,38 @@ document.addEventListener('DOMContentLoaded', function () {
         })
         .then(data => {
             if (data.success) {
-                if (data.redirect_url) {
-                    window.location.href = data.redirect_url;
+                const photoItem = document.querySelector(`#order-${orderIndex} .photo-item[data-photo-index="${photoIndex}"]`);
+                if (photoItem) {
+                    photoItem.parentNode.removeChild(photoItem);
+
+                    const orderList = document.querySelector(`#order-${orderIndex} .photo-list`);
+                    if (orderList.children.length === 0) {
+                        const orderElement = document.getElementById(`order-${orderIndex}`);
+                        if (orderElement) {
+                            orderElement.parentNode.removeChild(orderElement);
+                        }
+
+                        // Update data-order-index for remaining orders
+                        document.querySelectorAll('.order-list > li').forEach((orderElement, newIndex) => {
+                            orderElement.id = `order-${newIndex}`;
+                            orderElement.querySelectorAll('.remove-photo').forEach(button => {
+                                button.setAttribute('data-order-index', newIndex);
+                            });
+                        });
+
+                        if (document.querySelectorAll('.order-list .photo-list').length === 0) {
+                            // Redirect to order form page if no orders left
+                            window.location.href = '/';
+                        }
+                    } else {
+                        // Update data-photo-index for remaining photos
+                        orderList.querySelectorAll('.photo-item').forEach((item, newIndex) => {
+                                                        item.setAttribute('data-photo-index', newIndex);
+                            item.querySelector('.remove-photo').setAttribute('data-photo-index', newIndex);
+                        });
+                    }
                 } else {
-                    loadContent('/load_content?page=order_summary');
+                    console.error(`Photo item not found for order ${orderIndex} and photo ${photoIndex}`);
                 }
             } else {
                 console.error(`Error from server: ${data.error}`);
