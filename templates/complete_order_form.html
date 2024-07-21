@@ -178,7 +178,8 @@
                                 });
 
                                 if (document.querySelectorAll('.order-list .photo-list').length === 0) {
-                                    loadContent('/load_content?page=index');
+                                    // Refresh the page content without redirecting to order summary
+                                    loadContent('/load_content?page=complete_order_form');
                                 }
                             } else {
                                 // Update data-photo-index for remaining photos
@@ -191,7 +192,7 @@
                             console.error(`Photo item not found for order ${orderIndex} and photo ${photoIndex}`);
                         }
                     } else {
-                                                console.error(`Error from server: ${data.error}`);
+                        console.error(`Error from server: ${data.error}`);
                     }
                 }).catch(error => {
                     console.error('Error:', error);
