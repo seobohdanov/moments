@@ -71,7 +71,11 @@
                     body: `order_index=${orderIndex}&photo_index=${photoIndex}`
                 }).then(response => response.json()).then(data => {
                     if (data.success) {
-                        loadContent('/load_content?page=order_summary');
+                        if (data.redirect_url) {
+                            window.location.href = data.redirect_url;
+                        } else {
+                            loadContent('/load_content?page=order_summary');
+                        }
                     } else {
                         console.error(`Error from server: ${data.error}`);
                     }
@@ -118,7 +122,11 @@
                 })
                 .then(data => {
                     if (data.success) {
-                        loadContent('/');
+                        if (data.redirect_url) {
+                            window.location.href = data.redirect_url;
+                        } else {
+                            loadContent('/');
+                        }
                     } else {
                         console.error(`Error from server: ${data.error}`);
                     }

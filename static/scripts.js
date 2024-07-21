@@ -195,9 +195,13 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
                 return response.json();
             })
-            .then(data => {
+                        .then(data => {
                 if (data.success) {
-                    loadContent('/load_content?page=order_summary');
+                    if (data.redirect_url) {
+                        window.location.href = data.redirect_url;
+                    } else {
+                        loadContent('/load_content?page=order_summary');
+                    }
                 } else {
                     console.error(`Error from server: ${data.error}`);
                 }
@@ -222,10 +226,13 @@ document.addEventListener('DOMContentLoaded', function () {
             })
             .then(data => {
                 if (data.success) {
-                    allSelectedPhotos = [];
-                    updatePreview();
-                    checkPhotoCount();
-                    loadContent('/');
+                    if (data.redirect_url) {
+                        window.location.href = data.redirect_url;
+                    } else {
+                        allSelectedPhotos = [];
+                        updatePreview();
+                        checkPhotoCount();
+                    }
                 } else {
                     console.error(`Error from server: ${data.error}`);
                 }

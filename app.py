@@ -25,7 +25,7 @@ if not os.path.exists('logs'):
 
 # Настройка логирования
 file_handler = RotatingFileHandler('logs/app.log', maxBytes=10240, backupCount=10)
-file_handler.setFormatter(logging.Formatter('%(asctime)s %(levelname)s: %(message)s [in %(pathname)s:%(lineno)d]'))
+file_handler.setFormatter(logging.Formatter('%(asctime)s %(levelname)s: %(message)s [in %(pathname)s:%(lineno)d]')
 file_handler.setLevel(logging.DEBUG)
 
 app.logger.addHandler(file_handler)
@@ -203,6 +203,7 @@ def send_order_to_telegram(user_info, archive_name):
             f"New Order:\n"
             f"    Name: {user_info['first_name']} {user_info['last_name']}\n"
             f"    Phone: {user_info['phone']}\n"
+            f"    Phone: {user_info['phone']}\n"
             f"    City: {user_info['city']}\n"
             f"    Post Office: {user_info['post_office']}\n"
             f"    Archive: {app.config['SERVER_ADDRESS']}/archives/{archive_name}"
@@ -244,6 +245,8 @@ def remove_photo():
                 if len(session['orders'][order_index]['photos']) == 0:
                     session['orders'].pop(order_index)
                 session.modified = True
+                if len(session['orders']) == 0:
+                    return jsonify(success=True, redirect_url=url_for('index'))
                 return jsonify(success=True)
         return jsonify(success=False, error='Invalid index')
     except Exception as e:
@@ -257,7 +260,7 @@ def clear_all():
         session.pop('user_info', None)
         session.pop('order_submitted', None)
         session.modified = True
-        return jsonify(success=True)
+        return jsonify(success=True, redirect_url=url_for('index'))
     except Exception as e:
         app.logger.error(f"Error in clear_all route: {e}")
         return jsonify(success=False, error='An error occurred. Check logs for details.')
