@@ -178,12 +178,12 @@
                                 });
 
                                 if (document.querySelectorAll('.order-list .photo-list').length === 0) {
-                                    // Redirect to order form page
+                                    // Redirect to order form page if no orders left
                                     window.location.href = '/';
                                 }
                             } else {
                                 // Update data-photo-index for remaining photos
-                                orderList.querySelectorAll('.photo-item').forEach((item, newIndex) => {
+                                                                orderList.querySelectorAll('.photo-item').forEach((item, newIndex) => {
                                     item.setAttribute('data-photo-index', newIndex);
                                     item.querySelector('.remove-photo').setAttribute('data-photo-index', newIndex);
                                 });
