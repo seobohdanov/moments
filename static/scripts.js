@@ -149,8 +149,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 const photoContainer = document.createElement('div');
                 photoContainer.classList.add('photo-container');
-
-                const img = document.createElement('img');
+                                const img = document.createElement('img');
                 img.src = e.target.result;
                 img.classList.add('photo-preview');
 
@@ -159,7 +158,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 removeButton.innerText = 'X';
                 removeButton.dataset.photoIndex = index;
                 removeButton.addEventListener('click', function () {
-                                        allSelectedPhotos.splice(photoItem.dataset.photoIndex, 1);
+                    allSelectedPhotos.splice(photoItem.dataset.photoIndex, 1);
                     updatePreview();
                     checkPhotoCount();
                     if (allSelectedPhotos.length === 0) {
