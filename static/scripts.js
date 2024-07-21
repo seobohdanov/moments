@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', function () {
     let allSelectedPhotos = [];
     let fromOrderSummary = false; // Track if the user came from Order Summary page
+    let existingPhotos = false; // Track if there are already added photos
 
     function loadContent(url) {
         console.log(`Loading content from URL: ${url}`);
@@ -69,6 +70,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         const response = JSON.parse(xhr.responseText);
                         if (response.success) {
                             allSelectedPhotos = []; // Clear the selected photos after adding to order
+                            existingPhotos = true; // Mark that there are existing photos
                             loadContent(response.next_url);
                         } else {
                             console.error('Error:', response.error);
@@ -255,8 +257,8 @@ document.addEventListener('DOMContentLoaded', function () {
                         });
 
                         if (document.querySelectorAll('.order-list .photo-list').length === 0) {
-                            // Redirect to order form page if no orders left
-                                                       window.location.href = '/';
+                                                        // Redirect to order form page if no orders left
+                            window.location.href = '/';
                         }
                     } else {
                         // Update data-photo-index for remaining photos
@@ -328,7 +330,7 @@ document.addEventListener('DOMContentLoaded', function () {
     function toggleSkipButton() {
         const skipButton = document.getElementById('skip-button');
         if (skipButton) {
-            if (fromOrderSummary && allSelectedPhotos.length > 0) {
+            if (fromOrderSummary && existingPhotos) {
                 skipButton.style.display = 'inline-block';
             } else {
                 skipButton.style.display = 'none';
