@@ -254,13 +254,12 @@ def remove_photo():
 
 @app.route('/clear_all', methods=['POST'])
 def clear_all():
-    try:
-        session.clear()  # Полное очищение сессии
-        session.modified = True
-        return jsonify(success=True, redirect_url=url_for('index'))
-    except Exception as e:
-        app.logger.error(f"Error in clear_all route: {e}")
-        return jsonify(success=False, error='An error occurred. Check logs for details.')
+    session.clear()
+    response = {
+        'success': True,
+        'redirect_url': url_for('index')  # Assuming 'index' is the endpoint for the order form page
+    }
+    return jsonify(response)
 
 if __name__ == '__main__':
     logging.basicConfig(level=logging.DEBUG)

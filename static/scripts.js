@@ -255,7 +255,7 @@ document.addEventListener('DOMContentLoaded', function () {
             method: "POST",
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded"
-            }
+                            }
         })
         .then(response => {
             if (!response.ok) {
@@ -265,7 +265,30 @@ document.addEventListener('DOMContentLoaded', function () {
         })
         .then(data => {
             if (data.success) {
-                                window.location.href = data.redirect_url; // Redirect to the order form page
+                window.location.href = '/'; // Redirect to the order form page
+            } else {
+                console.error(`Error from server: ${data.error}`);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    }
+
+    // Function to handle "Place Another Order" button click
+    function clearAllAndRedirect() {
+        console.log("clearAllAndRedirect function called");
+        fetch("/clear_all", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log("Response from clear_all:", data);
+            if (data.success) {
+                window.location.href = '/'; // Redirect to the order form page
             } else {
                 console.error(`Error from server: ${data.error}`);
             }
@@ -279,4 +302,10 @@ document.addEventListener('DOMContentLoaded', function () {
     if (document.querySelector('.preview')) {
         updatePreview();
     }
+
+    // Attach event listener for "Place Another Order" button
+    document.getElementById('place-another-order').addEventListener('click', function () {
+        console.log("Place Another Order button clicked");
+        clearAllAndRedirect();
+    });
 });
