@@ -159,7 +159,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 removeButton.innerText = 'X';
                 removeButton.dataset.photoIndex = index;
                 removeButton.addEventListener('click', function () {
-                    allSelectedPhotos.splice(photoItem.dataset.photoIndex, 1);
+                                        allSelectedPhotos.splice(photoItem.dataset.photoIndex, 1);
                     updatePreview();
                     checkPhotoCount();
                     if (allSelectedPhotos.length === 0) {
@@ -230,7 +230,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     } else {
                         // Update data-photo-index for remaining photos
                         orderList.querySelectorAll('.photo-item').forEach((item, newIndex) => {
-                                                        item.setAttribute('data-photo-index', newIndex);
+                            item.setAttribute('data-photo-index', newIndex);
                             item.querySelector('.remove-photo').setAttribute('data-photo-index', newIndex);
                         });
                     }

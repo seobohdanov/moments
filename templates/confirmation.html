@@ -3,63 +3,94 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Order Confirmed</title>
+    <title>Order Confirmation</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-    </head>
+    <script src="{{ url_for('static', filename='scripts.js') }}"></script>
+    <style>
+        .container {
+            max-width: 700px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .order-details {
+            margin-top: 20px;
+        }
+        .btn {
+            margin-top: 20px;
+        }
+    </style>
+</head>
 <body>
-    <div class="container confirmation">
+    <div class="container">
         <h1>Order Confirmed</h1>
-        <p>Thank you, {{ user_info.first_name }} {{ user_info.last_name }}! Your order will be delivered to {{ user_info.city }}, Post Office No. {{ user_info.post_office }}.</p>
-        <button class="btn btn-primary btn-next" data-page="index">Place Another Order</button>
-        <h2>Current Orders</h2>
-        <ul class="order-list">
-            {% for order_index, order in enumerate(orders) %}
-            <li id="order-{{ order_index }}">
-                <p><strong>Size:</strong> {{ order.size }}</p>
-                <p><strong>Paper Type:</strong> {{ order.paper_type }}</p>
-                <p><strong>Photos:</strong></p>
-                <ul class="photo-list">
-                    {% for photo_index, photo in enumerate(order.photos) %}
-                    <li class="photo-item" data-photo-index="{{ photo_index }}">
-                        <div class="photo-container">
-                            <img src="{{ url_for('uploaded_file', filename=photo) }}" alt="{{ photo }}" class="photo-preview">
-                        </div>
-                    </li>
-                    {% endfor %}
-                </ul>
-            </li>
-            {% endfor %}
-        </ul>
+        <p>Thank you for your order! Your photos are being processed.</p>
+        <div class="order-details">
+            <p><strong>Order Summary:</strong></p>
+            <ul class="order-list">
+                {% for order_index, order in enumerate(orders) %}
+                <li id="order-{{ order_index }}">
+                    <p><strong>Size:</strong> {{ order.size }}</p>
+                    <p><strong>Paper Type:</strong> {{ order.paper_type }}</p>
+                    <p><strong>Photos:</strong></p>
+                    <ul class="photo-list">
+                        {% for photo_index, photo in enumerate(order.photos) %}
+                        <li class="photo-item" data-photo-index="{{ photo_index }}">
+                            <div class="photo-container">
+                                <img src="{{ url_for('uploaded_file', filename=photo) }}" alt="{{ photo }}" class="photo-preview">
+                            </div>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </li>
+                {% endfor %}
+            </ul>
+            <p><strong>Total Photos:</strong> {{ total_photos }}</p>
+        </div>
+        <button type="button" class="btn btn-primary" id="place-another-order">Place Another Order</button>
     </div>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            document.querySelector('.btn-next').addEventListener('click', function() {
-                const page = this.getAttribute('data-page');
-                loadContent(`/load_content?page=${page}`);
+            // Disable back button functionality
+            if (window.history && window.history.pushState) {
+                window.history.pushState(null, null, window.location.href);
+                window.onpopstate = function () {
+                    window.history.pushState(null, null, window.location.href);
+                };
+            }
+
+            // Handle the "Place Another Order" button click
+            document.getElementById('place-another-order').addEventListener('click', function () {
+                clearAllAndRedirect();
             });
+
+            function clearAllAndRedirect() {
+                fetch("/clear_all", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/x-www-form-urlencoded"
+                    }
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok ' + response.statusText);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.success) {
+                        window.location.href = '/'; // Redirect to the order form page
+                    } else {
+                        console.error(`Error from server: ${data.error}`);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+            }
         });
-
-        function loadContent(url) {
-            fetch(url, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'text/html'
-                }
-            })
-            .then(response => response.text())
-            .then(html => {
-                document.querySelector('.container').innerHTML = html;
-                attachEventListeners(); // Re-attach event listeners after content load
-            })
-            .catch(error => console.error('Error loading content:', error));
-        }
-
-        function attachEventListeners() {
-            document.querySelector('.btn-next').addEventListener('click', function() {
-                const page = this.getAttribute('data-page');
-                loadContent(`/load_content?page=${page}`);
-            });
-        }
     </script>
 </body>
 </html>
