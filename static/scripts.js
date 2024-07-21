@@ -261,8 +261,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         // Update data-photo-index for remaining photos
                         orderList.querySelectorAll('.photo-item').forEach((item, newIndex) => {
                             item.setAttribute('data-photo-index', newIndex);
-                            item.querySelector('.remove-photo').setAttribute
-                            ('data-photo-index', newIndex);
+                            item.querySelector('.remove-photo').setAttribute('data-photo-index', newIndex);
                         });
                     }
                 } else {
@@ -329,7 +328,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const skipButton = document.getElementById('skip-button');
         if (skipButton) {
             const fromOrderSummary = localStorage.getItem('fromOrderSummary');
-            if (fromOrderSummary) {
+            if (fromOrderSummary === 'true') {
                 skipButton.style.display = 'inline-block';
                 localStorage.removeItem('fromOrderSummary');
             } else {

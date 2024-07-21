@@ -97,6 +97,9 @@
                     button.addEventListener('click', function () {
                         const page = this.getAttribute('data-page');
                         loadContent(`/load_content?page=${page}`);
+                        if (page === 'index') {
+                            localStorage.setItem('fromOrderSummary', 'true');
+                        }
                     });
                 });
 
