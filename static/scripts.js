@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const submitButton = document.getElementById('submit-button');
     const clearAllButton = document.getElementById('clear-all-button');
     const skipButton = document.getElementById('skip-button');
+    const progressBar = document.getElementById('progress-bar');
     let allSelectedPhotos = [];
 
     function loadContent(url) {
@@ -48,24 +49,34 @@ document.addEventListener('DOMContentLoaded', function () {
                     formData.append('photos', file, file.name);
                 });
 
-                fetch(this.action, {
-                    method: 'POST',
-                    body: formData
-                })
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok ' + response.statusText);
+                const xhr = new XMLHttpRequest();
+                xhr.open('POST', this.action, true);
+                xhr.upload.addEventListener('progress', function (e) {
+                    if (e.lengthComputable) {
+                        const percentComplete = (e.loaded / e.total) * 100;
+                        progressBar.style.width = percentComplete + '%';
+                        progressBar.innerText = Math.round(percentComplete) + '%';
                     }
-                    return response.json();
-                })
-                .then(data => {
-                    if (data.success) {
-                        loadContent(data.next_url); // Load next page
+                });
+
+                xhr.addEventListener('load', function () {
+                    if (xhr.status === 200) {
+                        const response = JSON.parse(xhr.responseText);
+                        if (response.success) {
+                            loadContent(response.next_url);
+                        } else {
+                            console.error('Error:', response.error);
+                        }
                     } else {
-                        console.error('Error:', data.error);
+                        console.error('Network response was not ok');
                     }
-                })
-                .catch(error => console.error('Error:', error));
+                });
+
+                xhr.addEventListener('error', function () {
+                    console.error('Error during the upload');
+                });
+
+                xhr.send(formData);
             });
         }
 
@@ -96,9 +107,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
         document.querySelectorAll('.remove-photo').forEach(button => {
             button.addEventListener('click', function () {
-                const orderIndex = this.dataset.orderIndex;
                 const photoIndex = this.dataset.photoIndex;
-                removePhoto(orderIndex, photoIndex);
+                allSelectedPhotos.splice(photoIndex, 1);
+                updatePreview();
+                checkPhotoCount();
             });
         });
 
@@ -109,17 +121,25 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         if (photoInput) {
-            photoInput.addEventListener('change', updatePreview);
+            photoInput.addEventListener('change', handleFileSelect);
+        }
+
+        function handleFileSelect(event) {
+            Array.from(event.target.files).forEach(file => {
+                allSelectedPhotos.push(file);
+            });
+            updatePreview();
+            checkPhotoCount();
         }
 
         function updatePreview() {
-            Array.from(photoInput.files).forEach((file, index) => {
-                allSelectedPhotos.push(file);
+            previewContainer.innerHTML = '';
+            allSelectedPhotos.forEach((file, index) => {
                 const reader = new FileReader();
                 reader.onload = function (e) {
                     const photoItem = document.createElement('div');
                     photoItem.classList.add('photo-item');
-                    photoItem.dataset.photoIndex = allSelectedPhotos.length - 1;
+                    photoItem.dataset.photoIndex = index;
 
                     const photoContainer = document.createElement('div');
                     photoContainer.classList.add('photo-container');
@@ -131,10 +151,10 @@ document.addEventListener('DOMContentLoaded', function () {
                     const removeButton = document.createElement('button');
                     removeButton.classList.add('remove-photo');
                     removeButton.innerText = 'X';
-                    removeButton.dataset.photoIndex = allSelectedPhotos.length - 1;
+                    removeButton.dataset.photoIndex = index;
                     removeButton.addEventListener('click', function () {
                         allSelectedPhotos.splice(photoItem.dataset.photoIndex, 1);
-                        photoItem.remove();
+                        updatePreview();
                         checkPhotoCount();
                     });
 
@@ -145,7 +165,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
                 reader.readAsDataURL(file);
             });
-            checkPhotoCount();
+            photoInput.value = ''; // Clear the file input to allow re-selecting the same files if needed
         }
 
         function checkPhotoCount() {
@@ -156,45 +176,6 @@ document.addEventListener('DOMContentLoaded', function () {
             } else {
                 errorMessage.innerText = '';
             }
-        }
-
-        function removePhoto(orderIndex, photoIndex) {
-            fetch("/remove_photo", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/x-www-form-urlencoded"
-                },
-                body: `order_index=${orderIndex}&photo_index=${photoIndex}`
-            })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok ' + response.statusText);
-                }
-                return response.json();
-            })
-            .then(data => {
-                if (data.success) {
-                    const photoItem = document.querySelector(`#order-${orderIndex} .photo-item[data-photo-index="${photoIndex}"]`);
-                    if (photoItem) {
-                        photoItem.parentNode.removeChild(photoItem);
-                    }
-                    const orderList = document.querySelector(`#order-${orderIndex} .photo-list`);
-                    if (orderList.children.length === 0) {
-                        const orderElement = document.getElementById(`order-${orderIndex}`);
-                        if (orderElement) {
-                            orderElement.parentNode.removeChild(orderElement);
-                        }
-                        if (document.querySelectorAll('.order-list .photo-list').length === 0) {
-                            loadContent('/load_content?page=index');
-                        }
-                    }
-                } else {
-                    console.error(`Error from server: ${data.error}`);
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
         }
 
         function clearAll() {
@@ -213,7 +194,8 @@ document.addEventListener('DOMContentLoaded', function () {
             .then(data => {
                 if (data.success) {
                     allSelectedPhotos = [];
-                    loadContent(window.location.href); // Reload current content
+                    updatePreview();
+                    checkPhotoCount();
                 } else {
                     console.error(`Error from server: ${data.error}`);
                 }
