@@ -25,7 +25,7 @@ if not os.path.exists('logs'):
 
 # Настройка логирования
 file_handler = RotatingFileHandler('logs/app.log', maxBytes=10240, backupCount=10)
-file_handler.setFormatter(logging.Formatter('%(asctime)s %(levelname)s: %(message)s [in %(pathname)s:%(lineno)d]')
+file_handler.setFormatter(logging.Formatter('%(asctime)s %(levelname)s: %(message)s [in %(pathname)s:%(lineno)d]'))
 file_handler.setLevel(logging.DEBUG)
 
 app.logger.addHandler(file_handler)
@@ -202,7 +202,6 @@ def send_order_to_telegram(user_info, archive_name):
         message = (
             f"New Order:\n"
             f"    Name: {user_info['first_name']} {user_info['last_name']}\n"
-            f"    Phone: {user_info['phone']}\n"
             f"    Phone: {user_info['phone']}\n"
             f"    City: {user_info['city']}\n"
             f"    Post Office: {user_info['post_office']}\n"
