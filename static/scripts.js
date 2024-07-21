@@ -47,7 +47,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 const xhr = new XMLHttpRequest();
                 xhr.open('POST', orderForm.action, true);
-                xhr.upload.addEventListener('progress', function (e) {
+                                xhr.upload.addEventListener('progress', function (e) {
                     if (e.lengthComputable) {
                         const percentComplete = (e.loaded / e.total) * 100;
                         document.getElementById('progress-bar').style.width = percentComplete + '%';
@@ -113,6 +113,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
         if (document.getElementById('clear-all-button')) {
             document.getElementById('clear-all-button').addEventListener('click', function () {
+                clearAll();
+            });
+        }
+
+        if (document.getElementById('clear-all')) {
+            document.getElementById('clear-all').addEventListener('click', function () {
                 clearAll();
             });
         }
@@ -227,14 +233,7 @@ document.addEventListener('DOMContentLoaded', function () {
         })
         .then(data => {
             if (data.success) {
-                if (data.redirect_url) {
-                    window.location.href = data.redirect_url;
-                } else {
-                    allSelectedPhotos = [];
-                    updatePreview();
-                    checkPhotoCount();
-                    loadContent('/');
-                }
+                window.location.href = '/'; // Redirect to order form page
             } else {
                 console.error(`Error from server: ${data.error}`);
             }
