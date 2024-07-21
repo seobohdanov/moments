@@ -255,9 +255,7 @@ def remove_photo():
 @app.route('/clear_all', methods=['POST'])
 def clear_all():
     try:
-        session.pop('orders', None)
-        session.pop('user_info', None)
-        session.pop('order_submitted', None)
+        session.clear()  # Полное очищение сессии
         session.modified = True
         return jsonify(success=True, redirect_url=url_for('index'))
     except Exception as e:
