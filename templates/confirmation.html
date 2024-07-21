@@ -15,46 +15,8 @@
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
-        .order-details, .customer-details {
+        .order-details {
             margin-top: 20px;
-        }
-        .customer-details p, .order-details p {
-            margin: 5px 0;
-        }
-        .order-list {
-            list-style-type: none;
-            padding: 0;
-        }
-        .order-list li {
-            border-bottom: 1px solid #ddd;
-            padding: 10px 0;
-        }
-        .order-list li:last-child {
-            border-bottom: none;
-        }
-        .photo-list {
-            list-style-type: none;
-            padding: 0;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-        .photo-item {
-            list-style: none;
-            width: calc(33.33% - 10px); /* Three photos per row */
-        }
-        .photo-container {
-            position: relative;
-            width: 100%;
-            padding-top: 75%; /* 4:3 Aspect Ratio */
-        }
-        .photo-preview {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
         }
         .btn {
             margin-top: 20px;
@@ -65,14 +27,6 @@
     <div class="container">
         <h1>Order Confirmed</h1>
         <p>Thank you for your order! Your photos are being processed.</p>
-        <div class="customer-details">
-            <p><strong>Customer Details:</strong></p>
-            <p><strong>First Name:</strong> {{ user_info.first_name }}</p>
-            <p><strong>Last Name:</strong> {{ user_info.last_name }}</p>
-            <p><strong>Phone:</strong> {{ user_info.phone }}</p>
-            <p><strong>City:</strong> {{ user_info.city }}</p>
-            <p><strong>Post Office:</strong> {{ user_info.post_office }}</p>
-        </div>
         <div class="order-details">
             <p><strong>Order Summary:</strong></p>
             <ul class="order-list">
@@ -109,12 +63,10 @@
 
             // Handle the "Place Another Order" button click
             document.getElementById('place-another-order').addEventListener('click', function () {
-                console.log("Place Another Order button clicked");
                 clearAllAndRedirect();
             });
 
             function clearAllAndRedirect() {
-                console.log("clearAllAndRedirect function called");
                 fetch("{{ url_for('clear_all') }}", {
                     method: "POST",
                     headers: {
@@ -123,7 +75,6 @@
                 })
                 .then(response => response.json())
                 .then(data => {
-                    console.log("Response from clear_all:", data);
                     if (data.success) {
                         window.location.href = data.redirect_url; // Redirect to the order form page
                     } else {
