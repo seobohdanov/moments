@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', function () {
         if (document.getElementById('orderForm')) {
             document.getElementById('orderForm').addEventListener('submit', function (e) {
                 e.preventDefault();
-                if (!photoInput.files.length) {
+                if (!photoInput.files.length && document.querySelectorAll('.photo-item').length === 0) {
                     errorMessage.innerText = 'No photos selected';
                     return;
                 }
