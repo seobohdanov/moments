@@ -15,8 +15,11 @@
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
-        .order-details {
+        .customer-details, .order-summary {
             margin-top: 20px;
+        }
+        .customer-details p {
+            margin: 5px 0;
         }
         .btn {
             margin-top: 20px;
@@ -27,7 +30,16 @@
     <div class="container">
         <h1>Order Confirmed</h1>
         <p>Thank you for your order! Your photos are being processed.</p>
-        <div class="order-details">
+        <div class="customer-details">
+            <p><strong>Customer Details:</strong></p>
+            <p><strong>First Name:</strong> {{ user_info.first_name }}</p>
+            <p><strong>Last Name:</strong> {{ user_info.last_name }}</p>
+            <p><strong>Phone:</strong> {{ user_info.phone }}</p>
+            <p><strong>City:</strong> {{ user_info.city }}</p>
+            <p><strong>Post Office:</strong> {{ user_info.post_office }}</p>
+        </div>
+        <button type="button" class="btn btn-primary" id="place-another-order">Place Another Order</button>
+        <div class="order-summary">
             <p><strong>Order Summary:</strong></p>
             <ul class="order-list">
                 {% for order_index, order in enumerate(orders) %}
@@ -49,7 +61,6 @@
             </ul>
             <p><strong>Total Photos:</strong> {{ total_photos }}</p>
         </div>
-        <button type="button" class="btn btn-primary" id="place-another-order">Place Another Order</button>
     </div>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
@@ -63,10 +74,12 @@
 
             // Handle the "Place Another Order" button click
             document.getElementById('place-another-order').addEventListener('click', function () {
+                console.log("Place Another Order button clicked");
                 clearAllAndRedirect();
             });
 
             function clearAllAndRedirect() {
+                console.log("clearAllAndRedirect function called");
                 fetch("{{ url_for('clear_all') }}", {
                     method: "POST",
                     headers: {
@@ -75,6 +88,7 @@
                 })
                 .then(response => response.json())
                 .then(data => {
+                    console.log("Response from clear_all:", data);
                     if (data.success) {
                         window.location.href = data.redirect_url; // Redirect to the order form page
                     } else {
