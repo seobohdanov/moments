@@ -71,36 +71,7 @@
                     body: `order_index=${orderIndex}&photo_index=${photoIndex}`
                 }).then(response => response.json()).then(data => {
                     if (data.success) {
-                        const photoItem = document.querySelector(`#order-${orderIndex} .photo-item[data-photo-index="${photoIndex}"]`);
-                        if (photoItem) {
-                            photoItem.parentNode.removeChild(photoItem);
-
-                            const orderList = document.querySelector(`#order-${orderIndex} .photo-list`);
-                            if (orderList.children.length === 0) {
-                                const orderElement = document.getElementById(`order-${orderIndex}`);
-                                if (orderElement) {
-                                    orderElement.parentNode.removeChild(orderElement);
-                                }
-
-                                document.querySelectorAll('.order-list > li').forEach((orderElement, newIndex) => {
-                                    orderElement.id = `order-${newIndex}`;
-                                    orderElement.querySelectorAll('.remove-photo').forEach(button => {
-                                        button.setAttribute('data-order-index', newIndex);
-                                    });
-                                });
-
-                                if (document.querySelectorAll('.order-list .photo-list').length === 0) {
-                                    loadContent('/load_content?page=index');
-                                }
-                            } else {
-                                orderList.querySelectorAll('.photo-item').forEach((item, newIndex) => {
-                                    item.setAttribute('data-photo-index', newIndex);
-                                    item.querySelector('.remove-photo').setAttribute('data-photo-index', newIndex);
-                                });
-                            }
-                        } else {
-                            console.error(`Photo item not found for order ${orderIndex} and photo ${photoIndex}`);
-                        }
+                        loadContent('/load_content?page=order_summary');
                     } else {
                         console.error(`Error from server: ${data.error}`);
                     }
@@ -114,7 +85,6 @@
                     button.addEventListener('click', function () {
                         const orderIndex = button.dataset.orderIndex;
                         const photoIndex = button.dataset.photoIndex;
-                        console.log(`Removing photo ${photoIndex} from order ${orderIndex}`);
                         removePhoto(orderIndex, photoIndex);
                     });
                 });
@@ -148,7 +118,7 @@
                 })
                 .then(data => {
                     if (data.success) {
-                        loadContent(window.location.href); // Reload current content
+                        loadContent('/load_content?page=order_summary');
                     } else {
                         console.error(`Error from server: ${data.error}`);
                     }

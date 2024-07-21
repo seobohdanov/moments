@@ -63,6 +63,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     if (xhr.status === 200) {
                         const response = JSON.parse(xhr.responseText);
                         if (response.success) {
+                            allSelectedPhotos = []; // Clear the selected photos after adding to order
                             loadContent(response.next_url);
                         } else {
                             console.error('Error:', response.error);
@@ -107,10 +108,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
         document.querySelectorAll('.remove-photo').forEach(button => {
             button.addEventListener('click', function () {
+                const orderIndex = this.dataset.orderIndex;
                 const photoIndex = this.dataset.photoIndex;
-                allSelectedPhotos.splice(photoIndex, 1);
-                updatePreview();
-                checkPhotoCount();
+                removePhoto(orderIndex, photoIndex);
             });
         });
 
@@ -178,6 +178,32 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         }
 
+        function removePhoto(orderIndex, photoIndex) {
+            fetch("/remove_photo", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded"
+                },
+                body: `order_index=${orderIndex}&photo_index=${photoIndex}`
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok ' + response.statusText);
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.success) {
+                    loadContent('/load_content?page=order_summary');
+                } else {
+                    console.error(`Error from server: ${data.error}`);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+
         function clearAll() {
             fetch("/clear_all", {
                 method: "POST",
@@ -196,6 +222,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     allSelectedPhotos = [];
                     updatePreview();
                     checkPhotoCount();
+                    loadContent('/load_content?page=order_summary');
                 } else {
                     console.error(`Error from server: ${data.error}`);
                 }
