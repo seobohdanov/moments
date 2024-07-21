@@ -108,25 +108,31 @@
             <button type="submit" class="btn btn-success">Submit Order</button>
         </form>
         <h2>Current Orders</h2>
-        <ul class="order-list">
-            {% for order_index, order in enumerate(orders) %}
-            <li id="order-{{ order_index }}">
-                <p><strong>Size:</strong> {{ order.size }}</p>
-                <p><strong>Paper Type:</strong> {{ order.paper_type }}</p>
-                <p><strong>Photos:</strong></p>
-                <ul class="photo-list">
-                    {% for photo_index, photo in enumerate(order.photos) %}
-                    <li class="photo-item" data-photo-index="{{ photo_index }}">
-                        <div class="photo-container">
-                            <img src="{{ url_for('uploaded_file', filename=photo) }}" alt="{{ photo }}" class="photo-preview">
-                            <button class="remove-photo" data-order-index="{{ order_index }}" data-photo-index="{{ photo_index }}">X</button>
-                        </div>
+        <div id="orders-container">
+            {% if orders %}
+                <ul class="order-list">
+                    {% for order_index, order in enumerate(orders) %}
+                    <li id="order-{{ order_index }}">
+                        <p><strong>Size:</strong> {{ order.size }}</p>
+                        <p><strong>Paper Type:</strong> {{ order.paper_type }}</p>
+                        <p><strong>Photos:</strong></p>
+                        <ul class="photo-list">
+                            {% for photo_index, photo in enumerate(order.photos) %}
+                            <li class="photo-item" data-photo-index="{{ photo_index }}">
+                                <div class="photo-container">
+                                    <img src="{{ url_for('uploaded_file', filename=photo) }}" alt="{{ photo }}" class="photo-preview">
+                                    <button class="remove-photo" data-order-index="{{ order_index }}" data-photo-index="{{ photo_index }}">X</button>
+                                </div>
+                            </li>
+                            {% endfor %}
+                        </ul>
                     </li>
                     {% endfor %}
                 </ul>
-            </li>
-            {% endfor %}
-        </ul>
+            {% else %}
+                <p>No orders yet.</p>
+            {% endif %}
+        </div>
         <p><strong>Total Photos:</strong> {{ total_photos }}</p>
     </div>
     <script>
